@@ -1,0 +1,24 @@
+.homePageBody{
+    max-width: 1080px;
+    width: 100%;
+    margin: auto;
+}
+
+.header{
+    display: flex;
+    justify-content: center;
+
+    h1{
+        font-size: 24px;
+    }
+}
+
+.main{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer{
+
+}
