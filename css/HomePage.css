@@ -36,7 +36,7 @@
   align-items: center;
 
   width: 100%;
-  height: 100px;
+  height: 125px;
   text-wrap: wrap;
   background-color: rgb(224, 224, 224);
 
@@ -60,6 +60,7 @@
 .portfolioItems:hover {
   background-color: rgb(104, 125, 113);
   color: white;
+  cursor: pointer;
 }
 
 .leftSide {
@@ -70,6 +71,10 @@
 .rightSide {
   width: 75%;
   background-color: rgb(224, 224, 224);
+}
+
+.rightSide:hover {
+  background-color: rgb(104, 125, 113);
 }
 
 .portfolioVisualization {
