@@ -14,63 +14,90 @@
     <title>Portfolio Development</title>
   </head>
 
-  <body class="homePageBody">
-    <header class="topHeader">
-      <div class="topHeaderLeftSide">
+  <body>
+    <header class="header">
+      <section class="banner">
         <div>NASDAQ Comp 12478 0.93% | RUSSELL 1000 0.63% | S&P 500 0.66%</div>
-        <div>...</div>
-      </div>
-      <div class="topHeaderRightSide">
-        <div>Welcome, Antonella! <i class="fa-solid fa-user"></i></div>
-        <div>Help <i class="fa-solid fa-question"></i></div>
-      </div>
-    </header>
 
-    <header class="mainHeader">
-      <div><h1>Portfolio App</h1></div>
-      <div><input type="text" class="searchBar" placeholder="Search..." /></div>
-      <div>
-        <i class="fa-solid fa-bell"></i>
-        <button class="tradeButton">Trade</button>
-      </div>
-    </header>
+        <div>
+          <p>Welcome, Antonella!</p>
+          <p>Help?</p>
+        </div>
+      </section>
 
-    <main class="main">
-      <div class="navLinks">
-        <a href="" class="navLinkItem">Home</a>
-        <a href="" class="navLinkItem">Portfolio</a>
-        <a href="" class="navLinkItem">Updates</a>
-        <a href="" class="navLinkItem">Research</a>
-      </div>
+      <section class="searchBar">
+        <div>(Title of Application)</div>
 
-      <hr />
-
-      <section class="portfolioDashboard">
-        <div class="leftSide">
-          <div class="portfolioItems">
-            <div><h6>Portfolio Value</h6></div>
-            <div><h2>$16k</h2></div>
-          </div>
-
-          <div class="portfolioItems">
-            <div><h4>Total Invested</h4></div>
-            <div><h2>$25k</h2></div>
-            <div><h6>4 Investments made in the past 6 months</h6></div>
-          </div>
-
-          <div class="portfolioItems">Assets & Liabilities</div>
+        <div>
+          <input type="search" placeholder="Search..." class="searchInput" />
         </div>
 
-        <div class="rightSide">
-          <div class="portfolioVisualization">
-            <div>Performance Graph Would be Here</div>
-          </div>
+        <div>Notification Bell</div>
+      </section>
+
+      <section class="navigationLinks">
+        <div>
+          <a href="" class="navigationItem">Home</a>
         </div>
+
+        <div>
+          <a href="" class="navigationItem">Updates</a>
+        </div>
+
+        <div>
+          <a href="" class="navigationItem">Research</a>
+        </div>
+      </section>
+    </header>
+
+    <hr />
+
+    <main>
+      <section class="portfolioBox">
+        <div class="accountInformation">
+          <h1>Your Portfolio</h1>
+          <p>Account</p>
+          <p>(Username)</p>
+        </div>
+
+        <div class="portfolioItemContainer">
+          <article class="portfolioItem">
+            <p class="itemTitle">Settled Cash</p>
+            <p>$$$</p>
+          </article>
+
+          <article class="portfolioItem">
+            <p class="itemTitle">Buying Power</p>
+            <p>$$$</p>
+          </article>
+
+          <article class="portfolioItem">
+            <p class="itemTitle">Dividends</p>
+            <p class="itemValue">$$$</p>
+          </article>
+        </div>
+
+        <div class="portfolioOptions">
+          <div class="optionItem">Deposit</div>
+          <div class="optionItem">Withdraw</div>
+          <div class="optionItem">Deposit</div>
+        </div>
+
+        <div class="acquiredContainer">
+          <div class="acquiredItem">BZFD BuzzFeed, Inc. Class A +20.40%</div>
+          <div class="acquiredItem">NVDA NVIDIA Corporation -0.54%</div>
+          <div class="acquiredItem">AMD Advanced Micro Devices +2.86%</div>
+          <div class="acquiredItem">SER Serina Therapeutics +16.73</div>
+        </div>
+      </section>
+
+      <section class="recommendedBox">
+        <article>
+          <h1>Recommended</h1>
+        </article>
       </section>
     </main>
 
-    <footer class="footer">
-      <span>Footer</span>
-    </footer>
+    <footer></footer>
   </body>
 </html>

@@ -1,165 +1,118 @@
-* {
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.homePageBody {
-  max-width: 1280px;
+body {
+  max-width: 1600px;
   width: 100%;
   padding: 0;
   margin: auto;
+
+  font-family: sans-serif;
 }
 
-.topHeader {
+.banner {
   display: flex;
   justify-content: space-between;
-  box-sizing: border-box;
-  padding: 8px;
-
+  padding: 12px;
   background-color: black;
-  width: 100%;
   color: white;
-}
 
-.topHeaderLeftSide{
-  display: flex;
-
-  div{
-    padding: 8px 16px;
-  }
-}
-
-.topHeaderRightSide{
-  display: flex;
-
-  div{
-    padding: 8px 16px;
-  }
-}
-
-.mainHeader {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 1em;
-  margin-bottom: 1em;
-
-  h1 {
-    font-size: 16px;
-    margin: 0;
-    padding: 0;
-  }
-
-  .fa-solid {
-    font-size: 16px;
-    color: red;
-  }
-
-  .tradeButton {
-    border-radius: 0;
-    border-style: none;
-    color: white;
-    background: red;
+  p {
+    display: inline;
   }
 }
 
 .searchBar {
-  width: 100%;
-  padding: 6px;
-  border-style: none;
-  background-color: gray;
-  color: white;
-}
-
-.main {
-  min-height: 100vh;
-
-  hr {
-    border-width: 2px;
-    border-style: solid;
-  }
-}
-
-.navLinkItem {
-  text-decoration: none;
-  margin: 0px 16px 0px 16px;
-  color: black;
-}
-
-.navLinkItem:hover {
-  text-decoration: underline;
-  color: black;
-}
-
-.portfolioDashboard {
   display: flex;
   justify-content: space-between;
+  padding: 24px;
+
+  .searchInput {
+    width: 425px;
+    min-width: 100%;
+    border-radius: 0;
+    border-style: none;
+    background-color: #d9d9d9;
+  }
 }
 
-.portfolioItems {
+@media (max-width: 768px) {
+  .searchBar .searchInput {
+    width: 100%; /* Make the input take full width of its container */
+  }
+}
+
+.navigationLinks {
   display: flex;
-  justify-content: space-evenly;
-  flex-direction: column;
-
-  flex-wrap: nowrap;
-  align-items: center;
-
-  margin-top: 8px;
-  margin-bottom: 8px;
-
-  width: 100%;
-  min-height: 125px;
-  text-wrap: wrap;
-  background-color: gray;
-  color: rgb(255, 255, 255);
-
-  h2 {
-    margin: 0;
-  }
-
-  h4 {
-    margin: 0;
-    font-weight: 500;
-    font-size: 16px;
-  }
-
-  h6 {
-    margin: 0;
-    font-weight: 500;
-    font-size: 8px;
-  }
+  justify-content: left;
 }
 
-.portfolioItems:hover {
+.navigationItem {
+  color: black;
+  text-decoration: none;
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+.navigationItem:hover {
+  text-decoration: underline;
+}
+
+hr {
+  height: 2px;
   background-color: black;
-  color: white;
-  cursor: pointer;
+  border-style: none;
 }
 
-.leftSide {
-  width: 25%;
-  margin-right: 8px;
-  text-align: center;
+.portfolioBox,
+.recommendedBox {
+  background-color: #d9d9d9;
+  color: black;
+  width: 35%;
+  padding: 12px;
+  margin: 6px;
+
+  p {
+    margin: 0;
+  }
+
+  h1 {
+    margin: 0;
+  }
 }
 
-.rightSide {
-  margin-top: 8px;
-  margin-bottom: 8px;
-
-  width: 75%;
-  background-color: gray;
+.portfolioItemContainer {
+  margin-top: 16px;
+  margin-bottom: 16px;
 }
 
-.rightSide:hover {
-  background-color: black;
-}
-
-.portfolioVisualization {
+.portfolioItem {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
 
-  height: 100%;
-  width: 100%;
-  color: white;
+  .itemTitle {
+    color: #767171;
+  }
 }
 
-.footer {
+.portfolioOptions {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  .optionItem {
+    background-color: #3dc0a8;
+    padding: 12px;
+    border-radius: 24px;
+  }
+
+  .optionItem:hover {
+    background-color: #2e8e7c;
+    cursor: pointer;
+  }
+}
+
+.acquiredContainer {
+  margin-top: 16px;
+
+  .acquiredItem {
+    padding: 12px;
+  }
 }
