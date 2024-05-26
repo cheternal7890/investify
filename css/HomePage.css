@@ -3,6 +3,7 @@ body {
   width: 100%;
   padding: 0;
   margin: auto;
+  background-color: rgb(255, 251, 246);
 
   font-family: sans-serif;
 }
@@ -14,8 +15,16 @@ body {
   background-color: black;
   color: white;
 
-  p {
+  a {
     display: inline;
+    margin: 0;
+    text-decoration: none;
+    color: white;
+    padding: 6px;
+  }
+
+  a:hover {
+    text-decoration: underline;
   }
 }
 
@@ -26,13 +35,23 @@ body {
 
   .searchInput {
     width: 425px;
+    padding: 6px;
     min-width: 100%;
     border-radius: 0;
     border-style: none;
     background-color: #d9d9d9;
   }
-}
 
+  .fa-solid {
+    font-size: 24px;
+    color: red;
+  }
+
+  .fa-solid:hover {
+    color: rgb(172, 0, 0);
+    cursor: pointer;
+  }
+}
 @media (max-width: 768px) {
   .searchBar .searchInput {
     width: 100%; /* Make the input take full width of its container */
