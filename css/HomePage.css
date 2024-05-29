@@ -5,7 +5,7 @@ body {
   margin: auto;
   background-color: rgb(255, 251, 246);
 
-  font-family: sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 .banner {
@@ -80,11 +80,18 @@ hr {
   border-style: none;
 }
 
+.flexItems {
+  display: flex;
+}
+
+main{
+  height: 100vh;
+}
+
 .portfolioBox,
+.performanceGraph,
 .recommendedBox {
-  background-color: #d9d9d9;
   color: black;
-  width: 35%;
   padding: 12px;
   margin: 6px;
 
@@ -95,6 +102,62 @@ hr {
   h1 {
     margin: 0;
   }
+}
+
+.portfolioBox {
+  width: 450px;
+  max-width: 25%;
+  background-color: #d9d9d9;
+}
+
+.performanceGraph {
+  width: 75%;
+
+  h1 {
+    font-weight: 500;
+    font-size: 20px;
+    color: #8a8484;
+  }
+
+  p {
+    font-size: 32px;
+  }
+}
+
+.performanceChart{
+  width: 100%;
+  height: 100%;
+
+  img{
+    object-fit: contain;
+  }
+}
+
+.datesBox {
+  display: flex;
+  width: 75%;
+  justify-content: center;
+  align-items: center;
+
+  h1 {
+    margin: 0;
+  }
+}
+
+.buttonItem {
+  border: none;
+  background-color: white;
+  padding: 12px;
+}
+
+.buttonItem:focus {
+  font-weight: bold;
+}
+
+.recommendedBox {
+  width: 450px;
+  max-width: 25%;
+  background-color: #d9d9d9;
 }
 
 .portfolioItemContainer {
