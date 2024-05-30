@@ -10,7 +10,7 @@ body {
   padding: 0;
   margin: auto;
   box-sizing: border-box;
-  background-color: rgb(255, 251, 246);
+  background-color: white;
 
   font-family: "Inter", sans-serif;
 }
@@ -38,6 +38,7 @@ body {
 .searchBar {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   align-items: center;
   padding: 12px;
 
@@ -52,17 +53,17 @@ body {
 
   .fa-solid {
     font-size: 24px;
-    color: red;
+    color: #CC0000;
   }
 
   .fa-solid:hover {
-    color: rgb(172, 0, 0);
+    color: #990000;
     cursor: pointer;
   }
 }
 @media (max-width: 768px) {
   .searchBar .searchInput {
-    width: 100%; /* Make the input take full width of its container */
+    width: 100%;
   }
 }
 
