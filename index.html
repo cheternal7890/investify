@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/HomePage.css" />
+    <link rel="stylesheet" href="/css/Banner.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -21,6 +22,7 @@
   </head>
 
   <body>
+    <!-- Header -->
     <header class="header">
       <section class="banner">
         <div class="leftSideBanner">
@@ -28,19 +30,21 @@
         </div>
 
         <div class="rightSideBanner">
-          <a href="">Welcome, Antonella! <i class="fa-solid fa-user"></i></a>
+          <a href="/pages/login.html">Welcome, User! <i class="fa-solid fa-user"></i></a>
           <a href="">Help <i class="fas fa-question-circle"></i></a>
         </div>
       </section>
 
       <section class="searchBar">
-        <div>(Title of Application)</div>
+        <div>(Application Title)</div>
 
         <div>
           <input type="search" placeholder="Search..." class="searchInput" />
         </div>
 
-        <div><i class="fa-solid fa-bell"></i></div>
+        <div>
+          <i class="fa-solid fa-bell"></i>
+        </div>
       </section>
 
       <section class="navigationLinks">
@@ -49,21 +53,18 @@
         </div>
 
         <div>
-          <a href="pages/positions.html" class="navigationItem">Positions</a>
+          <a href="/pages/positions.html" class="navigationItem">Positions</a>
         </div>
 
         <div>
-          <a href="" class="navigationItem">Unrealized Gain/Loss</a>
-        </div>
-
-        <div>
-          <a href="" class="navigationItem">Realized Gain/Loss</a>
+          <a href="" class="navigationItem">Updates</a>
         </div>
       </section>
     </header>
 
     <hr />
 
+    <!-- Main Container -->
     <div class="container">
       <div id="portfolioBox">
         <div id="portfolioHeader">
@@ -73,9 +74,15 @@
         </div>
 
         <div id="informationContainer">
-          <p id="informationItem">Settled Cash <span id="settledCash">$8,520.00</span></p>
-          <p id="informationItem">Buying Power <span id="buyingPower">$55,800.00</span></p>
-          <p id="informationItem">Dividends <span id="dividends">$0.00</span></p>
+          <p id="informationItem">
+            Settled Cash <span id="settledCash">$8,520.00</span>
+          </p>
+          <p id="informationItem">
+            Buying Power <span id="buyingPower">$55,800.00</span>
+          </p>
+          <p id="informationItem">
+            Dividends <span id="dividends">$0.00</span>
+          </p>
         </div>
 
         <div id="buttonContainer">
@@ -114,12 +121,14 @@
       <div id="dateBox">
         <button id="dateButton">7 Days</button>
         <button id="dateButton">Months to Date</button>
-        <button id="dateButton">1 Month</button>
+        <button id="dateButton" autofocus>1 Month</button>
         <button id="dateButton">Year to Date</button>
         <button id="dateButton">1 Year</button>
       </div>
-      <footer id="footer">Footer</footer>
+      <!-- <footer id="footer">Footer</footer> -->
     </div>
+
+    <!-- Loads JavaScript File -->
     <script src="/index.js"></script>
   </body>
 </html>
