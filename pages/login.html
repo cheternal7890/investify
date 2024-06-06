@@ -3,8 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/css/Banner.css" />
-    <link rel="stylesheet" href="/css/Login.css" />
+    <link rel="stylesheet" href="/css/LoginRegister.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -18,58 +17,17 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <script src="/index.js"></script>
+    <script defer src="/js/loginform.js"></script>
     <title>Portfolio Development</title>
   </head>
 
   <body>
-    <!-- Header -->
-    <!-- <header class="header">
-      <section class="banner">
-        <div class="leftSideBanner">
-          NASDAQ Comp 12478 0.93% | RUSSELL 1000 0.63% | S&P 500 0.66%
-        </div>
-
-        <div class="rightSideBanner">
-          <a href="">Welcome, User! <i class="fa-solid fa-user"></i></a>
-          <a href="">Help <i class="fas fa-question-circle"></i></a>
-        </div>
-      </section>
-
-      <section class="searchBar">
-        <div>(Application Title)</div>
-
-        <div>
-          <input type="search" placeholder="Search..." class="searchInput" />
-        </div>
-
-        <div>
-          <i class="fa-solid fa-bell"></i>
-        </div>
-      </section>
-
-      <section class="navigationLinks">
-        <div>
-          <a href="/index.html" class="navigationItem">Home</a>
-        </div>
-
-        <div>
-          <a href="/pages/positions.html" class="navigationItem">Positions</a>
-        </div>
-
-        <div>
-          <a href="" class="navigationItem">Updates</a>
-        </div>
-      </section>
-    </header> -->
-
     <main>
       <div class="container">
-        <form>
-          <fieldset>
+        <form id="form" class="box" action="">
             <div>
               <label for="username">Username</label>
-              <input type="text" id="username" placeholder="Enter Username" />
+              <input type="text" id="username" placeholder="Enter Username" required />
             </div>
 
             <div>
@@ -82,9 +40,12 @@
             </div>
 
             <div>
-              <input type="submit" id="submit" value="Submit" />
+              <input type="submit" id="submit" value="Login" />
             </div>
-          </fieldset>
+
+            <div>
+              <a href="/pages/signup.html" id="registerLink">Don't have an account?</a>
+            </div>
         </form>
       </div>
     </main>
