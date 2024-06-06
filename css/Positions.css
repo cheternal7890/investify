@@ -20,46 +20,39 @@ table {
   width: 100%;
 }
 
+#headerCells {
+  background-color: #0e8cd2;
+}
+
 caption {
   font-weight: bold;
   font-size: 20px;
 }
 
 caption,
-th {
-  text-align: left;
-}
-
-th,
 td {
   padding: 1rem;
   border-style: solid;
   border-width: 1px;
-  background: #0e8cd2;
-}
-
-tr {
-  color: black;
-}
-
-th {
-  color: black;
+  background-color: #0e8cd2;
 }
 
 td {
   border-style: solid;
   background-color: #d9d9d9;
   border-width: 1px;
+  width: 400px;
 }
 
+/* Media Queries for Mobile Devices */
 @media (max-width: 650px) {
-  th {
+  #headerCells {
     display: none;
-    gap: 0.5rem;
   }
 
   td {
     display: block;
+    width: 100%;
     padding: 1rem;
     background-color: #d9d9d9;
     border-style: none;
@@ -70,9 +63,5 @@ td {
     content: attr(data-cell) ": ";
     font-weight: 700;
     text-transform: capitalize;
-  }
-
-  tr {
-    padding: 1rem;
   }
 }

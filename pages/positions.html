@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/css/Positions.css" />
-    <link rel="stylesheet" href="/css/Banner.css"/>
+    <link rel="stylesheet" href="/css/Banner.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -18,13 +18,13 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <script src="/index.js"></script>
+    <script src="/js/positions.js" defer></script>
     <title>Portfolio Development</title>
   </head>
 
   <body>
-     <!-- Header -->
-     <header class="header">
+    <!-- Header -->
+    <header class="header">
       <section class="banner">
         <div class="leftSideBanner">
           NASDAQ Comp 12478 0.93% | RUSSELL 1000 0.63% | S&P 500 0.66%
@@ -66,86 +66,15 @@
     <hr />
 
     <div class="container">
-      <table>
-        <caption>
-          Positions Overview
-        </caption>
-
+      <caption>
+        <strong>Your Positions</strong>
+      </caption>
+      <table id="userPositions">
         <tr>
-          <th>Name</th>
-          <th>Price</th>
-          <th>Unrealized Gain/Loss</th>
-          <th>Realized Gain/Loss</th>
-        </tr>
-
-        <tr>
-          <td data-cell="Name">Buzzfeed</td>
-          <td data-cell="Price">Price</td>
-          <td data-cell="unrealized">Unrealized</td>
-          <td data-cell="realized">Realized</td>
-        </tr>
-
-        <tr>
-          <td data-cell="Name">Buzzfeed</td>
-          <td data-cell="Price">Price</td>
-          <td data-cell="unrealized">Unrealized</td>
-          <td data-cell="realized">Realized</td>
-        </tr>
-
-        <tr>
-          <td data-cell="Name">Buzzfeed</td>
-          <td data-cell="Price">Price</td>
-          <td data-cell="unrealized">Unrealized</td>
-          <td data-cell="realized">Realized</td>
-        </tr>
-
-        <tr>
-          <td data-cell="Name">Buzzfeed</td>
-          <td data-cell="Price">Price</td>
-          <td data-cell="unrealized">Unrealized</td>
-          <td data-cell="realized">Realized</td>
-        </tr>
-
-        <tr>
-          <td data-cell="Name">Buzzfeed</td>
-          <td data-cell="Price">Price</td>
-          <td data-cell="unrealized">Unrealized</td>
-          <td data-cell="realized">Realized</td>
-        </tr>
-
-        <tr>
-          <td data-cell="Name">Buzzfeed</td>
-          <td data-cell="Price">Price</td>
-          <td data-cell="unrealized">Unrealized</td>
-          <td data-cell="realized">Realized</td>
-        </tr>
-
-        <tr>
-          <td data-cell="Name">Buzzfeed</td>
-          <td data-cell="Price">Price</td>
-          <td data-cell="unrealized">Unrealized</td>
-          <td data-cell="realized">Realized</td>
-        </tr>
-
-        <tr>
-          <td data-cell="Name">Buzzfeed</td>
-          <td data-cell="Price">Price</td>
-          <td data-cell="unrealized">Unrealized</td>
-          <td data-cell="realized">Realized</td>
-        </tr>
-
-        <tr>
-          <td data-cell="Name">Buzzfeed</td>
-          <td data-cell="Price">Price</td>
-          <td data-cell="unrealized">Unrealized</td>
-          <td data-cell="realized">Realized</td>
-        </tr>
-
-        <tr>
-          <td data-cell="Name">Buzzfeed</td>
-          <td data-cell="Price">Price</td>
-          <td data-cell="unrealized">Unrealized</td>
-          <td data-cell="realized">Realized</td>
+          <td id="headerCells">Name</td>
+          <td id="headerCells">Price</td>
+          <td id="headerCells">Unrealized Gains</td>
+          <td id="headerCells">Realized Gains</td>
         </tr>
       </table>
     </div>
