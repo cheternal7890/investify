@@ -44,15 +44,19 @@ div{
 }
 
 #submit{
-  background-color:  #0066FF;
+  background-color:  #3dc0a8;
   border: none;
   padding: 6px 12px;
-  color: white;
+  color: black;
   cursor: pointer;
 }
 
 #submit:hover{
-  background-color:  #004aba;
+  background-color:  #37ac97;
+}
+
+#submit:active{
+  background-color: #2f8d7c;
 }
 
 #registerLink{
