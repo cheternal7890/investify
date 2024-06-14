@@ -41,10 +41,23 @@
     border-style: solid;
     border-color: #d9d9d9;
   }
+
+  #searchBox:focus{
+    outline: none;
+  }
+
+  #searchIcon{
+    padding: 6px;
+    cursor: pointer;
+    float: right;
+    border-style: solid;
+    border-color: #d9d9d9;
+    background-color: #d9d9d9;
+  }
 }
 
 @media only screen and (max-width: 900px) {
-  #searchBox {
+  #searchBar {
     display: none;
   }
 }
