@@ -11,9 +11,13 @@ body {
   font-family: "Inter", sans-serif;
 }
 
+input{
+  height: 25px;
+}
+
 .container {
   display: flex;
-  background: linear-gradient(#d9d9d9, #bbbbbb);
+  background-color: #d9d9d9;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
@@ -46,7 +50,7 @@ div{
 #submit{
   background-color:  #3dc0a8;
   border: none;
-  padding: 6px 12px;
+  height: 35px;
   color: black;
   cursor: pointer;
 }

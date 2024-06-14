@@ -18,63 +18,50 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <title>Portfolio Development</title>
+    <title>Investify</title>
   </head>
 
   <body>
-    <!-- Header -->
-    <header class="header">
-      <section class="banner">
-        <div class="leftSideBanner">
-          NASDAQ Comp 12478 0.93% | RUSSELL 1000 0.63% | S&P 500 0.66%
-        </div>
-
-        <div class="rightSideBanner">
-          <a href="/pages/login.html" id="username">Login <i class="fa-solid fa-user"></i></a>
-          <!-- <a href="">Help <i class="fas fa-question-circle"></i></a> -->
+    <header>
+      <nav id="topHeader">
+        <div>Corner</div>
+        <div>
+          <a href="/pages/login.html">Login</a>
           <a href="/pages/profile.html">Profile</a>
         </div>
-      </section>
+      </nav>
 
-      <section class="searchBar">
-        <div>(Application Title)</div>
-
+      <nav id="middleHeader">
+        <div id="applicationTitle">Investify</div>
         <div>
-          <input type="search" placeholder="Search..." class="searchInput" />
+          <input type="search" id="searchBox" placeholder="Search..." />
         </div>
-
         <div>
-          <i class="fa-solid fa-bell"></i>
+          <i class="fa-solid fa-bell" id="notificationBell"></i>
         </div>
-      </section>
+      </nav>
 
-      <section class="navigationLinks">
+      <nav id="bottomHeader">
         <div>
-          <a href="/index.html" class="navigationItem">Home</a>
+          <a href="/">Home</a>
+          <a href="/pages/positions.html">Positions</a>
+          <a href="/pages/updates.html">Updates</a>
         </div>
+      </nav>
 
-        <div>
-          <a href="/pages/positions.html" class="navigationItem">Positions</a>
-        </div>
-
-        <div>
-          <a href="pages/updates.html" class="navigationItem">Updates</a>
-        </div>
-      </section>
+      <hr id="horizontalLine" />
     </header>
 
-    <hr />
-
     <!-- Main Container -->
-    <div class="container">
+    <main id="container">
       <div id="portfolioBox">
-        <div id="portfolioHeader">
+        <div>
           <h1>Your Portfolio</h1>
           <p>Account</p>
           <p id="username">(Username)</p>
         </div>
 
-        <div id="informationContainer">
+        <div>
           <p id="informationItem">
             Settled Cash <span id="settledCash">$8,520.00</span>
           </p>
@@ -89,17 +76,15 @@
         <div id="buttonContainer">
           <button id="buttonItem">Deposit</button>
           <button id="buttonItem">Withdraw</button>
-          <button id="buttonItem">More</button>
+          <button id="buttonItem">Sell All</button>
         </div>
 
-        <div id="positionsContainer">
+        <div>
           <h1>Positions:</h1>
-          <p id="positionItem">
-            BZFD BuzzFeed, Inc. Class A <span>+20.40%</span>
-          </p>
-          <p id="positionItem">NVDA NVIDIA Corporation <span>-0.54%</span></p>
-          <p id="positionItem">AMD Advanced Micro Devices +2.86%</p>
-          <p id="positionItem">SER Serina Therapeutics +16.73</p>
+          <p id="positionItem"><span id="positionTitle">Buzzfeed Inc</span> <span id="positionValue">+20.40%</span></p>
+          <p id="positionItem"><span id="positionTitle">NVIDIA Corporation</span> <span id="positionValue">-0.54%</span></p>
+          <p id="positionItem"><span id="positionTitle">AMD Advanced Micro Devices</span> <span id="positionValue">+20.0%</span></p>
+          <p id="positionItem"><span id="positionTitle">Serina Therapeutics</span> <span id="positionValue">+17.0%</span></p>
         </div>
       </div>
 
@@ -113,10 +98,10 @@
 
       <div id="recommendedBox">
         <h1>Recommended:</h1>
-        <p id="recommendedItem">AMC AMC Entertainment Holdings+6.29%</p>
-        <p id="recommendedItem">MARA Marathon Digital Holdings +5.63%</p>
-        <p id="recommendedItem">INTC Intel Corporation +2.13%</p>
-        <p id="recommendedItem">F Ford Motor Company +0.41%</p>
+        <p id="recommendedItem"><span id="recommendedTitle">AMC Entertainment Holdings Inc</span> <span id="recommendedValue">+6.0%</span></p>
+        <p id="recommendedItem"><span id="recommendedTitle">Marathon Digital Holdings</span> <span id="recommendedValue">-0.3%</span></p>
+        <p id="recommendedItem"><span id="recommendedTitle">Intel Corporation</span> <span id="recommendedValue">+4.6%</span></p>
+        <p id="recommendedItem"><span id="recommendedTitle">Ford Motor Company</span> <span id="recommendedValue">-5.2%</span></p>
       </div>
 
       <div id="dateBox">
@@ -126,10 +111,7 @@
         <button id="dateButton">Year to Date</button>
         <button id="dateButton">1 Year</button>
       </div>
-      <!-- <footer id="footer">Footer</footer> -->
-    </div>
-
-    <!-- Loads JavaScript File -->
+    </main>
     <script src="/index.js"></script>
   </body>
 </html>

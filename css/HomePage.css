@@ -5,6 +5,7 @@
 body {
   max-width: 1600px;
   width: 100%;
+  font-size: 1rem;
   padding: 0;
   margin: auto;
   box-sizing: border-box;
@@ -15,17 +16,19 @@ body {
 
 /* Main */
 
-.container {
+#container {
   display: grid;
-  height: 100vh;
+  height: 50dvh;
   grid-template-columns: 1fr 3fr;
   grid-template-rows: 2fr 1fr;
   grid-template-areas:
     "portfolioBox performanceGraph"
     "recommendedBox dateBox"
     "footer footer";
-  gap: 0.6rem;
+  gap: 1rem;
 }
+
+/* Portfolio Box */
 
 #portfolioBox {
   background-color: #d9d9d9;
@@ -37,10 +40,68 @@ body {
   }
 }
 
+#informationItem {
+  display: flex;
+  justify-content: space-between;
+  color: #5c5b5b;
+
+  span {
+    color: black;
+  }
+}
+
+#buttonContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+#buttonItem {
+  padding: 12px;
+  margin-top: 12px;
+  margin-bottom: 12px;
+  width: 100px;
+  border-radius: 24px;
+  border: none;
+  cursor: pointer;
+  background-color: #3dc0a8;
+}
+
+#buttonItem:hover {
+  background-color: #37ac97;
+}
+
+#buttonItem:active {
+  background-color: #2f8d7c;
+}
+
+#positionItem{
+  display: flex;
+  justify-content: space-between;
+}
+
+
+
+/* Recommended Box */
+
+#recommendedBox {
+  background-color: #d9d9d9;
+  grid-area: recommendedBox;
+  padding: 12px;
+
+  h1 {
+    margin: 0;
+    font-size: 20px;
+  }
+}
+
+#recommendedItem{
+  display: flex;
+  justify-content: space-between;
+}
+
 #performanceGraph {
   grid-area: performanceGraph;
   padding: 12px;
-
   p {
     margin: 0;
     color: #5c5b5b;
@@ -59,42 +120,12 @@ body {
   }
 }
 
-#recommendedBox {
-  background-color: #d9d9d9;
-  grid-area: recommendedBox;
-  padding: 12px;
-
-  h1 {
-    margin: 0;
-    font-size: 20px;
-  }
-}
-
-#dateBox {
-  grid-area: dateBox;
-  padding: 12px;
-  text-align: center;
-}
-
-#dateButton {
-  font-size: 1rem;
-  padding: 1rem;
-}
-
-#dateButton:focus {
-  outline: none;
-}
-
-#footer {
-  background-color: black;
-  padding: 12px;
-  text-align: center;
-  color: white;
-  grid-area: footer;
+#balance{
+  color: #2f9482;
 }
 
 @media only screen and (max-width: 768px) {
-  .container {
+  #container {
     grid-template-columns: 1fr;
     grid-template-rows: 2fr 0.5fr 1fr 1fr 1fr;
     grid-template-areas:
@@ -114,49 +145,25 @@ body {
   }
 }
 
-/* Portfolio Box */
 
-#informationItem {
-  display: flex;
-  justify-content: space-between;
-  color: #5c5b5b;
-
-  span {
-    color: black;
-  }
-}
-
-#buttonContainer {
-  display: flex;
-  justify-content: space-between;
-}
-
-#buttonItem {
-  padding: 12px;
-  margin: 12px;
-  width: 100px;
-  border-radius: 24px;
-  border: none;
-  cursor: pointer;
-  background-color: #3dc0a8;
-}
-
-#buttonItem:hover {
-  background-color: #37ac97;
-}
-
-#buttonItem:active {
-  background-color: #2f8d7c;
-}
 
 /* Date Box */
 
+#dateBox {
+  grid-area: dateBox;
+  padding: 12px;
+  text-align: center;
+}
+
 #dateButton {
+  font-size: 1rem;
+  padding: 1rem;
   border: none;
   background: none;
   cursor: pointer;
 }
 
 #dateButton:focus {
+  outline: none;
   font-weight: bold;
 }

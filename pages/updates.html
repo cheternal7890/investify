@@ -21,48 +21,35 @@
   </head>
 
   <body>
-    <header class="header">
-      <section class="banner">
-        <div class="leftSideBanner">
-          NASDAQ Comp 12478 0.93% | RUSSELL 1000 0.63% | S&P 500 0.66%
-        </div>
-
-        <div class="rightSideBanner">
-          <a href="/pages/login.html" id="username"
-            >Login <i class="fa-solid fa-user"></i
-          ></a>
-          <!-- <a href="">Help <i class="fas fa-question-circle"></i></a> -->
+    <header>
+      <nav id="topHeader">
+        <div>Corner</div>
+        <div>
+          <a href="/pages/login.html">Login</a>
           <a href="/pages/profile.html">Profile</a>
         </div>
-      </section>
+      </nav>
 
-      <section class="searchBar">
-        <div>(Application Title)</div>
-
+      <nav id="middleHeader">
+        <div id="applicationTitle">Investify</div>
         <div>
-          <input type="search" placeholder="Search..." class="searchInput" />
+          <input type="search" id="searchBox" placeholder="Search..." />
         </div>
-
         <div>
-          <i class="fa-solid fa-bell"></i>
+          <i class="fa-solid fa-bell" id="notificationBell"></i>
         </div>
-      </section>
+      </nav>
 
-      <section class="navigationLinks">
+      <nav id="bottomHeader">
         <div>
-          <a href="/index.html" class="navigationItem">Home</a>
+          <a href="/">Home</a>
+          <a href="/pages/positions.html">Positions</a>
+          <a href="/pages/updates.html">Updates</a>
         </div>
+      </nav>
 
-        <div>
-          <a href="/pages/positions.html" class="navigationItem">Positions</a>
-        </div>
-
-        <div>
-          <a href="pages/updates.html" class="navigationItem">Updates</a>
-        </div>
-      </section>
+      <hr id="horizontalLine" />
     </header>
-    <hr />
 
     <main>
       <div>
