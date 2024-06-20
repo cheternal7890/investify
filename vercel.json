@@ -7,9 +7,7 @@
       }
     ],
     "routes": [
-      { "src": "/positions", "dest": "/positions" },
-      { "src": "/updates", "dest": "/updates" },
-      { "src": "/(.*)", "dest": "/" }
+      { "src": "/(.*)", "dest": "/server.js" }
     ]
   }
   
