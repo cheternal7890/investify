@@ -72,5 +72,22 @@ div{
   text-decoration: underline;
 }
 
+/* Plaid Button */
+#link-account{
+  background-color:  black;
+  border: none;
+  height: 35px;
+  color: white;
+  cursor: pointer;
+}
+
+#link-account:hover{
+  background-color:  rgb(33, 33, 33);
+}
+
+#link-account:active{
+  background-color:  rgb(40, 40, 40);
+}
+
 
 

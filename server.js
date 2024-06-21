@@ -89,5 +89,11 @@ app.get("/api/data", async (req, res, next) => {
 app.get("/api/is_account_connected", async (req, res, next) => {
     return (req.session.access_token ? res.json({ status: true }) : res.json({ status: false}));
 });
+
+
+// If the user accesses a route that does exist
+app.all("/*", function(req, res){
+  res.status(400).sendFile(path.join(__dirname, "/pages/404.html"));
+})
   
 app.listen(8000, console.log("Port listening in 8000"));
