@@ -17,6 +17,9 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+    <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
+    <script src="/js/plaidClient.js"></script>
     <script defer src="/js/loginform.js"></script>
     <title>Portfolio Development</title>
   </head>
@@ -47,6 +50,8 @@
               <a href="/register" id="registerLink">Don't have an account?</a>
             </div>
         </form>
+        <button type="button" id="link-account" value="submit">Submit</button>
+        <pre id="response"></pre>
       </div>
     </main>
   </body>
