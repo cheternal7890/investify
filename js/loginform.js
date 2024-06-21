@@ -10,7 +10,7 @@ function validate(event) {
 
   if (username === "test" && password === "test") {
     alert("Login successful");
-    window.location.assign("/index.html");
+    window.location.assign("/dashboard");
   } else {
     alert("Incorrect");
   }
