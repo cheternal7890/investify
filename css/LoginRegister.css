@@ -50,7 +50,7 @@ div{
 #submit{
   background-color:  #3dc0a8;
   border: none;
-  height: 35px;
+  height: 40px;
   color: black;
   cursor: pointer;
 }
@@ -76,13 +76,13 @@ div{
 #link-account{
   background-color:  black;
   border: none;
-  height: 35px;
+  height: 40px;
   color: white;
   cursor: pointer;
 }
 
 #link-account:hover{
-  background-color:  rgb(33, 33, 33);
+  background-color:  rgb(55, 55, 55);
 }
 
 #link-account:active{
