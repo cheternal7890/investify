@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require('express');
+const mongoose = require('mongoose');
 const session = require("express-session");
 const { Configuration, PlaidApi, PlaidEnvironments } = require("plaid");
 const bodyParser = require("body-parser"); 
@@ -43,6 +44,34 @@ app.get("/register", function(req, res){
 app.get("/profile", function(req,res){
     res.sendFile(path.join(__dirname, "/pages/profile.html"));
 })
+
+// Adds the user information to the mongoDB server
+mongoose.connect("mongodb+srv://cesar:salad@cluster0.pjrclss.mongodb.net/accountsDB")
+
+const accountsSchema = {
+  username: String,
+  password: String
+}
+
+const Account = mongoose.model("Account", accountsSchema);
+
+app.post("/register", function(req, res){
+   let newAccount = new Account({
+      username: req.body.username,
+      password: req.body.password
+   });
+   newAccount.save();
+   res.redirect('/login');
+})
+
+// Retrives user information from the mongoDB server
+
+// app.get("/login", (req, res) => {
+//   Account.find({}, function(accounts){
+
+//   })
+// })
+
 
 // Handles the Plaid API Requests
 const config = new Configuration({
