@@ -17,7 +17,6 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <script defer src="/js/signupform.js"></script>
     <title>Portfolio Development</title>
   </head>
 
@@ -47,7 +46,8 @@
                 name="password2"
                 id="password2"
                 placeholder="Enter Password"
-              />
+                onkeyup="validate_password()"
+                />
             </div>
 
             <div>
@@ -60,5 +60,6 @@
         </form>
       </div>
     </main>
+    <script src="/js/signupform.js"></script>
   </body>
 </html>

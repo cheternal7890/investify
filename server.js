@@ -59,13 +59,41 @@ app.get("/profile", function(req,res){
 })
 
 // Handles the registration form
-app.post("/register", function(req, res){
-  let newAccount = new Account({
-     username: req.body.username,
-     password: req.body.password
-  });
-  newAccount.save();
-  res.redirect('/login');
+app.post("/register", async function(req, res){
+
+  try{
+
+    // First check if the user exists
+    const user = await Account.findOne({ username: req.body.username })
+
+    // If the user does exist, redirect back to the register page
+    if(user){
+      console.log("User already exists");
+      res.redirect('register');
+
+    // If the user does not exist, create the account
+    } else {
+      // Next check if the password matches
+      if(req.body.password == req.body.password2){
+        let newAccount = new Account({
+          username: req.body.username,
+          password: req.body.password
+       });
+       newAccount.save();
+       console.log("Account was created succesfully");
+       res.redirect('/login');
+      
+      // If the passwords do not match, redirect to the register page
+      } else {
+        console.log("Password do not match");
+        res.redirect('register');
+      }
+    }
+  } catch (error){
+    console.log("error");
+    res.redirect('register');
+  }
+
 })
 
 // Handles the login form
@@ -74,9 +102,10 @@ app.post('/login', async function(req, res){
     // First check if the user exists
     const user = await Account.findOne({ username: req.body.username })
     if(user){
-    // If the does does exist, check if the password matches
+    // If user does exist, check if the password matches
       const result = req.body.password === user.password;
       if(result){
+      console.log("Logged in successfully")
       res.render('dashboard');
       } else {  
       console.log("Password does not exist");

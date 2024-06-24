@@ -1,8 +1,15 @@
-const form = document.querySelector("#form");
+const form = document.getElementById("form");
+const username = document.getElementById("username");
 
-const username = document.querySelector("#username");
-const password = document.querySelector("#password");
-const toConfirmPassword = document.querySelector("#password2");
+function validate_password() {
+    let password = document.getElementById("password").value;
+    let toConfirmPassword = document.getElementById("password2").value;
 
-const submitButton = document.querySelector("#submit");
-
+    if(password != toConfirmPassword){
+        document.getElementById("submit").disabled = true;
+        document.getElementById("submit").style.opacity = (0.3);
+    } else {
+        document.getElementById("submit").disabled = false;
+        document.getElementById("submit").style.opacity = (1);
+    }
+}
