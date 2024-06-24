@@ -1,51 +1,15 @@
 require("dotenv").config();
 const express = require('express');
 const mongoose = require('mongoose');
+const ejs = require('ejs');
 const session = require("express-session");
 const { Configuration, PlaidApi, PlaidEnvironments } = require("plaid");
 const bodyParser = require("body-parser"); 
-const path = require('path');
 const app = express();
 
-app.use(
-    session({ secret: "cesar", saveUninitialized: true, resave: true })
-  );
+app.set('view engine', 'ejs');
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
-// Handles all the routes for the application
-app.get("/", function(req, res){
-    res.sendFile(path.join(__dirname, "/pages/login.html"))
-})
-
-app.use(express.static(__dirname + "/"));
-
-app.get("/dashboard", function(req, res){
-    res.sendFile(path.join(__dirname, "index.html"));
-})
-
-app.get("/positions", function(req, res){
-    res.sendFile(path.join(__dirname, "/pages/positions.html"));
-})
-
-app.get("/updates", function (req, res){
-    res.sendFile(path.join(__dirname, "/pages/updates.html"));
-})
-
-app.get("/login", function (req, res){
-    res.sendFile(path.join(__dirname, "/pages/login.html"));
-})
-
-app.get("/register", function(req, res){
-    res.sendFile(path.join(__dirname, "/pages/register.html"));
-})
-
-app.get("/profile", function(req,res){
-    res.sendFile(path.join(__dirname, "/pages/profile.html"));
-})
-
-// Adds the user information to the mongoDB server
+// Sets up the mongoDB 
 mongoose.connect("mongodb+srv://cesar:salad@cluster0.pjrclss.mongodb.net/accountsDB")
 
 const accountsSchema = {
@@ -55,23 +19,79 @@ const accountsSchema = {
 
 const Account = mongoose.model("Account", accountsSchema);
 
-app.post("/register", function(req, res){
-   let newAccount = new Account({
-      username: req.body.username,
-      password: req.body.password
-   });
-   newAccount.save();
-   res.redirect('/login');
+
+app.use(
+    session({ secret: "cesar", saveUninitialized: true, resave: true })
+  );
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+// Handles all the routes for the application
+app.get("/", (req, res) => {
+    res.render('login');
 })
 
-// Retrives user information from the mongoDB server
+app.use(express.static(__dirname + "/"));
 
-// app.get("/login", (req, res) => {
-//   Account.find({}, function(accounts){
+app.get("/dashboard", function(req, res){
+    res.render('dashboard')
+})
 
-//   })
-// })
+app.get("/positions", function(req, res){
+    res.render('positions');
+})
 
+app.get("/updates", function (req, res){
+   res.render('updates');
+})
+
+app.get("/login", function (req, res){
+    res.render('login');
+})
+
+app.get("/register", function(req, res){
+    res.render('register');
+})
+
+app.get("/profile", function(req,res){
+    res.render('profile');
+})
+
+// Handles the registration form
+app.post("/register", function(req, res){
+  let newAccount = new Account({
+     username: req.body.username,
+     password: req.body.password
+  });
+  newAccount.save();
+  res.redirect('/login');
+})
+
+// Handles the login form
+app.post('/login', async function(req, res){
+  try {
+    // First check if the user exists
+    const user = await Account.findOne({ username: req.body.username })
+    if(user){
+    // If the does does exist, check if the password matches
+      const result = req.body.password === user.password;
+      if(result){
+      res.render('dashboard');
+      } else {  
+      console.log("Password does not exist");
+      }
+    } else {
+      console.log("User does not exist");
+      res.redirect('/login');
+    }
+
+  } catch (error) {
+    console.log("error");
+    res.redirect('/login');
+  }
+
+})
 
 // Handles the Plaid API Requests
 const config = new Configuration({
@@ -122,7 +142,7 @@ app.get("/api/is_account_connected", async (req, res, next) => {
 
 // If the user accesses a route that does exist
 app.all("/*", function(req, res){
-  res.status(400).sendFile(path.join(__dirname, "/pages/404.html"));
+  res.status(400).render('404');
 })
   
 app.listen(8000, console.log("Port listening in 8000"));
