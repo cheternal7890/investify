@@ -109,6 +109,7 @@ app.post('/login', async function(req, res){
       res.render('dashboard');
       } else {  
       console.log("Password does not exist");
+      res.redirect('/login');
       }
     } else {
       console.log("User does not exist");
