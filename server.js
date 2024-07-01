@@ -38,15 +38,21 @@ app.get("/", (req, res) => {
 })
 
 app.get("/dashboard", function(req, res){
-    res.render('dashboard')
+    res.render('dashboard', {
+      nameOfUser: username
+    })
 })
 
 app.get("/positions", function(req, res){
-    res.render('positions');
+    res.render('positions', {
+      nameOfUser: username
+    });
 })
 
 app.get("/updates", function (req, res){
-   res.render('updates');
+   res.render('updates', {
+    nameOfUser: username
+  });
 })
 
 app.get("/login", function (req, res){
@@ -110,7 +116,7 @@ app.post('/login', async function(req, res){
       if(result){
       console.log("Logged in successfully")
       username = req.body.username;
-      res.render('dashboard');
+      res.redirect('dashboard')
       } else {  
       console.log("Password does not exist");
       res.redirect('/login');
