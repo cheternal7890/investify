@@ -57,7 +57,12 @@ label, input, a{
   border-bottom-style: solid;
   border-width: 1px;
   height: 30px;
-  margin-top: 16px;
+  margin-top: 12px;
+}
+
+#updateLabel{
+  font-size: 14px;
+  margin-top: 6px;
 }
 
 #submit{
