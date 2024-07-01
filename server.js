@@ -7,7 +7,6 @@ const { Configuration, PlaidApi, PlaidEnvironments } = require("plaid");
 const bodyParser = require("body-parser"); 
 const app = express();
 
-app.set('view engine', 'ejs');
 
 // Sets up the mongoDB 
 mongoose.connect("mongodb+srv://cesar:salad@cluster0.pjrclss.mongodb.net/accountsDB")
@@ -24,15 +23,19 @@ app.use(
     session({ secret: "cesar", saveUninitialized: true, resave: true })
   );
 
+app.set('view engine', 'ejs');
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(express.static("js"));
+app.use(express.static("public"));
+
+var username = ""
 
 // Handles all the routes for the application
 app.get("/", (req, res) => {
     res.render('login');
 })
-
-app.use(express.static(__dirname + "/"));
 
 app.get("/dashboard", function(req, res){
     res.render('dashboard')
@@ -106,6 +109,7 @@ app.post('/login', async function(req, res){
       const result = req.body.password === user.password;
       if(result){
       console.log("Logged in successfully")
+      username = req.body.username;
       res.render('dashboard');
       } else {  
       console.log("Password does not exist");
@@ -124,50 +128,50 @@ app.post('/login', async function(req, res){
 })
 
 // Handles the Plaid API Requests
-const config = new Configuration({
-    basePath: PlaidEnvironments[process.env.PLAID_ENV],
-    baseOptions: {
-      headers: {
-        "PLAID-CLIENT-ID": process.env.PLAID_CLIENT_ID,
-        "PLAID-SECRET": process.env.PLAID_SECRET,
-        "Plaid-Version": "2020-09-14",
-      },
-    },
-  });
+// const config = new Configuration({
+//     basePath: PlaidEnvironments[process.env.PLAID_ENV],
+//     baseOptions: {
+//       headers: {
+//         "PLAID-CLIENT-ID": process.env.PLAID_CLIENT_ID,
+//         "PLAID-SECRET": process.env.PLAID_SECRET,
+//         "Plaid-Version": "2020-09-14",
+//       },
+//     },
+//   });
 
-const client = new PlaidApi(config);
+// const client = new PlaidApi(config);
 
-app.get("/api/create_link_token", async (req, res, next) => {
-    const tokenResponse = await client.linkTokenCreate({
-      user: { client_user_id: req.sessionID },
-      client_name: "Investify Development App",
-      language: "en",
-      products: ["auth"],
-      country_codes: ["US"],
-      redirect_uri: process.env.PLAID_SANDBOX_REDIRECT_URI,
-    });
-    res.json(tokenResponse.data);
-});
+// app.get("/api/create_link_token", async (req, res, next) => {
+//     const tokenResponse = await client.linkTokenCreate({
+//       user: { client_user_id: req.sessionID },
+//       client_name: "Investify Development App",
+//       language: "en",
+//       products: ["auth"],
+//       country_codes: ["US"],
+//       redirect_uri: process.env.PLAID_SANDBOX_REDIRECT_URI,
+//     });
+//     res.json(tokenResponse.data);
+// });
 
-app.post("/api/exchange_public_token", async (req, res, next) => {
-    const exchangeResponse = await client.itemPublicTokenExchange({
-      public_token: req.body.public_token,
-    });
-    req.session.access_token = exchangeResponse.data.access_token;
-    res.json(true);
-});
+// app.post("/api/exchange_public_token", async (req, res, next) => {
+//     const exchangeResponse = await client.itemPublicTokenExchange({
+//       public_token: req.body.public_token,
+//     });
+//     req.session.access_token = exchangeResponse.data.access_token;
+//     res.json(true);
+// });
 
-app.get("/api/data", async (req, res, next) => {
-    const access_token = req.session.access_token;
-    const balanceResponse = await client.accountsBalanceGet({ access_token });
-    res.json({
-      Balance: balanceResponse.data,
-    });
-});
+// app.get("/api/data", async (req, res, next) => {
+//     const access_token = req.session.access_token;
+//     const balanceResponse = await client.accountsBalanceGet({ access_token });
+//     res.json({
+//       Balance: balanceResponse.data,
+//     });
+// });
 
-app.get("/api/is_account_connected", async (req, res, next) => {
-    return (req.session.access_token ? res.json({ status: true }) : res.json({ status: false}));
-});
+// app.get("/api/is_account_connected", async (req, res, next) => {
+//     return (req.session.access_token ? res.json({ status: true }) : res.json({ status: false}));
+// });
 
 
 // If the user accesses a route that does exist

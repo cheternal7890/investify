@@ -3,8 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/css/Positions.css" />
-    <link rel="stylesheet" href="/css/Banner.css" />
+    <link rel="stylesheet" href="/styles/Positions.css" />
+    <link rel="stylesheet" href="/styles/Banner.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -23,37 +23,7 @@
   </head>
 
   <body>
-    <header>
-      <nav id="topHeader">
-        <div>Corner</div>
-        <div>
-          <a href="/login">Login</a>
-          <a href="/profile">Profile</a>
-        </div>
-      </nav>
-
-      <nav id="middleHeader">
-        <div id="applicationTitle">Development</div>
-        <div id="searchBar">
-          <input type="search" id="searchBox" placeholder="Search..." />
-          <button type="submit" id="searchIcon"><i class="fa-solid fa-magnifying-glass"></i></button>
-          
-        </div>
-        <div>
-          <i class="fa-solid fa-bell" id="notificationBell"></i>
-        </div>
-      </nav>
-
-      <nav id="bottomHeader">
-        <div>
-          <a href="/dashboard">Home</a>
-          <a href="/positions">Positions</a>
-          <a href="/updates">Updates</a>
-        </div>
-      </nav>
-
-      <hr id="horizontalLine" />
-    </header>
+    <%- include("partials/header.ejs") %>
 
     <div class="container">
       <caption id="caption">

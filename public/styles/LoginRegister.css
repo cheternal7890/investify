@@ -29,12 +29,15 @@ input{
   flex-direction: column;
   padding: 25px 25px;
   width: 375px;
+  border-radius: 12px;
   max-width: 100%;
 }
 
 h1{
   padding: 12px;
-  font-size: 1.5rem;
+  text-align: center;
+  font-weight: 700;
+  font-size: 20px;
   margin: 0;
 }
 
@@ -42,6 +45,10 @@ div{
   display: flex;
   flex-direction: column;
   padding: 12px;
+}
+
+label, input, a{
+  font-size: 14px;
 }
 
 #username, #password, #password2{
