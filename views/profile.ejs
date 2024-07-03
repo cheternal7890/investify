@@ -16,57 +16,43 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <link rel="stylesheet" href="/styles/Banner.css" />
     <link rel="stylesheet" href="/styles/Profile.css" />
-    <title>Portfolio Development</title>
+    <title>Investify</title>
   </head>
-
+  
   <body>
-    <main id="main">
-      <p id="title">User Profile</p>
-      <div id="header">
-        <div id="headerButtons">
-          <a href="">Dashboard</a>
-          <a href="">Button</a>
-          <a href="">Button</a>
-          <a href="">Logout</a>
-        </div>
-      </div>
+    <%- include("partials/header.ejs") %>
 
-      <div id="container">
-        <div id="profileIcon">
-          <div><i class="fa-solid fa-user"></i></div>
-          <div>(Full Name)</div>
+    <div id="profileContainer">
+      <form action="/update" method="post" id="form">
+        <h1 id="editFormTitle">Edit Profile</h1>
+        <!-- <div><i class="fa-solid fa-user"></i></div> -->
+        <div id="divider">
+          <label for="username" id="label">Username</label>
+          <input type="text" name="username" id="input" placeholder="Enter Username" required />
         </div>
 
-        <div id="changeBox">
-          <div>
-            <label for="name">Name</label>
-            <input type="text" name="name" id="name" />
-          </div>
-          <form action="/index.html">
-            <div>
-              <label for="username">Username</label>
-              <input type="text" name="username" id="username" />
-            </div>
-
-            <div>
-              <label for="password">Password</label>
-              <input type="text" name="password" id="password" />
-            </div>
-
-            <div>
-              <label for="profile-picture-update">Change Profile Picture</label>
-              <input type="file" name="file" id="profile-picture-update" />
-            </div>
-
-            <div>
-              <button id="submit" name="submit">Save Changes</button>
-            </div>
-          </form>
+        <div id="divider">
+          <label for="password" id="label">Password</label>
+          <input
+            type="password"
+            name="password"
+            id="input"
+            placeholder="Enter New Password"
+          />
         </div>
-      </div>
-    </main>
 
-    <src href="profile.js"></src>
+        <div id="divider">
+          <label for="updateProfilePicture" id="label">Change Profile Picture</label>
+          <input type="file" name="file" id="updateProfilePicture" />
+        </div>
+
+        <div id="divider">
+          <input type="submit" id="submit" value="Save Changes" />
+        </div>
+    </form>
+    </div>
+
   </body>
 </html>

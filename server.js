@@ -31,6 +31,7 @@ app.use(express.static("js"));
 app.use(express.static("public"));
 
 var username = ""
+var id = ""
 
 // Handles all the routes for the application
 app.get("/", (req, res) => {
@@ -64,7 +65,10 @@ app.get("/register", function(req, res){
 })
 
 app.get("/profile", function(req,res){
-    res.render('profile');
+    res.render('profile', {
+      nameOfUser: username,
+      userID: id
+    });
 })
 
 // Handles the registration form
@@ -116,6 +120,7 @@ app.post('/login', async function(req, res){
       if(result){
       console.log("Logged in successfully")
       username = req.body.username;
+      id = user._id;
       res.redirect('dashboard')
       } else {  
       console.log("Password does not exist");
@@ -132,6 +137,29 @@ app.post('/login', async function(req, res){
   }
 
 })
+
+app.post("/update", async (req,res) =>{
+  const newUser = req.body['username'];
+  const newPassword = req.body['password']
+
+  let query = id;
+
+  await Account.findOneAndUpdate(query, { username: newUser, password: newPassword})
+  
+  console.log("Account updated successfully");
+
+  res.redirect("/")
+})
+
+app.post("/delete", async (req, res) => {
+  let query = id;
+
+  await Account.findByIdAndDelete(query);
+  console.log("Account deleted succesfully");
+})
+
+
+
 
 // Handles the Plaid API Requests
 const config = new Configuration({
