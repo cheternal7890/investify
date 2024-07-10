@@ -1,216 +1,139 @@
-require("dotenv").config();
-const express = require('express');
-const mongoose = require('mongoose');
-const ejs = require('ejs');
-const session = require("express-session");
-const { Configuration, PlaidApi, PlaidEnvironments } = require("plaid");
-const bodyParser = require("body-parser"); 
+import express from "express";
+import bodyParser from "body-parser"
+import pg from "pg";
+
 const app = express();
+const port = 3000;
 
-
-// Sets up the mongoDB 
-mongoose.connect("mongodb+srv://cesar:salad@cluster0.pjrclss.mongodb.net/accountsDB")
-
-const accountsSchema = {
-  username: String,
-  password: String
-}
-
-const Account = mongoose.model("Account", accountsSchema);
-
-
-app.use(
-    session({ secret: "cesar", saveUninitialized: true, resave: true })
-  );
-
-app.set('view engine', 'ejs');
-
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-app.use(express.static("js"));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-var username = ""
-var id = ""
+let currentUser = ""
+let userById = ""
 
-// Handles all the routes for the application
+// Setting up Database Client
+
+const db = new pg.Client({
+  user: "postgres.ormzewzckwyfqgyfukcc",
+  password: "p4pv4mm13bpP!",
+  host: "aws-0-us-east-1.pooler.supabase.com",
+  database: "postgres",
+  port: 6543
+})
+
+db.connect();
+
+// Handles all the routes
 app.get("/", (req, res) => {
-    res.render('login');
+  res.render("login.ejs");
 })
 
-app.get("/dashboard", function(req, res){
-    res.render('dashboard', {
-      nameOfUser: username
-    })
+app.get("/login", (req, res) => {
+  res.render("login.ejs");
 })
 
-app.get("/positions", function(req, res){
-    res.render('positions', {
-      nameOfUser: username
-    });
+app.get("/register", (req, res) => {
+  res.render("register.ejs");
 })
 
-app.get("/updates", function (req, res){
-   res.render('updates', {
-    nameOfUser: username
-  });
-})
+app.get("/dashboard", async (req, res) => {
+  console.log(userById);
 
-app.get("/login", function (req, res){
-    res.render('login');
-})
-
-app.get("/register", function(req, res){
-    res.render('register');
-})
-
-app.get("/profile", function(req,res){
-    res.render('profile', {
-      nameOfUser: username,
-      userID: id
-    });
-})
-
-// Handles the registration form
-app.post("/register", async function(req, res){
-
-  try{
-
-    // First check if the user exists
-    const user = await Account.findOne({ username: req.body.username })
-
-    // If the user does exist, redirect back to the register page
-    if(user){
-      console.log("User already exists");
-      res.redirect('register');
-
-    // If the user does not exist, create the account
-    } else {
-      // Next check if the password matches
-      if(req.body.password == req.body.password2){
-        let newAccount = new Account({
-          username: req.body.username,
-          password: req.body.password
-       });
-       newAccount.save();
-       console.log("Account was created succesfully");
-       res.redirect('/login');
-      
-      // If the passwords do not match, redirect to the register page
-      } else {
-        console.log("Password do not match");
-        res.redirect('register');
-      }
-    }
-  } catch (error){
-    console.log("error");
-    res.redirect('register');
-  }
-
-})
-
-// Handles the login form
-app.post('/login', async function(req, res){
   try {
-    // First check if the user exists
-    const user = await Account.findOne({ username: req.body.username })
-    if(user){
-    // If user does exist, check if the password matches
-      const result = req.body.password === user.password;
-      if(result){
-      console.log("Logged in successfully")
-      username = req.body.username;
-      id = user._id;
-      res.redirect('dashboard')
-      } else {  
-      console.log("Password does not exist");
-      res.redirect('/login');
-      }
-    } else {
-      console.log("User does not exist");
-      res.redirect('/login');
+    const result = await db.query("SELECT * FROM accounts JOIN portfolio_information ON accounts.id = portfolio_information.id WHERE username = $1", [currentUser])
+
+    const data = result.rows[0]
+
+    console.log(data);
+
+    res.render("dashboard.ejs", {
+      username: currentUser,
+      account: data
+    });
+
+  } catch (err) {
+    console.log("There was an error executing this query");
+  }
+  db.ae
+
+})
+
+app.get("/positions", (req, res) => {
+  res.render("positions.ejs", {
+    username: currentUser
+  });
+})
+
+app.get("/updates", (req, res) => {
+  res.render("updates.ejs", {
+    username: currentUser
+  });
+})
+
+app.get("/profile", (req, res) => {
+  res.render("profile.ejs", {
+    username: currentUser
+  });
+})
+
+/* Handles the login and registration form */
+app.post("/login", async (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+
+  try {
+    const result = await db.query("SELECT id, username, password FROM accounts WHERE username=$1 AND password=$2", [username, password])
+
+    const data = result.rows[0];
+
+    userById = data.id;
+
+    if (data.username == username && data.password == password) {
+      console.log("Success");
+      currentUser = data.username
+      res.redirect("/dashboard")
     }
 
-  } catch (error) {
-    console.log("error");
-    res.redirect('/login');
+  } catch (err) {
+    console.log("That account does not exist");
+    res.render("login.ejs", {
+      error: "Login or password is invalid..."
+    })
+  }
+})
+
+app.post("/register", async (req, res) => {
+  const email = req.body.email;
+  const username = req.body.username;
+  const password = req.body.password;
+
+  try {
+    // First create the account
+    const createAccount = await db.query("INSERT INTO accounts (email, username, password) VALUES ($1, $2, $3)", [email, username, password]);
+
+    // Find the new account
+    const findNewAccount = await db.query("SELECT * FROM accounts WHERE username=$1", [username])
+
+    // Retrieve the data of the new account
+    const data = findNewAccount.rows[0]
+
+    // Every new account that is made will have the default values of 0
+    if (createAccount) {
+      const insertDefaultData = await db.query("INSERT INTO portfolio_information (id, settled_cash, buying_power, dividends, balance) VALUES ($1, 0, 0, 0, 0)", [data.id])
+      res.redirect("/login");
+    }
+  } catch (err) {
+    console.log("Account already exists");
+    res.render("register.ejs", {
+      error: "Email or username already exists"
+    })
   }
 
 })
-
-app.post("/update", async (req,res) =>{
-  const newUser = req.body['username'];
-  const newPassword = req.body['password']
-
-  let query = id;
-
-  await Account.findOneAndUpdate(query, { username: newUser, password: newPassword})
-  
-  console.log("Account updated successfully");
-
-  res.redirect("/")
-})
-
-app.post("/delete", async (req, res) => {
-  let query = id;
-
-  await Account.findByIdAndDelete(query);
-  console.log("Account deleted succesfully");
-})
-
-
-
-
-// Handles the Plaid API Requests
-const config = new Configuration({
-    basePath: PlaidEnvironments[process.env.PLAID_ENV],
-    baseOptions: {
-      headers: {
-        "PLAID-CLIENT-ID": process.env.PLAID_CLIENT_ID,
-        "PLAID-SECRET": process.env.PLAID_SECRET,
-        "Plaid-Version": "2020-09-14",
-      },
-    },
-  });
-
-const client = new PlaidApi(config);
-
-app.get("/api/create_link_token", async (req, res, next) => {
-    const tokenResponse = await client.linkTokenCreate({
-      user: { client_user_id: req.sessionID },
-      client_name: "Investify Development App",
-      language: "en",
-      products: ["auth"],
-      country_codes: ["US"],
-      redirect_uri: process.env.PLAID_SANDBOX_REDIRECT_URI,
-    });
-    res.json(tokenResponse.data);
-});
-
-app.post("/api/exchange_public_token", async (req, res, next) => {
-    const exchangeResponse = await client.itemPublicTokenExchange({
-      public_token: req.body.public_token,
-    });
-    req.session.access_token = exchangeResponse.data.access_token;
-    res.json(true);
-});
-
-app.get("/api/data", async (req, res, next) => {
-    const access_token = req.session.access_token;
-    const balanceResponse = await client.accountsBalanceGet({ access_token });
-    res.json({
-      Balance: balanceResponse.data,
-    });
-});
-
-app.get("/api/is_account_connected", async (req, res, next) => {
-    return (req.session.access_token ? res.json({ status: true }) : res.json({ status: false}));
-});
-
 
 // If the user accesses a route that does exist
-app.all("/*", function(req, res){
-  res.status(400).render('404');
+app.all("/*", (req, res) => {
+  res.status(400).render('404.ejs');
 })
-  
-app.listen(8000, console.log("Port listening in 8000"));
+
+app.listen(3000, console.log(`Listening on port ${port}`));

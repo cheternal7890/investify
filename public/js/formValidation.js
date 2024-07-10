@@ -27,7 +27,7 @@ function validate_password() {
   if(!isPasswordStrong){
     document.getElementById("submit").disabled = true;
     document.getElementById("submit").style.opacity = (0.50);
-    document.getElementById("updateLabel").style.color = "#CC3333";
+    document.getElementById("updateLabel").style.color = "#CC3300";
     updateLabel.innerHTML = "Please use a combination of uppercase and lowercase letters, a special character, a number, and 8 or more characters"
 
   // Else, tell the user that the password works

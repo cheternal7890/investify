@@ -25,10 +25,16 @@
       <div class="container">
         <form id="form" class="box" method="post" action="/register">
             <h1>Create your account</h1>
+            <span id="errorMessageHeader"><%= locals.error %></span>
 
             <div>
               <label for="username">Username</label>
               <input type="text" name="username" id="username" placeholder="Enter Username" required />
+            </div>
+
+            <div>
+              <label for="email">Email</label>
+              <input type="email" name="email" id="email" placeholder="Enter Email" required />
             </div>
 
             <div>
@@ -39,6 +45,7 @@
                 id="password"
                 placeholder="Enter Password"
                 onkeyup="validate_password()"
+                required
               />
               <label id="updateLabel"></label>
             </div>
@@ -51,6 +58,7 @@
                 id="password2"
                 placeholder="Enter Password"
                 onkeyup="validate_password()"
+                required
                 />
             </div>
 

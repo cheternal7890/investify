@@ -30,18 +30,18 @@
         <div>
           <h1>Your Portfolio</h1>
           <p>Account</p>
-          <p id="username"><strong><%= nameOfUser %>'s</strong> portfolio</p>
+          <p id="username"><%= locals.username %>'s portfolio</p>
         </div>
 
         <div>
           <p id="informationItem">
-            Settled Cash <span id="settledCash">$8,520.00</span>
+            Settled Cash <span id="settledCash"><%= account.settled_cash %></span>
           </p>
           <p id="informationItem">
-            Buying Power <span id="buyingPower">$55,800.00</span>
+            Buying Power <span id="buyingPower"><%= account.buying_power %></span>
           </p>
           <p id="informationItem">
-            Dividends <span id="dividends">$0.00</span>
+            Dividends <span id="dividends"><%= account.dividends %></span>
           </p>
         </div>
 
@@ -53,16 +53,16 @@
 
         <div>
           <h1>Positions:</h1>
-          <p id="positionItem"><span id="positionTitle">Buzzfeed Inc</span> <span id="positionValue">+20.40%</span></p>
-          <p id="positionItem"><span id="positionTitle">NVIDIA Corporation</span> <span id="positionValue">-0.54%</span></p>
-          <p id="positionItem"><span id="positionTitle">AMD Advanced Micro Devices</span> <span id="positionValue">+20.0%</span></p>
-          <p id="positionItem"><span id="positionTitle">Serina Therapeutics</span> <span id="positionValue">+17.0%</span></p>
+          <p id="positionItem"><span id="positionTitle">Buzzfeed Inc</span> <span id="positionValue"></span></p>
+          <p id="positionItem"><span id="positionTitle">NVIDIA Corporation</span> <span id="positionValue"></span></p>
+          <p id="positionItem"><span id="positionTitle">AMD Advanced Micro Devices</span> <span id="positionValue"></span></p>
+          <p id="positionItem"><span id="positionTitle">Serina Therapeutics</span> <span id="positionValue"></span></p>
         </div>
       </div>
 
       <div id="performanceGraph">
         <p>Net Liquidity</p>
-        <h1 id="balance">$600,000</h1>
+        <h1 id="balance"><%= account.balance %></h1>
         <div>
           <img src="/images/graphReference.png" />
         </div>
@@ -70,10 +70,10 @@
 
       <div id="recommendedBox">
         <h1>Recommended:</h1>
-        <p id="recommendedItem"><span id="recommendedTitle">AMC Entertainment Holdings Inc</span> <span id="recommendedValue">+6.0%</span></p>
-        <p id="recommendedItem"><span id="recommendedTitle">Marathon Digital Holdings</span> <span id="recommendedValue">-0.3%</span></p>
-        <p id="recommendedItem"><span id="recommendedTitle">Intel Corporation</span> <span id="recommendedValue">+4.6%</span></p>
-        <p id="recommendedItem"><span id="recommendedTitle">Ford Motor Company</span> <span id="recommendedValue">-5.2%</span></p>
+        <p id="recommendedItem"><span id="recommendedTitle">AMC Entertainment Holdings Inc</span> <span id="recommendedValue"></span></p>
+        <p id="recommendedItem"><span id="recommendedTitle">Marathon Digital Holdings</span> <span id="recommendedValue"></span></p>
+        <p id="recommendedItem"><span id="recommendedTitle">Intel Corporation</span> <span id="recommendedValue"></span></p>
+        <p id="recommendedItem"><span id="recommendedTitle">Ford Motor Company</span> <span id="recommendedValue"></span></p>
       </div>
 
       <div id="dateBox">
@@ -88,6 +88,5 @@
 
       </div>
     </main>
-    <script src="/index.js"></script>
   </body>
 </html>

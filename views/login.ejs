@@ -28,28 +28,37 @@
       <div class="container">
         <form id="form" class="box" method="post" action="/login">
             <h1>Welcome Back!</h1>
-
+  
             <div>
-              <label for="username">Username</label>
+              <label for="username">
+                <% if(locals.error){ %>
+                  <span id="errorMessage">Username - <i><%= error %></i></span>
+                <% } else { %>
+                  Username
+                <% } %>
+              </label>
               <input type="text" name="username" id="username" placeholder="Enter Username" required />
             </div>
 
             <div>
-              <label for="password">Password</label>
+              <label for="password">
+                <% if(locals.error){ %>
+                  <span id="errorMessage">Password - <i><%= error %></i></span>
+                <% } else { %>
+                  Password
+                <% } %>
+              </label>
               <input
                 type="password"
                 name="password"
                 id="password"
                 placeholder="Enter Password"
+                required
               />
             </div>
 
             <div>
               <input type="submit" id="submit" value="Login" />
-            </div>
-
-            <div>
-              <button type="button" id="link-account" value="submit">Connect with Plaid</button>
             </div>
 
             <div>

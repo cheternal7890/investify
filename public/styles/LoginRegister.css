@@ -29,12 +29,11 @@ input{
   flex-direction: column;
   padding: 25px 25px;
   width: 375px;
-  border-radius: 12px;
   max-width: 100%;
 }
 
 h1{
-  padding: 12px;
+  padding: 10px;
   text-align: center;
   font-weight: 700;
   font-size: 20px;
@@ -44,24 +43,19 @@ h1{
 div{
   display: flex;
   flex-direction: column;
-  padding: 12px;
+  padding: 10px;
 }
 
 label, input, a{
-  font-size: 14px;
+  font-size: 12px;
 }
 
-#username, #password, #password2{
+#username, #email, #password, #password2{
   border-color: gray;
   border-style: none;
   border-bottom-style: solid;
   border-width: 1px;
   height: 30px;
-  margin-top: 12px;
-}
-
-#updateLabel{
-  font-size: 14px;
   margin-top: 6px;
 }
 
@@ -90,21 +84,13 @@ label, input, a{
   text-decoration: underline;
 }
 
-/* Plaid Button */
-#link-account{
-  background-color:  black;
-  border: none;
-  height: 40px;
-  color: white;
-  cursor: pointer;
+#errorMessage{
+  color: #CC3300;
 }
 
-#link-account:hover{
-  background-color:  rgb(55, 55, 55);
-}
-
-#link-account:active{
-  background-color:  rgb(40, 40, 40);
+#errorMessageHeader{
+  text-align: center;
+  color: #CC3300;
 }
 
 
