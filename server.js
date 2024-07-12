@@ -41,15 +41,23 @@ app.get("/dashboard", async (req, res) => {
 
   try {
     const result = await db.query("SELECT * FROM accounts JOIN portfolio_information ON accounts.id = portfolio_information.id WHERE username = $1", [currentUser])
-
     const data = result.rows[0]
 
-    console.log(data);
+    const positionData = await db.query("SELECT position_data.id, identifier, name, price, type, unrealized_gains, realized_gains FROM accounts JOIN portfolio_information ON portfolio_information.id = accounts.id JOIN position_data ON position_data.account_id = portfolio_information.id WHERE username = $1 LIMIT 3", [currentUser]);
+    const positionResult = positionData.rows
 
-    res.render("dashboard.ejs", {
-      username: currentUser,
-      account: data
-    });
+    console.log("Positions Result", positionResult);
+
+    if (data) {
+      res.render("dashboard.ejs", {
+        username: currentUser,
+        account: data,
+        position: positionResult
+      });
+
+    }
+
+
 
   } catch (err) {
     console.log("There was an error executing this query");
@@ -58,10 +66,29 @@ app.get("/dashboard", async (req, res) => {
 
 })
 
-app.get("/positions", (req, res) => {
-  res.render("positions.ejs", {
-    username: currentUser
-  });
+app.get("/positions", async (req, res) => {
+
+  try {
+    const result = await db.query("SELECT position_data.id, identifier, name, price, type, unrealized_gains, realized_gains FROM accounts JOIN portfolio_information ON portfolio_information.id = accounts.id JOIN position_data ON position_data.account_id = portfolio_information.id WHERE username = $1", [currentUser]);
+
+    const data = result.rows
+
+    if (data.length > 1) {
+      res.render("positions.ejs", {
+        username: currentUser,
+        positionData: result.rows
+      });
+    } else {
+      res.render("positions.ejs", {
+        username: currentUser,
+      });
+    }
+  } catch (err) {
+    res.render("positions.ejs", {
+      username: currentUser,
+    });
+  }
+
 })
 
 app.get("/updates", (req, res) => {

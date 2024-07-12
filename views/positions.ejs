@@ -1,28 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/styles/Positions.css" />
-    <link rel="stylesheet" href="/styles/Banner.css" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <title>Investify</title>
-  </head>
 
-  <body>
-    <%- include("partials/header.ejs") %>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="/styles/Positions.css" />
+  <link rel="stylesheet" href="/styles/Banner.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>Investify</title>
+</head>
+
+<body>
+  <%- include("partials/header.ejs") %>
 
     <div id="container">
       <div id="filterBox">
@@ -31,9 +25,19 @@
         </div>
 
         <div>
-          <label>Filter</label>
-          <input type="checkbox" name="Test">
-          <span>Currently showing 8</span>
+          <span>
+            <% if(locals.positionData){ %>
+              <label>Sort By</label>
+              <select name="Test">
+                <option>Name</option>
+                <option>Price</option>
+                <option>Type</option>
+              </select>
+              Currently showing <%= positionData.length %>
+                <% } else { %>
+                  No data to display
+                  <% } %>
+          </span>
 
         </div>
       </div>
@@ -44,19 +48,85 @@
           <td id="headerCells">Name</td>
           <td id="headerCells">Price</td>
           <td id="headerCells">Type</td>
-          <td id="headerCells">Unrealized Gains</td>
-          <td id="headerCells">Realized Gains</td>
+          <td id="headerCells">Unrealized Gain / Loss</td>
+          <td id="headerCells">Realized Gain / Loss</td>
           <td id="headerCells">Action</td>
         </tr>
+
+
+        <% if(locals.positionData){ %>
+          <% positionData.forEach((item)=> { %>
+
+            <tr id="positionRow">
+              <td data-cell="identifier" id="identifier">
+                <a href="">
+                  <%= item.identifier %>
+                </a>
+              </td>
+              <td data-cell="name" id="name">
+                <%= item.name %>
+              </td>
+              <td data-cell="price" id="price">
+                <%= item.price %>
+              </td>
+              <td data-cell="type" id="type">
+                <%= item.type %>
+              </td>
+              <td data-cell="unrealized" id="unrealized">
+
+                <% if(item.unrealized_gains> 0){ %>
+                  <span style="color: green;">+<%= item.unrealized_gains%>%<i class="fa-solid fa-arrow-trend-up"></i>
+                  </span>
+                  <% } else if (item.unrealized_gains < 0){ %>
+                    <span style="color: red;">
+                      <%= item.unrealized_gains%>%<i class="fa-solid fa-arrow-trend-down"></i>
+                    </span>
+                    <% } else { %>
+                      <span>
+                        <%= item.unrealized_gains %>
+                      </span>
+                      <% } %>
+
+
+              </td>
+              <td data-cell="realized" id="realized">
+
+                <% if(item.realized_gains> 0){ %>
+                  <span style="color: green;">+<%= item.realized_gains%>%<i class="fa-solid fa-arrow-trend-up"></i>
+                  </span>
+                  <% } else if (item.realized_gains < 0){ %>
+                    <span style="color: red;">
+                      <%= item.realized_gains%>%<i class="fa-solid fa-arrow-trend-down"></i>
+                    </span>
+                    <% } else { %>
+                      <span>
+                        <%= item.realized_gains %>
+                      </span>
+                      <% } %>
+
+              </td>
+              <td data-cell="actions" id="action">
+                <select id="actionButton">
+                  <option>Buy More</option>
+                  <option>Sell</option>
+                  <option>Sell All</option>
+                </select>
+              </td>
+            </tr>
+
+            <% }) %>
+              <% } %>
       </table>
     </div>
 
-    
+
+
     <dialog id="modal">
       <button>Buy</button>
       <button>Sell</button>
       <button id="closeModal">X</button>
     </dialog>
     <script src="/js/positions.js"></script>
-  </body>
+</body>
+
 </html>

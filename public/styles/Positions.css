@@ -46,7 +46,7 @@ td {
 tr{
   border-bottom-style: solid;
   border-bottom-width: 1px;
-  border-bottom-color: #c4c4c4;
+  border-bottom-color: #b0afaf;
 }
 
 tr:hover {
@@ -64,12 +64,6 @@ tr td:nth-child(7) {
   width: 200px;
   text-align: center;
 }
-
-
-/* tr td:nth-child(5):hover{
-  border-style: solid;
-  background-color: #0d6da1;
-} */
 
 #filterBox{
   padding: 12px;
@@ -105,3 +99,9 @@ tr td:nth-child(7) {
   }
   
 }
+
+select {
+ padding: 12px;
+}
+
+

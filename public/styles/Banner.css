@@ -2,7 +2,11 @@
 #topHeader {
   display: flex;
   justify-content: space-between;
-  padding: 12px;
+  align-items: center;
+  padding-left: 12px;
+  padding-right: 12px;
+  padding-top: 6px;
+  padding-bottom: 6px;
   background-color: black;
   color: white;
 
@@ -14,6 +18,24 @@
 
   a:hover {
     text-decoration-line: underline;
+  }
+
+  #profile{
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    border-style: solid;
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    border-color: rgb(66, 66, 66);
+    border-radius: 6px;
+    border-width: 1px;
+  }
+
+  #profile:active{
+    background-color: rgb(216, 216, 216);
   }
 }
 
