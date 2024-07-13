@@ -21,14 +21,13 @@
     <div id="container">
       <div id="filterBox">
         <div>
-          <span>Positions Overview</span>
+          <h6>Positions Overview</h6>
         </div>
 
         <div>
-          <span>
             <% if(locals.positionData){ %>
               <label>Sort By</label>
-              <select name="Test">
+              <select id="sortByButton">
                 <option>Name</option>
                 <option>Price</option>
                 <option>Type</option>
@@ -37,7 +36,6 @@
                 <% } else { %>
                   No data to display
                   <% } %>
-          </span>
 
         </div>
       </div>
@@ -75,10 +73,10 @@
               <td data-cell="unrealized" id="unrealized">
 
                 <% if(item.unrealized_gains> 0){ %>
-                  <span style="color: green;">+<%= item.unrealized_gains%>%<i class="fa-solid fa-arrow-trend-up"></i>
+                  <span style="color: #009933;">+<%= item.unrealized_gains%>%<i class="fa-solid fa-arrow-trend-up"></i>
                   </span>
                   <% } else if (item.unrealized_gains < 0){ %>
-                    <span style="color: red;">
+                    <span style="color: #CC0000;">
                       <%= item.unrealized_gains%>%<i class="fa-solid fa-arrow-trend-down"></i>
                     </span>
                     <% } else { %>
@@ -92,10 +90,10 @@
               <td data-cell="realized" id="realized">
 
                 <% if(item.realized_gains> 0){ %>
-                  <span style="color: green;">+<%= item.realized_gains%>%<i class="fa-solid fa-arrow-trend-up"></i>
+                  <span style="color: #009933;">+<%= item.realized_gains%>%<i class="fa-solid fa-arrow-trend-up"></i>
                   </span>
                   <% } else if (item.realized_gains < 0){ %>
-                    <span style="color: red;">
+                    <span style="color: #CC0000;">
                       <%= item.realized_gains%>%<i class="fa-solid fa-arrow-trend-down"></i>
                     </span>
                     <% } else { %>

@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <title>Investify</title>
 </head>
 
@@ -22,102 +23,119 @@
     <main id="container">
       <div id="portfolioBox">
         <div>
-          <h1>Your Portfolio</h1>
-          <p>Account</p>
+          <h6>Your Portfolio</h6>
           <p id="username">
-            <%= locals.username %>'s portfolio
+            <%= locals.username %>'s account
           </p>
         </div>
 
         <div>
-          <p id="informationItem">
-            Settled Cash <span id="settledCash">
+          <div id="informationItem">
+            <p style="opacity: 0.65;">Settled Cash</p>
+            <p>
               <%= account.settled_cash %>
-            </span>
-          </p>
-          <p id="informationItem">
-            Buying Power <span id="buyingPower">
+            </p>
+          </div>
+
+          <div id="informationItem">
+            <p style="opacity: 0.65;">Buying Power</p>
+            <p>
               <%= account.buying_power %>
-            </span>
-          </p>
-          <p id="informationItem">
-            Dividends <span id="dividends">
+            </p>
+          </div>
+
+          <div id="informationItem">
+            <p style="opacity: 0.65;">Dividends</p>
+            <p>
               <%= account.dividends %>
-            </span>
-          </p>
+            </p>
+          </div>
         </div>
 
         <div id="buttonContainer">
-          <button id="buttonItem">Deposit</button>
-          <button id="buttonItem">Withdraw</button>
-          <button id="buttonItem">Sell All</button>
+          <button id="buttonItem"><span>Deposit</span></button>
+          <button id="buttonItem"><span>Withdraw</span></button>
+          <button id="buttonItem"><span>Sell All</span></button>
         </div>
 
         <div>
-          <h1>Positions:</h1>
+          <h6>Positions:</h6>
+
 
           <% if(locals.position){ %>
             <% position.forEach((item)=> { %>
-              <p id="positionItem">
-                <span id="positionTitle">
+              <div id="positionItem">
+                <p>
                   <%= item.name %>
-                </span>
+                </p>
 
                 <% if(item.unrealized_gains> 0){ %>
-                  <span style="color: green;">+<%= item.unrealized_gains%>%<i class="fa-solid fa-arrow-trend-up"></i>
-                  </span>
-                  <% } else if (item.unrealized_gains < 0){ %>
-                    <span style="color: red;">
-                      <%= item.unrealized_gains%>%<i class="fa-solid fa-arrow-trend-down"></i>
-                    </span>
+                  <p style="color: #009933">+<%= item.unrealized_gains %>%<i class="fa-solid fa-arrow-trend-up"></i></p>
+                  <% } else if (item.unrealized_gains < 0) { %>
+                    <p style="color: #CC0000">
+                      <%= item.unrealized_gains %>%<i class="fa-solid fa-arrow-trend-down"></i>
+                    </p>
                     <% } else { %>
-                      <span>
-                        <%= item.unrealized_gains %>
-                      </span>
-                      <% } %>
+                      <%= item.unrealized_gains %>
+                        <% } %>
 
-
-              </p>
-              <% })%>
-                <!-- Add the View More Button -->
-                <!-- <p><a href="/positions" style="color: rgb(158, 158, 158); text-decoration: none;">More...</a></p> -->
+              </div>
+              <% }) %>
                 <% } %>
 
         </div>
       </div>
 
       <div id="performanceGraph">
-        <p>Net Liquidity</p>
-        <h1 id="balance">
-          <%= account.balance %>
-        </h1>
-        <div>
-          <img src="/images/graphReference.png" id="img" />
+        <div id="titleContainer">
+          <p style="opacity: 0.65; margin: 0;">Net Liquidity</p>
+          <h1>
+            <%= account.balance %>
+          </h1>
+        </div>
+
+        <div id="graphContainer">
+          <div class="chart">
+            <canvas id="lineGraph"></canvas>
+          </div>
+
+          <div class="chart">
+            <canvas id="doughnutChart"></canvas>
+          </div>
         </div>
       </div>
 
       <div id="recommendedBox">
-        <h1>Recommended:</h1>
-        <p id="recommendedItem"><span id="recommendedTitle">AMC Entertainment Holdings Inc</span> <span
-            id="recommendedValue"></span></p>
-        <p id="recommendedItem"><span id="recommendedTitle">Marathon Digital Holdings</span> <span
-            id="recommendedValue"></span></p>
-        <p id="recommendedItem"><span id="recommendedTitle">Intel Corporation</span> <span id="recommendedValue"></span>
-        </p>
-        <p id="recommendedItem"><span id="recommendedTitle">Ford Motor Company</span> <span
-            id="recommendedValue"></span></p>
+        <h6>Recommended:</h6>
+
+        <div id="recommendedItem">
+          <p>AMC Entertainment Inc</p>
+          <p>Test</p>
+        </div>
+
+        <div id="recommendedItem">
+          <p>Marathon Digital</p>
+          <p>Test</p>
+        </div>
+
+        <div id="recommendedItem">
+          <p>Intel Corporation</p>
+          <p>Test</p>
+        </div>
       </div>
 
       <div id="dateBox">
-        <button id="dateButton">7 Days</button>
-        <button id="dateButton">Months to Date</button>
-        <button id="dateButton" autofocus>1 Month</button>
-        <button id="dateButton">Year to Date</button>
-        <button id="dateButton">1 Year</button>
+        <button id="dateButton"><span>7 Days</span></button>
+        <button id="dateButton"><span>Months to Date</span></button>
+        <button id="dateButton" autofocus><span>1 Month</span></button>
+        <button id="dateButton"><span>Year to Date</span></button>
+        <button id="dateButton"><span>1 Year</span></button>
       </div>
 
       </div>
     </main>
+    <script src="/js/lineChart.js"></script>
+    <script src="/js/doughnutChart.js"></script>
 </body>
 
 </html>

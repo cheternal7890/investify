@@ -17,27 +17,41 @@ input{
 
 .container {
   display: flex;
-  background-color: #d9d9d9;
+  background: linear-gradient(to right, #d9d9d9 0%, #d0d0d0 100%); 
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  height: 100vh;
 }
 
 .box {
   background-color: white;
+  box-shadow: rgba(151, 151, 151, 0.24) 0px 3px 8px;
   display: flex;
   flex-direction: column;
   padding: 25px 25px;
   width: 375px;
+  border-radius: 4px;
   max-width: 100%;
 }
 
-h1{
+h6{
   padding: 10px;
   text-align: center;
   font-weight: 700;
-  font-size: 20px;
+  font-size: 1.2rem;
   margin: 0;
+}
+
+label {
+  font-weight: 600;
+}
+
+input:focus{
+  outline: none;
+}
+
+label, input, a{
+  font-size: 0.833rem;
 }
 
 div{
@@ -46,9 +60,6 @@ div{
   padding: 10px;
 }
 
-label, input, a{
-  font-size: 12px;
-}
 
 #username, #email, #password, #password2{
   border-color: gray;
@@ -60,15 +71,15 @@ label, input, a{
 }
 
 #submit{
-  background-color:  #3dc0a8;
+  background-color: #33a08c;
   border: none;
   height: 40px;
-  color: black;
+  color: white;
   cursor: pointer;
 }
 
 #submit:hover{
-  background-color:  #37ac97;
+  background-color: #37ac97;
 }
 
 #submit:active{

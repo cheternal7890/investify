@@ -13,6 +13,19 @@ body {
   font-family: "Inter", sans-serif;
 }
 
+h6{
+  font-size: 1.2rem;
+  padding: 0;
+  margin: 8px 0px;
+}
+
+td{
+  font-size: 0.833rem;
+  padding: 0;
+  margin: 10px 0px;
+}
+
+
 /* Main */
 
 #userPositionsTable {
@@ -24,6 +37,7 @@ body {
 #headerCells {
   background-color: #0d6da1;
   color: white;
+  font-weight: 600;
 }
 
 
@@ -68,6 +82,7 @@ tr td:nth-child(7) {
 #filterBox{
   padding: 12px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 
@@ -100,8 +115,14 @@ tr td:nth-child(7) {
   
 }
 
-select {
- padding: 12px;
+#sortByButton{
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+#actionButton {
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 

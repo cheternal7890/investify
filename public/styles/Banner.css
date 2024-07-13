@@ -27,8 +27,8 @@
     border-style: solid;
     padding-left: 8px;
     padding-right: 8px;
-    padding-top: 6px;
-    padding-bottom: 6px;
+    padding-top: 4px;
+    padding-bottom: 4px;
     border-color: rgb(66, 66, 66);
     border-radius: 6px;
     border-width: 1px;
@@ -53,7 +53,13 @@
     font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS",
       sans-serif;
     font-weight: 700;
-    font-size: 24px;
+    text-decoration: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+  }
+
+  #searchBar{
+    box-shadow: rgba(0, 0, 0, 0.20) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
   }
 
   #searchBox {
@@ -102,12 +108,13 @@
 }
 
 #notificationBell{
-  font-size: 1.5rem;
+  font-size: 1.2rem;
+  opacity: 1;
   cursor: pointer;
 }
 
-#notificationBell:hover{
-  color: rgb(51, 51, 51);
+#notificationBell:hover{ 
+  opacity: 0.75;
 }
 
 /*-----------------------------------------*/

@@ -5,13 +5,43 @@
 body {
   max-width: 1600px;
   width: 100%;
-  font-size: 1rem;
   padding: 0;
   margin: auto;
   box-sizing: border-box;
   background-color: white;
 
   font-family: "Inter", sans-serif;
+}
+
+h1 {
+  font-size: 1.728rem;
+  margin: 0;
+  padding: 0;
+}
+
+h6{
+  font-size: 1.25rem;
+  padding: 0;
+  margin: 10px 0px;
+}
+
+p{
+  font-size: 1rem;
+  margin: 12px 0px;
+}
+
+span {
+  font-size: 1rem;
+}
+
+#recommendedBox, #portfolioBox {
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
+}
+
+#recommendedBox, #portfolioBox{
+  padding: 18px;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
+  border-radius: 4px;
 }
 
 /* Main */
@@ -33,21 +63,11 @@ body {
 #portfolioBox {
   background-color: #d9d9d9;
   grid-area: portfolioBox;
-  padding: 12px;
-
-  h1 {
-    font-size: 20px;
-  }
 }
 
 #informationItem {
   display: flex;
   justify-content: space-between;
-  color: #5c5b5b;
-
-  span {
-    color: black;
-  }
 }
 
 #buttonContainer {
@@ -60,7 +80,7 @@ body {
 #buttonItem {
   color: white;
   padding: 12px;
-  width: 100px;
+  width: 96px;
   border-radius: 24px;
   border: none;
   cursor: pointer;
@@ -87,7 +107,6 @@ body {
 #recommendedBox {
   background-color: #d9d9d9;
   grid-area: recommendedBox;
-  padding: 12px;
 
   h1 {
     margin: 0;
@@ -101,45 +120,33 @@ body {
 }
 
 #performanceGraph {
-  /* border-style: solid;
-  border-color: rgb(200, 200, 200);
-  border-width: 1px;
-  border-radius: 6px; */
   align-items: center;
+  justify-content: center;
+  padding: 24px;
   grid-area: performanceGraph;
-  padding: 12px;
-  p {
-    margin: 0;
-    color: #5c5b5b;
-  }
-
-  h1 {
-    margin: 0;
-    font-size: 32px;
-    font-weight: 500;
-  }
-
-  #img {
-    padding: 6px;
-    object-fit: cover;
-    width: 100%;
-    max-height: 425px;
-  }
 }
 
-#balance{
-  color: #35a18d;
+#titleContainer{
+  height: 15%;
 }
 
-#recommendedBox, #portfolioBox{
-  border-radius: 4px;
-  padding: 18px;
+#graphContainer{
+  display: grid;
+  height: 85%;
+  grid-template-columns: 2fr 1fr;
+  grid-gap: 12px;
+  width: 100%;
+}
+
+.chart{
+  width: 100%;
+  padding: 20px;
 }
 
 @media only screen and (max-width: 768px) {
   #container {
     grid-template-columns: 1fr;
-    grid-template-rows: 2fr 0.5fr 1fr 1fr 1fr;
+    grid-template-rows: 3fr 0.5fr 1fr 1fr 1fr;
     grid-template-areas:
       "performanceGraph"
       "dateBox"
@@ -155,6 +162,10 @@ body {
   #buttonContainer {
     flex-wrap: wrap;
   }
+
+  #graphContainer {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Date Box */
@@ -166,9 +177,10 @@ body {
 }
 
 #dateButton {
-  font-size: 1rem;
   padding: 1rem;
   border: none;
+  margin-right: 4px;
+  margin-left: 4px;
   background: none;
   cursor: pointer;
 }
