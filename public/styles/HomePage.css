@@ -166,6 +166,10 @@ span {
   #graphContainer {
     grid-template-columns: 1fr;
   }
+
+  #lineGraph, #doughnutChart {
+    width: 100%;
+  }
 }
 
 /* Date Box */
