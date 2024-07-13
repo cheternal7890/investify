@@ -66,26 +66,14 @@ tr{
 tr:hover {
   td{
     background-color: #c9c9c9;
+    cursor: pointer;
   }
-}
-
-td:hover{
-  cursor: pointer;
-  background-color: #c9c9c9;
 }
 
 tr td:nth-child(7) {
   width: 200px;
   text-align: center;
 }
-
-#filterBox{
-  padding: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 
 /* Media Queries for Mobile Devices */
 @media (max-width: 650px) {
@@ -102,6 +90,26 @@ tr td:nth-child(7) {
     border-bottom-color: black;
   }
 
+  h6{
+    display: none;
+  }
+  
+  #infoSort{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  tr{
+    background-color: #d9d9d9;
+    display: grid;
+  }
+
+  tr:hover{
+    background-color: #c9c9c9;;
+  }
+
   td::before {
     content: attr(data-cell) ": ";
     font-weight: 700;
@@ -116,8 +124,8 @@ tr td:nth-child(7) {
 }
 
 #sortByButton{
-  padding-top: 6px;
-  padding-bottom: 6px;
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 
 #actionButton {
@@ -125,4 +133,19 @@ tr td:nth-child(7) {
   padding-bottom: 10px;
 }
 
+#filterBox{
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#infoSort{
+  display: flex;
+  align-items: center;
+}
+
+#divider{
+  padding-left: 1rem;
+}
 

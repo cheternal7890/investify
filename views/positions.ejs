@@ -24,19 +24,24 @@
           <h6>Positions Overview</h6>
         </div>
 
-        <div>
-            <% if(locals.positionData){ %>
+        <div id="infoSort">
+          <% if(locals.positionData){ %>
+
+            <div id="divider">
               <label>Sort By</label>
               <select id="sortByButton">
                 <option>Name</option>
                 <option>Price</option>
                 <option>Type</option>
               </select>
+            </div>
+
+            <div id="divider">
               Currently showing <%= positionData.length %>
                 <% } else { %>
                   No data to display
                   <% } %>
-
+            </div>
         </div>
       </div>
 
