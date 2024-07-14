@@ -3,6 +3,7 @@
 }
 
 body {
+  max-width: 1600px;
   width: 100%;
   padding: 0;
   margin: auto;
@@ -11,70 +12,26 @@ body {
   font-family: "Inter", sans-serif;
 }
 
-#profileContainer{
-  display: flex;
-  flex-direction: column;
-  background-color: #d9d9d9;
-  justify-content: center;
-  align-items: center;
-  height: 75dvh;
+#graphContainer{
+  display: grid;
+  height: 85%;
+  grid-template-columns: 1fr 5fr;
+  grid-gap: 12px;
+  width: 100%;
 }
 
-#form {
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  padding: 25px 25px;
-  width: 375px;
-  border-radius: 12px;
-  max-width: 100%;
+#column{
+  background-color: black;
+  color: white;
+  width: 100%;
+  height: 100%;
+  padding: 20px;
 }
 
-#editFormTitle{
-  padding: 12px;
-  text-align: center;
-  font-weight: 700;
-  font-size: 20px;
-  margin: 0;
-}
-
-#divider{
-  display: flex;
-  flex-direction: column;
-  padding: 12px;
-}
-
-#label{
-  font-size: 14px;
-}
-
-#input{
-  border-color: gray;
-  border-style: none;
-  border-bottom-style: solid;
-  border-width: 1px;
-  height: 30px;
-  margin-top: 12px;
-  line-height: 25px;
-}
-
-#updateProfilePicture{
-  margin-top: 12px;
-}
-
-#submit{
-  background-color:  #3dc0a8;
-  border: none;
-  height: 40px;
+#box{
+  width: 420px;
+  height: auto;
   color: black;
-  cursor: pointer;
+  background-color: white;
+  border-radius: 4px;
 }
-
-#submit:hover{
-  background-color:  #37ac97;
-}
-
-#submit:active{
-  background-color: #2f8d7c;
-}
-

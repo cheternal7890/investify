@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="/js/toggleDropdown.js" defer></script>
   <title>Investify</title>
 </head>
 
@@ -21,27 +22,27 @@
     <div id="container">
       <div id="filterBox">
         <div>
-          <h6>Positions Overview</h6>
+          <h6>My Positions
+
+            <% if(locals.positionData){ %>
+              (<%= positionData.length %>)
+                <%}%>
+
+          </h6>
         </div>
 
-        <div id="infoSort">
+        <div>
           <% if(locals.positionData){ %>
 
-            <div id="divider">
-              <label>Sort By</label>
-              <select id="sortByButton">
-                <option>Name</option>
-                <option>Price</option>
-                <option>Type</option>
-              </select>
-            </div>
+            <label>Sort By</label>
+            <select id="sortByButton">
+              <option>Name</option>
+              <option>Price</option>
+              <option>Type</option>
+            </select>
 
-            <div id="divider">
-              Currently showing <%= positionData.length %>
-                <% } else { %>
-                  No data to display
-                  <% } %>
-            </div>
+            <% } %>
+
         </div>
       </div>
 

@@ -11,6 +11,6 @@ var chartId = new Chart(chrt, {
       }],
    },
    options: {
-      responsive: true,
+      responsive: true
    },
 });

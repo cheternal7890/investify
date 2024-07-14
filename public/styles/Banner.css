@@ -1,8 +1,8 @@
 /*-----------------------------------------*/
 #topHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  
+  position: relative;
+  width: 100%;
   padding-left: 12px;
   padding-right: 12px;
   padding-top: 6px;
@@ -10,20 +10,17 @@
   background-color: black;
   color: white;
 
-  a {
-    color: white;
-    margin-left: 6px;
-    text-decoration-line: none;
+  #headerDivider{
+    display: flex;
+    justify-content: space-between;
   }
 
-  a:hover {
-    text-decoration-line: underline;
-  }
-
-  #profile{
+  #profile-btn {
+    user-select: none;
     cursor: pointer;
     background-color: white;
     color: black;
+    font-size: 0.833rem;
     border-style: solid;
     padding-left: 8px;
     padding-right: 8px;
@@ -34,9 +31,55 @@
     border-width: 1px;
   }
 
-  #profile:active{
+  #profile-btn:active{
     background-color: rgb(216, 216, 216);
   }
+
+  .menu-container{
+    position: absolute;
+    box-shadow: rgba(151, 151, 151, 0.75) 0px 3px 8px;
+    top: 48px;
+    right: 11px;
+    color: black;
+    background-color: white;
+    width: 215px;
+    height: auto;
+    border-radius: 4px;
+  }
+
+  .headingTitle{
+    font-size: 0.9rem;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  hr{
+    border-style: solid;
+    border-width: 1px;
+    border-color: #d9d9d9;
+  }
+
+  .dropdownLink{
+    display: block;
+    text-decoration-line: none;
+    color: black;
+    padding: 1rem;
+    font-size: 0.833rem;
+
+    .fa-solid{
+      margin-right: 10px;
+    }
+  }
+
+  .dropdownLink:hover{
+    background-color: #d9d9d9;
+  }
+
+
+  .hide{
+    display: none;
+  }
+
 }
 
 /*-----------------------------------------*/
@@ -60,10 +103,11 @@
 
   #searchBar{
     box-shadow: rgba(0, 0, 0, 0.20) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
+    border-radius: 4px;
   }
 
   #searchBox {
-    width: 600px;
+    width: 480px;
     padding: 6px;
     background-color: #d9d9d9;
     border-style: solid;

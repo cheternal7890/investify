@@ -90,17 +90,6 @@ tr td:nth-child(7) {
     border-bottom-color: black;
   }
 
-  h6{
-    display: none;
-  }
-  
-  #infoSort{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-  }
-
   tr{
     background-color: #d9d9d9;
     display: grid;
@@ -140,12 +129,4 @@ tr td:nth-child(7) {
   justify-content: space-between;
 }
 
-#infoSort{
-  display: flex;
-  align-items: center;
-}
-
-#divider{
-  padding-left: 1rem;
-}
 

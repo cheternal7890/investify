@@ -1,15 +1,39 @@
 <header>
   <nav id="topHeader">
-    <div>Corner</div>
+    <div id="headerDivider">
+      <div>Corner</div>
 
-    <div>
-      <div id="profile" title="Account">
-        <% if(locals.username){ %>
-          <%= locals.username %> <i class="fa-solid fa-user"></i>
-            <% } else { %>
-              Username
-              <% } %>
+      <div>
+        <button id="profile-btn">
+          <% if(locals.username){ %>
+            <%= locals.username %> <i class="fa-solid fa-user"></i>
+              <% } else { %>
+                Username
+                <% } %>
+        </button>
+
+        <div id="menu" class="menu-container hide">
+          <p class="headingTitle">
+            Settings
+          </p>
+          <hr>
+          <div id="links">
+            <a href="/profile" class="dropdownLink">
+              <i class="fa-solid fa-gear"></i>Preferences
+            </a>
+
+            <a href="" class="dropdownLink">
+              <i class="fa-solid fa-circle-question"></i>Help and Support
+            </a>
+
+            <a href="/login" class="dropdownLink">
+              <i class="fa-solid fa-right-from-bracket"></i>Log Out
+            </a>
+          </div>
+        </div>
+
       </div>
+    </div>
   </nav>
 
   <nav id="middleHeader">
