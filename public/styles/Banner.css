@@ -37,6 +37,7 @@
 
   .menu-container{
     position: absolute;
+    z-index: 1;
     box-shadow: rgba(151, 151, 151, 0.75) 0px 3px 8px;
     top: 48px;
     right: 11px;
