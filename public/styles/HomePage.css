@@ -34,10 +34,6 @@ span {
 }
 
 #recommendedBox, #portfolioBox {
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
-}
-
-#recommendedBox, #portfolioBox{
   padding: 18px;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
   border-radius: 4px;
@@ -55,6 +51,7 @@ span {
     "recommendedBox dateBox"
     "footer footer";
   gap: 1rem;
+  margin-right: 2.25rem;
 }
 
 /* Portfolio Box */
@@ -122,29 +119,40 @@ span {
 #performanceGraph {
   align-items: center;
   justify-content: center;
-  padding: 24px;
   grid-area: performanceGraph;
 }
 
 #titleContainer{
   height: 15%;
+  padding: 1em;
 }
+
+/* ============== CANVAS ============== */
 
 #graphContainer{
   display: grid;
   height: 85%;
   grid-template-columns: 2fr 1fr;
-  grid-gap: 12px;
+  grid-gap: 1rem;
   width: 100%;
+}
+
+canvas#lineGraph, canvas#doughnutChart{
+  max-width: 100%;
+  margin-top: 1rem;
 }
 
 .chart{
   width: 100%;
-  padding: 20px;
+  padding: 1rem;
+  border-radius: 4px;
+  box-shadow: rgb(95, 95, 95, 0.35) 0px 2px 6px;
 }
 
 @media only screen and (max-width: 768px) {
   #container {
+    margin-right: 0;
+    gap: 1.2rem;
     grid-template-columns: 1fr;
     grid-template-rows: 3fr 0.5fr 1fr 1fr 1fr;
     grid-template-areas:
@@ -167,8 +175,16 @@ span {
     grid-template-columns: 1fr;
   }
 
-  #lineGraph, #doughnutChart {
-    width: 100%;
+  #dateBox{
+    display: none;
+  }
+
+  canvas#lineGraph, canvas#doughnutChart{
+    margin-top: 0rem;
+  }
+
+  .chart{
+    box-shadow: none;
   }
 }
 
