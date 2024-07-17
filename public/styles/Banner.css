@@ -21,15 +21,13 @@
     cursor: pointer;
     background-color: white;
     color: black;
-    font-size: 0.833rem;
+    font-size: 1rem;
     border-style: solid;
     padding-left: 8px;
     padding-right: 8px;
     padding-top: 4px;
     padding-bottom: 4px;
-    border-color: rgb(66, 66, 66);
     border-radius: 6px;
-    border-width: 1px;
   }
 
   #profile-btn:active{
@@ -57,7 +55,6 @@
     font-weight: 700;
     margin: 0;
     height: 50px;
-
     border-bottom-style: solid;
     border-width: 1px;
     border-color: #d9d9d9;
@@ -106,13 +103,15 @@
   }
 
   #searchBar{
-    box-shadow: rgba(0, 0, 0, 0.20) 0px 0px 0px 1px, rgb(209, 213, 219) 0px 0px 0px 1px inset;
     border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 0px 0.5px, rgb(210, 210, 210) 0px 0px 0px 1px inset;
   }
 
   #searchBox {
     width: 480px;
     padding: 6px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
     background-color: #d9d9d9;
     border-style: solid;
     border-color: #d9d9d9;
@@ -124,6 +123,8 @@
 
   #searchIcon{
     padding: 6px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
     cursor: pointer;
     float: right;
     border-style: solid;
@@ -168,7 +169,7 @@
 /*-----------------------------------------*/
 #horizontalLine {
   margin-top: 0;
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
   border-width: 3px;
   border-style: solid;
   color: #d9d9d9;

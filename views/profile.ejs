@@ -19,25 +19,122 @@
 <body>
   <%- include("partials/header.ejs") %>
 
-    <!-- <div id="graphContainer">
-      <div id="column">
-        <div>Preferences</div>
-      </div>
+    <div id="graphContainer">
+      <h6>Preferences</h6>
 
+      <!------------------------ Update Account Information ------------------------>
       <div id="column">
-        <div id="box">
-          <div>Title</div>
-          <hr>
-          <div>
-            <label>Username</label>
-            <input>
+        <div id="boxContainer">
+          <div id="boxTitle">
+            <h5>Account Information</h5>
           </div>
 
+          <form id="boxForm" action="/update" method="post">
+            <div id="box">
+              <label for="username" id="formLabel">
+                <span>Username</span>
+              </label>
+              <input id="formInput" type="text" name="username" value="">
+            </div>
 
+            <div id="box">
+              <label for="password" id="formLabel">
+                <span>Password</span>
+              </label>
+              <input id="formInput" type="password" name="password" value="">
+            </div>
+
+            <div id="box" style="justify-content: right; gap: 4px;">
+              <input type="button" id="formButton" value="Cancel">
+              <button id="formButton" type="submit" value="Submit"><span>Save</button>
+            </div>
+          </form>
         </div>
       </div>
 
-    </div> -->
+      <!------------------------ Update Profile Information ------------------------>
+      <div id="column">
+        <div id="boxContainer">
+          <div id="boxTitle">
+            <h5>Profile Information</h5>
+          </div>
+
+          <form id="boxForm" action="" method="post">
+            <div id="box">
+              <label for="username" id="formLabel">
+                <span>First name</span>
+              </label>
+              <input id="formInput" type="text" name="username" value="">
+            </div>
+
+            <div id="box">
+              <label for="password" id="formLabel">
+                <span>Last name</span>
+              </label>
+              <input id="formInput" type="password" name="password" value="">
+            </div>
+
+            <div id="box" style="justify-content: right; gap: 4px;">
+              <input type="button" id="formButton" value="Cancel">
+              <button id="formButton" type="submit" value="Submit"><span>Save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+      <!------------------------ Import From Plaid ------------------------>
+
+      <div id="column">
+        <div id="boxContainer">
+          <div id="boxTitle">
+            <h5>Import From Plaid</h5>
+          </div>
+
+          <form id="boxForm">
+            <div id="box">
+              <button id="plaidButton">
+                <span>Link with Plaid</span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!------------------------ Delete Account ------------------------>
+      <div id="column">
+        <div id="boxContainer">
+          <div id="boxTitle">
+            <h5>Danger Zone</h5>
+          </div>
+
+          <form id="boxForm" action="/delete" method="post">
+            <div id="dangerBoxContainer">
+
+              <div id="deleteAccountInformation">
+                <div>
+                  <i class="fa-solid fa-triangle-exclamation"></i>
+                  <span><strong>Request for account deletion</strong></span>
+                </div>
+
+                <div>
+                  <span>
+                    Deleting your account is permanent and cannot be undone. All data will be removed, except
+                    the data that was imported from Plaid.
+                  </span>
+                </div>
+
+                <div style="display: flex; justify-content: right; gap: 4px;">
+                  <button id="deleteFormButton" type="submit" value="Submit"><span>Delete Account</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+    </div>
 
 </body>
 

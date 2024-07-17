@@ -37,16 +37,12 @@ app.get("/register", (req, res) => {
 })
 
 app.get("/dashboard", async (req, res) => {
-  console.log(userById);
-
   try {
     const result = await db.query("SELECT * FROM accounts JOIN portfolio_information ON accounts.id = portfolio_information.id WHERE username = $1", [currentUser])
     const data = result.rows[0]
 
     const positionData = await db.query("SELECT position_data.id, identifier, name, price, type, unrealized_gains, realized_gains FROM accounts JOIN portfolio_information ON portfolio_information.id = accounts.id JOIN position_data ON position_data.account_id = portfolio_information.id WHERE username = $1 LIMIT 3", [currentUser]);
     const positionResult = positionData.rows
-
-    console.log("Positions Result", positionResult);
 
     if (data) {
       res.render("dashboard.ejs", {
@@ -56,8 +52,6 @@ app.get("/dashboard", async (req, res) => {
       });
 
     }
-
-
 
   } catch (err) {
     console.log("There was an error executing this query");
@@ -113,11 +107,9 @@ app.post("/login", async (req, res) => {
 
     const data = result.rows[0];
 
-    userById = data.id;
-
     if (data.username == username && data.password == password) {
-      console.log("Success");
       currentUser = data.username
+      userById = data.id;
       res.redirect("/dashboard")
     }
 
@@ -157,6 +149,28 @@ app.post("/register", async (req, res) => {
   }
 
 })
+
+app.post("/update", async (req, res) => {
+  console.log(req.body);
+
+  console.log("Current user =", currentUser)
+  console.log("User's ID =", userById)
+
+  // try {
+  //   await db.query("UPDATE accounts SET username = $1, ")
+
+
+  // } catch (err) {
+  //   console.log(err);
+  // }
+
+
+})
+
+app.post("/delete", (req, res) => {
+  console.log(req.body);
+})
+
 
 // If the user accesses a route that does exist
 app.all("/*", (req, res) => {
