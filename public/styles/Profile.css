@@ -176,6 +176,17 @@ span {
   background-color: #b03a3a;
 }
 
+#errorMessage{
+  color: #CC3300;
+}
+
+#errorMessageHeader{
+  text-align: center;
+  color: #CC3300;
+}
+
+
+
 
 /* ====================== Media Queries ====================== */
 

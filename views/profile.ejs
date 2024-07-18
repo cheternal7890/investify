@@ -32,7 +32,11 @@
           <form id="boxForm" action="/update" method="post">
             <div id="box">
               <label for="username" id="formLabel">
-                <span>Username</span>
+                <% if(locals.error){ %>
+                  <span id="errorMessage"><i><%= error %></i></span>
+                <% } else { %>
+                  <span>Username</span>
+                <% } %>
               </label>
               <input id="formInput" type="text" name="username" value="">
             </div>
@@ -120,7 +124,7 @@
                 <div>
                   <span>
                     Deleting your account is permanent and cannot be undone. All data will be removed, except
-                    the data that was imported from Plaid.
+                    the data that was imported from Plaid. The Plaid Data remains completely safe. 
                   </span>
                 </div>
 
@@ -135,6 +139,8 @@
 
 
     </div>
+
+    <!--- Add client sided script for when the user clicks cancel it erases whatever the user inputted -->
 
 </body>
 

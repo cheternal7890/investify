@@ -1,31 +1,57 @@
 import express from "express";
-import bodyParser from "body-parser"
+import bodyParser from "body-parser";
 import pg from "pg";
+import bcrypt from "bcrypt";
+import session from "express-session";
+import passport from "passport";
+import { Strategy } from "passport-local";
+import env from "dotenv"
 
 const app = express();
+const saltRounds = 10;
 const port = 3000;
+env.config();
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-let currentUser = ""
-let userById = ""
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24
+  }
+}))
 
-// Setting up Database Client
+app.use(passport.initialize());
+app.use(passport.session());
+
+/* ========================== Connect to Database ========================== */
 
 const db = new pg.Client({
-  user: "postgres.ormzewzckwyfqgyfukcc",
-  password: "p4pv4mm13bpP!",
-  host: "aws-0-us-east-1.pooler.supabase.com",
-  database: "postgres",
-  port: 6543
-})
+  host: process.env.PG_HOST,
+  user: process.env.PG_USER,
+  password: process.env.PG_PASSWORD,
+  database: process.env.PG_DATABASE,
+  port: process.env.PG_PORT
+});
 
 db.connect();
 
-// Handles all the routes
+/* ========================== Middleware Authentication ========================== */
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  }
+  res.redirect('/login');
+}
+
+/* ========================== Main Routes ========================== */
+
 app.get("/", (req, res) => {
-  res.render("login.ejs");
+  res.redirect("/dashboard")
 })
 
 app.get("/login", (req, res) => {
@@ -36,90 +62,67 @@ app.get("/register", (req, res) => {
   res.render("register.ejs");
 })
 
-app.get("/dashboard", async (req, res) => {
-  try {
-    const result = await db.query("SELECT * FROM accounts JOIN portfolio_information ON accounts.id = portfolio_information.id WHERE username = $1", [currentUser])
-    const data = result.rows[0]
-
-    const positionData = await db.query("SELECT position_data.id, identifier, name, price, type, unrealized_gains, realized_gains FROM accounts JOIN portfolio_information ON portfolio_information.id = accounts.id JOIN position_data ON position_data.account_id = portfolio_information.id WHERE username = $1 LIMIT 3", [currentUser]);
-    const positionResult = positionData.rows
-
-    if (data) {
-      res.render("dashboard.ejs", {
-        username: currentUser,
-        account: data,
-        position: positionResult
-      });
-
-    }
-
-  } catch (err) {
-    console.log("There was an error executing this query");
-  }
-  db.ae
-
-})
-
-app.get("/positions", async (req, res) => {
+app.get("/dashboard", ensureAuthenticated, async (req, res) => {
 
   try {
-    const result = await db.query("SELECT position_data.id, identifier, name, price, type, unrealized_gains, realized_gains FROM accounts JOIN portfolio_information ON portfolio_information.id = accounts.id JOIN position_data ON position_data.account_id = portfolio_information.id WHERE username = $1", [currentUser]);
+    const user = req.user.username
 
-    const data = result.rows
-
-    if (data.length > 1) {
-      res.render("positions.ejs", {
-        username: currentUser,
-        positionData: result.rows
-      });
-    } else {
-      res.render("positions.ejs", {
-        username: currentUser,
-      });
-    }
-  } catch (err) {
-    res.render("positions.ejs", {
-      username: currentUser,
-    });
-  }
-
-})
-
-app.get("/updates", (req, res) => {
-  res.render("updates.ejs", {
-    username: currentUser
-  });
-})
-
-app.get("/profile", (req, res) => {
-  res.render("profile.ejs", {
-    username: currentUser
-  });
-})
-
-/* Handles the login and registration form */
-app.post("/login", async (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
-
-  try {
-    const result = await db.query("SELECT id, username, password FROM accounts WHERE username=$1 AND password=$2", [username, password])
-
+    const result = await db.query(
+      "SELECT settled_cash, buying_power, dividends, balance FROM account JOIN portfolio_information ON portfolio_information.id = account.id WHERE username = $1", [user])
     const data = result.rows[0];
 
-    if (data.username == username && data.password == password) {
-      currentUser = data.username
-      userById = data.id;
-      res.redirect("/dashboard")
-    }
+    const positionResult = await db.query(
+      "SELECT name, unrealized_gains FROM account JOIN position_table ON position_table.account_id = account.id WHERE username = $1 LIMIT 3", [user]);
+    const positionData = positionResult.rows
+
+    res.render("dashboard.ejs", {
+      username: user,
+      account: data,
+      position: positionData
+    });
 
   } catch (err) {
-    console.log("That account does not exist");
-    res.render("login.ejs", {
-      error: "Login or password is invalid..."
-    })
+    console.log(err);
   }
 })
+
+app.get("/positions", ensureAuthenticated, async (req, res) => {
+
+  try {
+    const user = req.user.username;
+
+    const positionResult = await db.query(
+      "SELECT * FROM account JOIN position_table ON position_table.account_id = account.id WHERE username = $1 LIMIT 3", [user]);
+    const positionData = positionResult.rows
+
+    res.render("positions.ejs", {
+      username: user,
+      positionData: positionData
+    })
+
+  } catch (err) {
+    console.log(err)
+  }
+
+})
+
+app.get("/updates", ensureAuthenticated, (req, res) => {
+  const user = req.user.username;
+
+  res.render("updates.ejs", {
+    username: user,
+  });
+})
+
+app.get("/profile", ensureAuthenticated, (req, res) => {
+  const user = req.user.username;
+
+  res.render("profile.ejs", {
+    username: user,
+  });
+})
+
+/* ========================== Register Account ========================== */
 
 app.post("/register", async (req, res) => {
   const email = req.body.email;
@@ -127,54 +130,96 @@ app.post("/register", async (req, res) => {
   const password = req.body.password;
 
   try {
-    // First create the account
-    const createAccount = await db.query("INSERT INTO accounts (email, username, password) VALUES ($1, $2, $3)", [email, username, password]);
+    const checkResult = await db.query("SELECT * FROM account WHERE email = $1", [email])
 
-    // Find the new account
-    const findNewAccount = await db.query("SELECT * FROM accounts WHERE username=$1", [username])
+    if (checkResult.rows.length > 0) {
+      res.send("Account already exists. Try logging in");
+    } else {
+      bcrypt.hash(password, saltRounds, async (err, hash) => {
 
-    // Retrieve the data of the new account
-    const data = findNewAccount.rows[0]
+        if (err) {
+          console.log("Error hashing the password:", err);
+        } else {
+          const result = await db.query("INSERT INTO account (email, username, password) VALUES ($1, $2, $3) RETURNING *", [email, username, hash])
 
-    // Every new account that is made will have the default values of 0
-    if (createAccount) {
-      const insertDefaultData = await db.query("INSERT INTO portfolio_information (id, settled_cash, buying_power, dividends, balance) VALUES ($1, 0, 0, 0, 0)", [data.id])
-      res.redirect("/login");
+          await db.query("INSERT INTO portfolio_information (id, settled_cash, buying_power, dividends, balance) VALUES ($1, 0, 0, 0, 0)", [result.rows[0].id])
+
+          res.redirect("/login");
+        }
+
+      });
     }
+
   } catch (err) {
-    console.log("Account already exists");
-    res.render("register.ejs", {
-      error: "Email or username already exists"
-    })
+    console.log(err);
   }
 
 })
 
-app.post("/update", async (req, res) => {
-  console.log(req.body);
+/* ========================== Log in ========================== */
 
-  console.log("Current user =", currentUser)
-  console.log("User's ID =", userById)
+app.post("/login", passport.authenticate("local", {
+  successRedirect: "/dashboard",
+  failureRedirect: "/login"
+}))
 
-  // try {
-  //   await db.query("UPDATE accounts SET username = $1, ")
+/* ========================== Log out ========================== */
 
-
-  // } catch (err) {
-  //   console.log(err);
-  // }
-
-
+app.get("/logout", (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect("/login")
+    }
+  })
 })
 
-app.post("/delete", (req, res) => {
-  console.log(req.body);
+passport.use(new Strategy(async function verify(username, password, cb) {
+
+  try {
+
+    const result = await db.query("SELECT * FROM account WHERE username = $1", [username]);
+
+    if (result.rows.length > 0) {
+      const user = result.rows[0]
+      const hashedPassword = user.password
+
+      bcrypt.compare(password, hashedPassword, (err, result) => {
+        if (err) {
+          return cb(err)
+        } else {
+          if (result) {
+            return cb(null, user)
+          } else {
+            return cb(null, false)
+          }
+        }
+      });
+
+
+    } else {
+      return cb("User not found");
+    }
+
+  } catch (err) {
+    return cb(err);
+  }
+
+}))
+
+passport.serializeUser((user, cb) => {
+  cb(null, user);
 })
 
+passport.deserializeUser((user, cb) => {
+  cb(null, user);
+})
 
-// If the user accesses a route that does exist
+/* ========================== 404 Fallback ========================== */
+
 app.all("/*", (req, res) => {
   res.status(400).render('404.ejs');
 })
 
-app.listen(3000, console.log(`Listening on port ${port}`));
+app.listen(3000, console.log(`Listening on port ${port}`))
