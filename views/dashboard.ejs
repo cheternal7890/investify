@@ -87,7 +87,9 @@
         </div>
       </div>
 
-      <div id="performanceGraph">
+
+      <!------------------ Line Graph ------------------>
+      <div id="lineGraphBox">
         <div id="titleContainer">
           <p style="opacity: 0.65; margin: 0;">Net Account Value</p>
           <h1>
@@ -95,11 +97,25 @@
           </h1>
         </div>
 
+        <hr id="borderLine">
+
         <div id="graphContainer">
           <div class="chart">
             <canvas id="lineGraph"></canvas>
           </div>
+        </div>
+      </div>
 
+
+      <!------------------ Doughnut Chart ------------------>
+      <div id="doughnutGraphBox">
+        <div id="titleContainer">
+          <h6 style="margin: 0; text-align: center;">Asset Allocation</h6>
+        </div>
+
+        <hr id="borderLine">
+
+        <div id="graphContainer">
           <div class="chart">
             <canvas id="doughnutChart"></canvas>
           </div>
@@ -107,34 +123,104 @@
       </div>
 
       <div id="recommendedBox">
-        <h6>Recommended:</h6>
+        <h6>Discover Investments</h6>
 
         <div id="recommendedItem">
           <p>AMC Entertainment Inc</p>
-          <p>Test</p>
+          <p style="color: #009933">+8.4%<i class="fa-solid fa-arrow-trend-up"></i></p>
         </div>
 
         <div id="recommendedItem">
           <p>Marathon Digital</p>
-          <p>Test</p>
+          <p style="color: #009933">+2.4%<i class="fa-solid fa-arrow-trend-up"></i></p>
         </div>
 
         <div id="recommendedItem">
           <p>Intel Corporation</p>
-          <p>Test</p>
+          <p style="color: #009933">+1.7%<i class="fa-solid fa-arrow-trend-up"></i></p>
         </div>
       </div>
 
-      <div id="dateBox">
-        <button id="dateButton"><span>7 Days</span></button>
-        <button id="dateButton"><span>Months to Date</span></button>
-        <button id="dateButton" autofocus><span>1 Month</span></button>
-        <button id="dateButton"><span>Year to Date</span></button>
-        <button id="dateButton"><span>1 Year</span></button>
+      <div id="transactionBox">
+        <h6>Transactions</h6>
+
+        <hr id="borderLine">
+
+        <table id="transactionTable">
+
+          <thead id="headerBlock">
+            <tr>
+              <td id="headerCells">Name</td>
+              <td id="headerCells">Category</td>
+              <td id="headerCells">Date</td>
+              <td id="headerCells">Amount</td>
+            </tr>
+          </thead>
+
+          <tbody id="positionRow">
+            <tr>
+              <td data-cell="name" id="name">
+                Walmart
+              </td>
+
+              <td data-cell="category" id="category">
+                Shops
+              </td>
+
+              <td data-cell="date" id="date">
+                2023-09-30
+              </td>
+
+              <td data-cell="amount" id="amount">
+                $72.10
+              </td>
+            </tr>
+
+            <tr>
+              <td data-cell="name" id="name">
+                Best Buy
+              </td>
+
+              <td data-cell="category" id="category">
+                Electronics
+              </td>
+
+              <td data-cell="date" id="date">
+                2023-09-28
+              </td>
+
+              <td data-cell="amount" id="amount">
+                $84.30
+              </td>
+            </tr>
+
+            <tr>
+              <td data-cell="name" id="name">
+                DoorDash
+              </td>
+
+              <td data-cell="category" id="category">
+                Food and Drink
+              </td>
+
+              <td data-cell="date" id="date">
+                2023-09-24
+              </td>
+
+              <td data-cell="amount" id="amount">
+                $23.94
+              </td>
+            </tr>
+
+          </tbody>
+
+        </table>
+
       </div>
 
       </div>
     </main>
+
     <script src="/js/chart.js"></script>
 </body>
 

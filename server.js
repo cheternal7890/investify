@@ -122,6 +122,106 @@ app.get("/profile", ensureAuthenticated, (req, res) => {
   });
 })
 
+/* ========================== Update Account ========================== */
+
+app.post("/update", async (req, res) => {
+  const user = req.user;
+  const newUsername = req.body.username;
+  const newPassword = req.body.password;
+
+  try {
+    if (newUsername != "" && newPassword != "") {
+
+      try {
+        const result = await db.query("SELECT * FROM account WHERE username = $1", [newUsername])
+
+        if (result.rows.length > 0) {
+          console.log("Account already exists");
+          res.render("profile.ejs", {
+            username: user.username,
+            error: "Username already exists"
+          })
+        } else {
+          bcrypt.hash(newPassword, saltRounds, async (err, hash) => {
+            if (err) {
+              console.log("Error hashing the password:", err);
+            } else {
+              await db.query("UPDATE account SET username = $1, password = $2 WHERE id = $3", [newUsername, hash, user.id])
+              console.log("Success");
+            }
+          })
+          res.redirect("/login")
+        }
+
+      } catch (err) {
+        console.log(err);
+      }
+
+    } else if (newUsername != "") {
+
+      try {
+        const result = await db.query("SELECT * FROM account WHERE username = $1", [newUsername])
+
+        if (result.rows.length > 0) {
+          console.log("Account already exists");
+          res.render("profile.ejs", {
+            username: user.username,
+            error: "Username already exists"
+          })
+        } else {
+          await db.query("UPDATE account SET username = $1 WHERE id = $2", [newUsername, user.id])
+          res.redirect("/login")
+        }
+
+      } catch (err) {
+        console.log(err);
+      }
+
+    } else if (newPassword != "") {
+
+      try {
+
+        bcrypt.hash(newPassword, saltRounds, async (err, hash) => {
+          if (err) {
+            console.log("Error hashing the password:", err)
+          } else {
+            await db.query("UPDATE account SET password = $1 WHERE id = $2", [hash, user.id]);
+            res.redirect("/login")
+          }
+        })
+
+      } catch (err) {
+        console.log(err);
+      }
+
+    } else {
+      console.log("Nothing happened");
+      res.redirect("/profile")
+    }
+
+  } catch (err) {
+    console.log(err);
+  }
+
+})
+
+/* ========================== Delete Account ========================== */
+
+app.post("/delete", async (req, res) => {
+  const user = req.body
+
+  try {
+    await db.query("SELECT * FROM account WHERE id = $1", [user.id])
+    // await db.query("DELETE FROM account WHERE id = $1", [user.id])
+    console.log("Account has been deleted")
+    res.redirect("/login");
+
+  } catch (err) {
+    console.log(err);
+  }
+
+})
+
 /* ========================== Register Account ========================== */
 
 app.post("/register", async (req, res) => {
@@ -197,9 +297,8 @@ passport.use(new Strategy(async function verify(username, password, cb) {
         }
       });
 
-
     } else {
-      return cb("User not found");
+      return cb(null, false);
     }
 
   } catch (err) {

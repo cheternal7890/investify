@@ -1,3 +1,5 @@
+/* ========================== Default CSS ========================== */
+
 * {
   box-sizing: border-box;
 }
@@ -16,12 +18,14 @@ h1 {
   font-size: 1.728rem;
   margin: 0;
   padding: 0;
+  font-weight: 600;
 }
 
 h6{
   font-size: 1.25rem;
   padding: 0;
-  margin: 10px 0px;
+  font-weight: 600;
+  margin: 7px 0px;
 }
 
 p{
@@ -33,25 +37,25 @@ span {
   font-size: 1rem;
 }
 
-#recommendedBox, #portfolioBox, .chart {
-  padding: 18px;
-  box-shadow: rgba(9, 30, 66, 0.195) 0px 1px 1px, rgba(112, 112, 112, 0.13) 0px 0px 1px 1px;
+#recommendedBox, #portfolioBox, #transactionBox, #lineGraphBox, #doughnutGraphBox {
+  padding: 1rem;
+  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.12), 0px 0px 1px 0px rgba(0, 0, 0, 0.35);
   border-radius: 4px;
 }
 
-/* Main */
+/* ========================== Main ========================== */
 
 #container {
   display: grid;
-  height: 50dvh;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 1fr 2fr 1fr;
   grid-template-rows: 2fr 1fr;
   grid-template-areas:
-    "portfolioBox performanceGraph"
-    "recommendedBox dateBox"
-    "footer footer";
+    "portfolioBox lineGraphBox doughnutGraphBox"
+    "recommendedBox transactionBox transactionBox"
+    "footer footer footer";
   gap: 1rem;
-  margin-right: 2.25rem;
+  margin-right: 1.5rem;
+  margin-left: 0.25rem;
 }
 
 /* Portfolio Box */
@@ -69,8 +73,8 @@ span {
 #buttonContainer {
   display: flex;
   justify-content: space-between;
-  margin-top: 24px;
-  margin-bottom: 24px;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 #buttonItem {
@@ -97,9 +101,7 @@ span {
   justify-content: space-between;
 }
 
-
-
-/* Recommended Box */
+/* ========================== Recommended Box ========================== */
 
 #recommendedBox {
   background-color: #d9d9d9;
@@ -116,30 +118,34 @@ span {
   justify-content: space-between;
 }
 
-#performanceGraph {
-  align-items: center;
-  justify-content: center;
-  grid-area: performanceGraph;
-}
+
+/* ========================== Graph Box ========================== */
 
 #titleContainer{
-  height: 15%;
-  padding: 1em;
+  height: 10%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: left;
 }
 
-/* ============== CANVAS ============== */
+#borderLine{
+  border-width: 1px;
+  border-style: solid;
+  border-color: #e6e6e6;
+}
 
-#graphContainer{
-  display: grid;
-  height: 85%;
-  grid-template-columns: 2fr 1fr;
-  grid-gap: 1rem;
-  width: 100%;
+#lineGraphBox{
+  grid-area: lineGraphBox;
+}
+
+#doughnutGraphBox{
+  grid-area: doughnutGraphBox;
 }
 
 canvas#lineGraph, canvas#doughnutChart{
   max-width: 100%;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 }
 
 .chart{
@@ -148,16 +154,19 @@ canvas#lineGraph, canvas#doughnutChart{
   border-radius: 4px;
 }
 
+/* ========================== Media Queries ========================== */
+
 @media only screen and (max-width: 768px) {
   #container {
-    margin-right: 0;
+    margin: 0;
     gap: 1.2rem;
     grid-template-columns: 1fr;
-    grid-template-rows: 3fr 0.5fr 1fr 1fr 1fr;
+    grid-template-rows: 0.5fr 1fr 1fr 0.5fr 0.5fr;
     grid-template-areas:
-      "performanceGraph"
-      "dateBox"
+      "lineGraphBox"
+      "doughnutGraphBox"
       "portfolioBox"
+      "transactionBox"
       "recommendedBox"
       "footer";
   }
@@ -166,33 +175,54 @@ canvas#lineGraph, canvas#doughnutChart{
     display: none;
   }
 
+  .chart{
+    padding: 0;
+  }
+
+  #transactionBox{
+    background-color: #d9d9d9;
+  }
+
+
   #buttonContainer {
     flex-wrap: wrap;
-  }
-
-  #graphContainer {
-    grid-template-columns: 1fr;
-  }
-
-  #dateBox{
-    display: none;
   }
 
   canvas#lineGraph, canvas#doughnutChart{
     margin-top: 0rem;
   }
 
-  .chart{
+  #lineGraphBox, #doughnutGraphBox{
     box-shadow: none;
   }
 }
 
-/* Date Box */
+/* ========================== Transaction Box ========================== */
 
-#dateBox {
-  grid-area: dateBox;
-  padding: 12px;
-  text-align: center;
+#transactionBox {
+  grid-area: transactionBox;
+  height: 0;
+  min-height: 100%;
+  overflow-y: auto;
+}
+
+#transactionTable{
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#transactionTable td{
+  padding: 10px;
+}
+
+#headerBlock{
+  font-weight: 500;
+}
+
+#block{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 #dateButton {

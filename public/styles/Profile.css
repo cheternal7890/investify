@@ -1,3 +1,4 @@
+/* ========================== Default CSS ========================== */
 * {
   box-sizing: border-box;
 }
@@ -26,8 +27,9 @@ h5{
 
 h6{
   font-size: 1.25rem;
+  font-weight: 600;
   padding: 0;
-  margin: 10px 0px;
+  margin: 7px 0px;  
 }
 
 p{
@@ -99,7 +101,7 @@ span {
   padding: 4px;
 }
 
-#formButton{
+.formButton{
   cursor: pointer;
   padding-bottom: 4px;
   padding-top: 4px;
@@ -108,16 +110,27 @@ span {
   border-style: solid;
   border-color: rgb(186, 186, 186);
   border-radius: 4px;
-  border-width: 1px;
+  border-width: 2px;
   color: white;
   border-color: #46d7bc;
   background-color: #2f8d7c;
 }
 
-#formButton:hover{
+.formButton:hover{
   border-color: #4be3c7;
   background-color: #3ab09a;
 }
+
+.cancelButton{
+  border-color: #8f8f8f;
+  background-color: #4f4f4f;
+}
+
+.cancelButton:hover{
+  border-color: #8f8f8f;
+  background-color: #707070;
+}
+
 
 /* ====================== Plaid Button CSS ====================== */
 
@@ -184,13 +197,3 @@ span {
   text-align: center;
   color: #CC3300;
 }
-
-
-
-
-/* ====================== Media Queries ====================== */
-
-
-
-
-
