@@ -20,7 +20,7 @@ input{
 
 .container {
   display: flex;
-  background: linear-gradient(to right, #d9d9d9 0%, #d0d0d0 100%); 
+  background: linear-gradient(to right, #d9d9d9 0%, #c1c1c1 100%); 
   justify-content: center;
   align-items: center;
   height: 100vh;

@@ -15,17 +15,17 @@ body {
 }
 
 h1 {
-  font-size: 1.728rem;
+  font-size: 1.65rem;
   margin: 0;
   padding: 0;
-  font-weight: 600;
+  font-weight: 550;
 }
 
 h6{
-  font-size: 1.25rem;
+  font-size: 1.125rem;
+  margin: 0;
   padding: 0;
-  font-weight: 600;
-  margin: 7px 0px;
+  font-weight: 550;
 }
 
 p{
@@ -38,7 +38,7 @@ span {
 }
 
 #recommendedBox, #portfolioBox, #transactionBox, #lineGraphBox, #doughnutGraphBox {
-  padding: 1rem;
+  padding: 1.25rem;
   box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.12), 0px 0px 1px 0px rgba(0, 0, 0, 0.35);
   border-radius: 4px;
 }
@@ -58,10 +58,13 @@ span {
   margin-left: 0.25rem;
 }
 
-/* Portfolio Box */
+/* ========================== Portfolio Box ========================== */
 
 #portfolioBox {
   background-color: #d9d9d9;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
   grid-area: portfolioBox;
 }
 
@@ -79,9 +82,10 @@ span {
 
 #buttonItem {
   color: white;
-  padding: 12px;
+  padding: 0.75rem;
   width: 96px;
-  border-radius: 24px;
+  text-align: center;
+  border-radius: 4px;
   border: none;
   cursor: pointer;
   user-select: none;
@@ -101,10 +105,21 @@ span {
   justify-content: space-between;
 }
 
+#positiveTrendColor{
+  color: #009900;
+}
+
+#negativeTrendColor {
+  color: #FF3300
+}
+
 /* ========================== Recommended Box ========================== */
 
 #recommendedBox {
   background-color: #d9d9d9;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
   grid-area: recommendedBox;
 
   h1 {
@@ -122,21 +137,27 @@ span {
 /* ========================== Graph Box ========================== */
 
 #titleContainer{
-  height: 10%;
   display: flex;
-  justify-content: center;
   flex-direction: column;
-  text-align: left;
 }
 
 #borderLine{
-  border-width: 1px;
+  margin-top: 6px;
+  margin-bottom: 6px;
   border-style: solid;
-  border-color: #e6e6e6;
+  border-width: 1px;
+  /* border-color: #e0e1e2; */
+  border-color: #e0e1e2;
 }
 
 #lineGraphBox{
   grid-area: lineGraphBox;
+}
+
+#lineGraphBox, #doughnutGraphBox{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 #doughnutGraphBox{
@@ -161,7 +182,7 @@ canvas#lineGraph, canvas#doughnutChart{
     margin: 0;
     gap: 1.2rem;
     grid-template-columns: 1fr;
-    grid-template-rows: 0.5fr 1fr 1fr 0.5fr 0.5fr;
+    grid-template-rows: auto auto 1fr 0.5fr 0.5fr;
     grid-template-areas:
       "lineGraphBox"
       "doughnutGraphBox"
@@ -193,6 +214,8 @@ canvas#lineGraph, canvas#doughnutChart{
   }
 
   #lineGraphBox, #doughnutGraphBox{
+    padding: 0;
+    margin: 5%;
     box-shadow: none;
   }
 }

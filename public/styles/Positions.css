@@ -14,13 +14,14 @@ body {
 }
 
 h6{
-  font-size: 1.25rem;
+  font-size: 1.125rem;
+  font-weight: 550;
   padding: 0;
   margin: 7px 0px;
 }
 
 td{
-  font-size: 1rem;
+  font-size: 0.875rem;
   padding: 0;
   margin: 10px 0px;
 }
@@ -30,13 +31,13 @@ td{
 #userPositionsTable {
   height: 100%;
   width: 100%;
-  border-collapse:collapse;
+  border-collapse: collapse;
 }
 
 #headerCells {
   background-color: #0d6da1;
   color: white;
-  font-weight: 600;
+  font-weight: 450;
 }
 
 #sortByButton{
@@ -47,23 +48,52 @@ td{
 #actionButton {
   padding-top: 10px;
   padding-bottom: 10px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-style: solid;
+  border-color: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  background-color: #33a08c;
+  border-radius: 4px;
+}
+
+#actionButton:hover{
+  background-color: #37ac97;
+}
+
+#actionButton:active{
+  background-color: #2f8d7c;
+}
+
+#modal{
+  background-color: #d9d9d9;
+  color: black;
+  border-radius: 4px;
+  border-width: 0.5px;
+  box-shadow: 0px 1px 3px 0px rgba(0,0,0,0.12), 0px 0px 1px 0px rgba(0, 0, 0, 0.35);
+  width: 400px;
+  height: 275px;
 }
 
 #filterBox{
-  padding: 12px;
+  padding: 0.75rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
 td {
-  padding: 1rem;
+  padding: 0.75rem;
   background-color: #d9d9d9;
   border-width: 1px;
   width: 400px;
-
+  line-height: 20px;
+  
   a{
-    color:  #299ad7;
+    color:  #0099FF;
     text-decoration-line: none;
   }
 
@@ -74,8 +104,8 @@ td {
 
 tr{
   border-bottom-style: solid;
-  border-bottom-width: 1px;
-  border-bottom-color: #b0afaf;
+  border-color: rgba(9, 30, 66, 0.10);
+  border-width: 0.5px;
 }
 
 tr:hover {
@@ -99,10 +129,7 @@ tr td:nth-child(7) {
   td {
     display: block;
     width: 100%;
-    padding: 1rem;
-    background-color: #d9d9d9;
-    border-style: none;
-    border-bottom-color: black;
+    padding: 0.75rem;
   }
 
   tr{

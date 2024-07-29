@@ -79,7 +79,7 @@
               <td data-cell="unrealized" id="unrealized">
 
                 <% if(item.unrealized_gains> 0){ %>
-                  <span style="color: #009933;">+<%= item.unrealized_gains%>%<i class="fa-solid fa-arrow-trend-up"></i>
+                  <span style="color: #009900;">+<%= item.unrealized_gains%>%<i class="fa-solid fa-arrow-trend-up"></i>
                   </span>
                   <% } else if (item.unrealized_gains < 0){ %>
                     <span style="color: #CC0000;">
@@ -96,7 +96,7 @@
               <td data-cell="realized" id="realized">
 
                 <% if(item.realized_gains> 0){ %>
-                  <span style="color: #009933;">+<%= item.realized_gains%>%<i class="fa-solid fa-arrow-trend-up"></i>
+                  <span style="color: #009900;">+<%= item.realized_gains%>%<i class="fa-solid fa-arrow-trend-up"></i>
                   </span>
                   <% } else if (item.realized_gains < 0){ %>
                     <span style="color: #CC0000;">
@@ -110,26 +110,25 @@
 
               </td>
               <td data-cell="actions" id="action">
-                <select id="actionButton">
-                  <option>Buy More</option>
-                  <option>Sell</option>
-                  <option>Sell All</option>
-                </select>
+                <button popovertarget="modal" id="actionButton">
+                  Buy
+                </button>
+
+                <div id="modal" popover>
+                  <button popovertarget="modal" popovertargetaction="hide"
+                    style="position: absolute; top: 0; right: 0;">X</button>
+                  <input type="button" value="Buy">
+                  <input type="button" value="Sell">
+                  <input type="button" value="Sell All">
+                </div>
               </td>
             </tr>
 
             <% }) %>
               <% } %>
+
       </table>
     </div>
-
-
-
-    <dialog id="modal">
-      <button>Buy</button>
-      <button>Sell</button>
-      <button id="closeModal">X</button>
-    </dialog>
     <script src="/js/positions.js"></script>
 </body>
 

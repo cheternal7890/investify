@@ -3,7 +3,7 @@
 const ctx = document.getElementById('lineGraph');
 
 Chart.defaults.font.size = 13
-Chart.defaults.family = "`Inter`, sans-serif;"
+Chart.defaults.font.family = "'Inter', sans-serif";
 Chart.defaults.font.weight = 400
 
 new Chart(ctx, {

@@ -37,7 +37,7 @@
   .menu-container{
     position: absolute;
     z-index: 1;
-    box-shadow: rgba(151, 151, 151, 0.75) 0px 3px 8px;
+    box-shadow: rgba(43, 43, 43, 0.30) 0px 3px 8px;
     top: 48px;
     right: 11px;
     color: black;
@@ -151,6 +151,7 @@
     color: black;
     padding-right: 1rem;
     text-underline-offset: 4px;
+    font-weight: 415;
   }
 
   a:hover {

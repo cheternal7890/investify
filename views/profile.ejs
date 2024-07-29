@@ -12,6 +12,8 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="/styles/Banner.css" />
   <link rel="stylesheet" href="/styles/Profile.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.plaid.com/link/v2/stable/link-initialize.js"></script>
   <script src="/js/toggleDropdown.js" defer></script>
   <title>Investify</title>
 </head>
@@ -29,28 +31,30 @@
             <h5>Account Information</h5>
           </div>
 
-          <form id="boxForm" action="/update" method="post">
+          <form class="boxForm" action="/update" method="post">
             <div id="box">
               <label for="username" id="formLabel">
                 <% if(locals.error){ %>
-                  <span id="errorMessage"><i><%= error %></i></span>
-                <% } else { %>
-                  <span>Username</span>
-                <% } %>
+                  <span id="errorMessage"><i>
+                      <%= error %>
+                    </i></span>
+                  <% } else { %>
+                    <span>Username</span>
+                    <% } %>
               </label>
-              <input id="formInput" type="text" name="username" value="">
+              <input class="formInput" type="text" name="username" id="username" onkeyup="enableButton()">
             </div>
 
             <div id="box">
               <label for="password" id="formLabel">
                 <span>Password</span>
               </label>
-              <input id="formInput" type="password" name="password" value="">
+              <input class="formInput" type="password" name="password" id="password" onkeyup="enableButton()">
             </div>
 
             <div id="box" style="justify-content: right; gap: 4px;">
-              <input type="button" class="formButton cancelButton" value="Cancel">
-              <button class="formButton" type="submit" value="Submit"><span>Save</button>
+              <button type="button" class="cancelButton cancelButtonActive" id="cancelAccountButton">Cancel</button>
+              <button type="submit" class="submitButton submitButtonActive" id="submitAccountButton"><span>Save</button>
             </div>
           </form>
         </div>
@@ -63,29 +67,29 @@
             <h5>Profile Information</h5>
           </div>
 
-          <form id="boxForm" action="" method="post">
+          <form class="boxForm" action="" method="post">
             <div id="box">
               <label for="username" id="formLabel">
                 <span>First name</span>
               </label>
-              <input id="formInput" type="text" name="username" value="">
+              <input class="formInput" type="text" name="firstName" id="firstName">
             </div>
 
             <div id="box">
               <label for="password" id="formLabel">
                 <span>Last name</span>
               </label>
-              <input id="formInput" type="password" name="password" value="">
+              <input class="formInput" type="password" name="lastName" id="lastName">
             </div>
 
             <div id="box" style="justify-content: right; gap: 4px;">
-              <input type="button" class="formButton cancelButton" value="Cancel">
-              <button class="formButton" type="submit" value="Submit"><span>Save</button>
+              <button type="button" class="cancelButton cancelButtonActive" id="cancelProfileButton">Cancel</button>
+              <button type="submit" class="submitButton saveButtonActive" value="Submit"
+                id="submitProfileButton"><span>Save</button>
             </div>
           </form>
         </div>
       </div>
-
 
       <!------------------------ Import From Plaid ------------------------>
 
@@ -95,11 +99,14 @@
             <h5>Import From Plaid</h5>
           </div>
 
-          <form id="boxForm">
+          <form class="boxForm">
             <div id="box">
-              <button id="plaidButton">
-                <span>Link with Plaid</span>
+              <button id="plaidButton" type="button">
+                <span>Link Bank</span>
               </button>
+
+              <button id="transactions" type="button">Get Investments</button>
+              <pre id="transactionsList"></pre>
             </div>
           </form>
         </div>
@@ -124,7 +131,7 @@
                 <div>
                   <span>
                     Deleting your account is permanent and cannot be undone. All data will be removed, except
-                    the data that was imported from Plaid. The Plaid Data remains completely safe. 
+                    the data that was imported from Plaid. The Plaid Data remains completely safe.
                   </span>
                 </div>
 
@@ -141,7 +148,8 @@
     </div>
 
     <!--- Add client sided script for when the user clicks cancel it erases whatever the user inputted -->
-
+    <script src="/js/profile.js"></script>
+    <script src="/js/plaidClient.js"></script>
 </body>
 
 </html>

@@ -5,15 +5,27 @@ import bcrypt from "bcrypt";
 import session from "express-session";
 import passport from "passport";
 import { Strategy } from "passport-local";
+import { Configuration, PlaidApi, PlaidEnvironments } from "plaid";
 import env from "dotenv"
+import cors from 'cors'
+import favicon from "serve-favicon"
+import path from "path"
+import { fileURLToPath } from 'url';
+import { access } from "fs";
 
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const app = express();
 const saltRounds = 10;
 const port = 3000;
-env.config();
+
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')))
+app.use(cors());
+env.config();
 
 app.use(session({
   secret: process.env.SESSION_SECRET,
@@ -82,6 +94,7 @@ app.get("/dashboard", ensureAuthenticated, async (req, res) => {
     });
 
   } catch (err) {
+    // Internal Server Error
     console.log(err);
   }
 })
@@ -92,7 +105,7 @@ app.get("/positions", ensureAuthenticated, async (req, res) => {
     const user = req.user.username;
 
     const positionResult = await db.query(
-      "SELECT * FROM account JOIN position_table ON position_table.account_id = account.id WHERE username = $1 LIMIT 3", [user]);
+      "SELECT * FROM account JOIN position_table ON position_table.account_id = account.id WHERE username = $1 LIMIT 10", [user]);
     const positionData = positionResult.rows
 
     res.render("positions.ejs", {
@@ -121,6 +134,91 @@ app.get("/profile", ensureAuthenticated, (req, res) => {
     username: user,
   });
 })
+
+/* ========================== Plaid Token Exchange ========================== */
+
+const configuration = new Configuration({
+  basePath: PlaidEnvironments.sandbox,
+  baseOptions: {
+    headers: {
+      'PLAID-CLIENT-ID': process.env.PLAID_CLIENT_ID,
+      'PLAID-SECRET': process.env.PLAID_SECRET,
+    },
+  },
+});
+
+const client = new PlaidApi(configuration);
+
+app.post('/create_link_token', async (req, res) => {
+  try {
+    const response = await client.linkTokenCreate({
+      user: {
+        client_user_id: String(req.user.id)
+      },
+      client_name: 'Investify',
+      products: ['investments'],
+      required_if_supported_products: ['auth'],
+      country_codes: ['US'],
+      language: "en"
+    });
+
+    res.json(response.data);
+    console.log(response.data)
+  } catch (error) {
+    console.error('Error', error);
+
+    res.json({
+      error: error.message
+    });
+  }
+});
+
+let token = ""
+
+app.post('/exchange_public_token', async function (
+  request,
+  response,
+  next,
+) {
+
+  const publicToken = request.body.public_token;
+  try {
+    const response = await client.itemPublicTokenExchange({
+      public_token: publicToken,
+    });
+    // These values should be saved to a persistent database and
+    // associated with the currently signed-in user
+    const accessToken = response.data.access_token;
+    const itemID = response.data.item_id;
+    token = accessToken;
+    res.json({ public_token_exchange: 'complete' });
+  } catch (error) {
+    // handle error
+  }
+});
+
+app.post('/get_investments', async (req, res) => {
+  console.log(token);
+
+  const request = {
+    access_token: token,
+    start_date: '2019-01-01',
+    end_date: '2024-07-29',
+    options: {
+      count: 250,
+      offset: 0,
+    },
+  };
+
+  try {
+    const response = await client.investmentsTransactionsGet(request);
+    const investmentTransactions = response.data.investment_transactions;
+    return res.json(investmentTransactions);
+  } catch (error) {
+    // handle error
+  }
+
+});
 
 /* ========================== Update Account ========================== */
 

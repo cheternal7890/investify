@@ -23,7 +23,7 @@
     <!-- Main Container -->
     <main id="container">
       <div id="portfolioBox">
-        <div>
+        <div id="titleContainer">
           <h6>Your Portfolio</h6>
           <p id="username">
             <%= locals.username %>'s account
@@ -60,8 +60,7 @@
         </div>
 
         <div>
-          <h6>Positions:</h6>
-
+          <h6>Positions</h6>
 
           <% if(locals.position){ %>
             <% position.forEach((item)=> { %>
@@ -71,9 +70,9 @@
                 </p>
 
                 <% if(item.unrealized_gains> 0){ %>
-                  <p style="color: #009933">+<%= item.unrealized_gains %>%<i class="fa-solid fa-arrow-trend-up"></i></p>
+                  <p id="positiveTrendColor">+<%= item.unrealized_gains %>%<i class="fa-solid fa-arrow-trend-up"></i></p>
                   <% } else if (item.unrealized_gains < 0) { %>
-                    <p style="color: #CC0000">
+                    <p id="negativeTrendColor">
                       <%= item.unrealized_gains %>%<i class="fa-solid fa-arrow-trend-down"></i>
                     </p>
                     <% } else { %>
@@ -91,13 +90,15 @@
       <!------------------ Line Graph ------------------>
       <div id="lineGraphBox">
         <div id="titleContainer">
-          <p style="opacity: 0.65; margin: 0;">Net Account Value</p>
+          <span style="opacity: 0.65; margin: 0;">Net Account Value</span>
           <h1>
             <%= account.balance %>
           </h1>
         </div>
 
-        <hr id="borderLine">
+        <div>
+          <hr id="borderLine">
+        </div>
 
         <div id="graphContainer">
           <div class="chart">
@@ -110,10 +111,12 @@
       <!------------------ Doughnut Chart ------------------>
       <div id="doughnutGraphBox">
         <div id="titleContainer">
-          <h6 style="margin: 0; text-align: center;">Asset Allocation</h6>
+          <h6 style="text-align: center;">Asset Allocation</h6>
         </div>
 
-        <hr id="borderLine">
+        <div>
+          <hr id="borderLine">
+        </div>
 
         <div id="graphContainer">
           <div class="chart">
@@ -123,28 +126,33 @@
       </div>
 
       <div id="recommendedBox">
-        <h6>Discover Investments</h6>
+        <div id="titleContainer">
+          <h6>Discover Investments</h6>
+        </div>
 
         <div id="recommendedItem">
           <p>AMC Entertainment Inc</p>
-          <p style="color: #009933">+8.4%<i class="fa-solid fa-arrow-trend-up"></i></p>
+          <p id="positiveTrendColor">+8.4%<i class="fa-solid fa-arrow-trend-up"></i></p>
         </div>
 
         <div id="recommendedItem">
           <p>Marathon Digital</p>
-          <p style="color: #009933">+2.4%<i class="fa-solid fa-arrow-trend-up"></i></p>
+          <p id="positiveTrendColor">+2.4%<i class="fa-solid fa-arrow-trend-up"></i></p>
         </div>
 
         <div id="recommendedItem">
           <p>Intel Corporation</p>
-          <p style="color: #009933">+1.7%<i class="fa-solid fa-arrow-trend-up"></i></p>
+          <p id="positiveTrendColor">+1.7%<i class="fa-solid fa-arrow-trend-up"></i></p>
         </div>
       </div>
 
       <div id="transactionBox">
-        <h6>Transactions</h6>
+        <div id="titleContainer">
+          <h6>Transactions</h6>
+        </div>
 
-        <hr id="borderLine">
+        <div id="borderLine">
+        </div>
 
         <table id="transactionTable">
 
