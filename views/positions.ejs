@@ -12,72 +12,65 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <script src="/js/toggleDropdown.js" defer></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.1.2/css/dataTables.dataTables.css">
+  <script defer src="https://code.jquery.com/jquery-3.7.1.js"></script>
+  <script defer src="https://cdn.datatables.net/2.1.2/js/dataTables.js"></script>
+  <script defer src="/js/toggleDropdown.js" defer></script>
+  <script defer src="/js/script.js"></script>
+
   <title>Investify</title>
 </head>
 
 <body>
   <%- include("partials/header.ejs") %>
 
-    <div id="container">
-      <div id="filterBox">
-        <div>
-          <h6>My Positions
+    <table id="userPositionTable" class="" style="width:100%">
 
+      <thead>
+        <div id="positionEntries">
+          <h6>My Positions
             <% if(locals.positionData){ %>
               (<%= positionData.length %>)
                 <%}%>
-
           </h6>
         </div>
 
-        <div>
-          <% if(locals.positionData){ %>
-
-            <label>Sort By</label>
-            <select id="sortByButton">
-              <option>Name</option>
-              <option>Price</option>
-              <option>Type</option>
-            </select>
-
-            <% } %>
-
-        </div>
-      </div>
-
-      <table id="userPositionsTable">
         <tr>
-          <td id="headerCells">Identifier</td>
-          <td id="headerCells">Name</td>
-          <td id="headerCells">Price</td>
-          <td id="headerCells">Type</td>
-          <td id="headerCells">Unrealized Gain / Loss</td>
-          <td id="headerCells">Realized Gain / Loss</td>
-          <td id="headerCells">Action</td>
+          <th id="headerCells">Identifier</th>
+          <th id="headerCells">Name</th>
+          <th id="headerCells">Price</th>
+          <th id="headerCells">Type</th>
+          <th id="headerCells">Unrealized Gain / Loss</th>
+          <th id="headerCells">Realized Gain / Loss</th>
+          <th id="headerCells" style="text-align: center;">Actions</th>
         </tr>
-
+      </thead>
+      <tbody>
 
         <% if(locals.positionData){ %>
           <% positionData.forEach((item)=> { %>
 
             <tr id="positionRow">
+
               <td data-cell="identifier" id="identifier">
-                <a href="">
+                <a href="" id="identifierLink">
                   <%= item.identifier %>
                 </a>
               </td>
+
               <td data-cell="name" id="name">
                 <%= item.name %>
               </td>
+
               <td data-cell="price" id="price">
                 <%= item.price %>
               </td>
+
               <td data-cell="type" id="type">
                 <%= item.type %>
               </td>
-              <td data-cell="unrealized" id="unrealized">
 
+              <td data-cell="unrealized" id="unrealized">
                 <% if(item.unrealized_gains> 0){ %>
                   <span style="color: #009900;">+<%= item.unrealized_gains%>%<i class="fa-solid fa-arrow-trend-up"></i>
                   </span>
@@ -90,11 +83,9 @@
                         <%= item.unrealized_gains %>
                       </span>
                       <% } %>
-
-
               </td>
-              <td data-cell="realized" id="realized">
 
+              <td data-cell="realized" id="realized">
                 <% if(item.realized_gains> 0){ %>
                   <span style="color: #009900;">+<%= item.realized_gains%>%<i class="fa-solid fa-arrow-trend-up"></i>
                   </span>
@@ -107,8 +98,8 @@
                         <%= item.realized_gains %>
                       </span>
                       <% } %>
-
               </td>
+
               <td data-cell="actions" id="action">
                 <button popovertarget="modal" id="actionButton">
                   Buy
@@ -122,14 +113,14 @@
                   <input type="button" value="Sell All">
                 </div>
               </td>
+
             </tr>
 
             <% }) %>
               <% } %>
 
-      </table>
-    </div>
-    <script src="/js/positions.js"></script>
+      </tbody>
+    </table>
 </body>
 
 </html>

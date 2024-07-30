@@ -11,7 +11,6 @@ import cors from 'cors'
 import favicon from "serve-favicon"
 import path from "path"
 import { fileURLToPath } from 'url';
-import { access } from "fs";
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -38,6 +37,9 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Testing the position list
+let list = ""
 
 /* ========================== Connect to Database ========================== */
 
@@ -197,6 +199,7 @@ app.post('/exchange_public_token', async function (
   }
 });
 
+// Get the user's investment transactions
 app.post('/get_investments', async (req, res) => {
   console.log(token);
 
@@ -212,13 +215,19 @@ app.post('/get_investments', async (req, res) => {
 
   try {
     const response = await client.investmentsTransactionsGet(request);
-    const investmentTransactions = response.data.investment_transactions;
+    const investmentTransactions = response.data.investment_transactions
+    list = investmentTransactions
     return res.json(investmentTransactions);
   } catch (error) {
     // handle error
   }
 
 });
+
+// Get the user's securites and holdings data
+app.post("/get_holdings", async (req, res) => {
+
+})
 
 /* ========================== Update Account ========================== */
 

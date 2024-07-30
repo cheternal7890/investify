@@ -41,12 +41,13 @@ span {
 #graphContainer{
   display: grid;
   max-width: 720px;
+  width: 100%;
   margin: auto;
   height: 85%;
   grid-template-columns: 2fr;
   grid-gap: 12px;
-  padding: 2px;
-  width: 100%;
+  padding: 1px;
+
 }
 
 #column{
@@ -201,4 +202,10 @@ span {
 #errorMessageHeader{
   text-align: center;
   color: #CC3300;
+}
+
+@media only screen and (max-width: 768px){
+  h6{
+    text-align: center;
+  }
 }
