@@ -143,13 +143,14 @@
 #bottomHeader {
   display: flex;
   justify-content: left;
-  padding: 12px;
   font-size: 1rem;
+  padding: 0.75rem;
 
   a {
     text-decoration-line: none;
     color: black;
-    padding-right: 1rem;
+    padding-right: 0.75rem;
+
     text-underline-offset: 4px;
     font-weight: 415;
   }

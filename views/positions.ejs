@@ -36,12 +36,15 @@
         </div>
 
         <tr>
-          <th id="headerCells">Identifier</th>
+          <th id="headerCells">Symbol</th>
           <th id="headerCells">Name</th>
-          <th id="headerCells">Price</th>
           <th id="headerCells">Type</th>
-          <th id="headerCells">Unrealized Gain / Loss</th>
-          <th id="headerCells">Realized Gain / Loss</th>
+          <th id="headerCells">Purchase Price</th>
+          <th id="headerCells">Current Price</th>
+          <th id="headerCells">Market Value</th>
+          <th id="headerCells">Quantity</th>
+          <th id="headerCells">Gain / Loss</th>
+          <th id="headerCells">Gain / Loss %</th>
           <th id="headerCells" style="text-align: center;">Actions</th>
         </tr>
       </thead>
@@ -54,7 +57,7 @@
 
               <td data-cell="identifier" id="identifier">
                 <a href="" id="identifierLink">
-                  <%= item.identifier %>
+                  <%= item.ticker_symbol %>
                 </a>
               </td>
 
@@ -62,42 +65,53 @@
                 <%= item.name %>
               </td>
 
-              <td data-cell="price" id="price">
-                <%= item.price %>
-              </td>
-
               <td data-cell="type" id="type">
-                <%= item.type %>
+                <%= item.type.charAt(0).toUpperCase() + item.type.slice(1) %>
               </td>
 
-              <td data-cell="unrealized" id="unrealized">
-                <% if(item.unrealized_gains> 0){ %>
-                  <span style="color: #009900;">+<%= item.unrealized_gains%>%<i class="fa-solid fa-arrow-trend-up"></i>
-                  </span>
-                  <% } else if (item.unrealized_gains < 0){ %>
-                    <span style="color: #CC0000;">
-                      <%= item.unrealized_gains%>%<i class="fa-solid fa-arrow-trend-down"></i>
-                    </span>
-                    <% } else { %>
-                      <span>
-                        <%= item.unrealized_gains %>
-                      </span>
-                      <% } %>
+              <td data-cell="price" id="price">
+                <%= item.cost_basis %>
               </td>
 
-              <td data-cell="realized" id="realized">
-                <% if(item.realized_gains> 0){ %>
-                  <span style="color: #009900;">+<%= item.realized_gains%>%<i class="fa-solid fa-arrow-trend-up"></i>
-                  </span>
-                  <% } else if (item.realized_gains < 0){ %>
-                    <span style="color: #CC0000;">
-                      <%= item.realized_gains%>%<i class="fa-solid fa-arrow-trend-down"></i>
+              <td data-cell="Institution Price" id="price">
+                <%= item.institution_price %>
+              </td>
+
+              <td data-cell="Institution Value" id="price">
+                <%= item.institution_value %>
+              </td>
+
+              <td data-cell="quantity" id="quantity">
+                <%= item.quantity %>
+              </td>
+
+              <td data-cell="Gain / Loss" id="unrealized">
+                <% var result=(item.cost_basis * item.quantity) - item.institution_value; %>
+                  <% if (result> 0) { %>
+                    <span style="color: #009900;">
+                      <%= result %></i>
                     </span>
-                    <% } else { %>
+                    <% } else if (result==0){ %>
                       <span>
-                        <%= item.realized_gains %>
+                        <%= result %>
                       </span>
-                      <% } %>
+                      <% } else { %>
+                        <span style="color: #CC0000;">-$<%= Math.abs(result) %></i></span>
+                        <% } %>
+              </td>
+
+              <td data-cell="Gain / Loss Percentage" id="realized">
+                <% var result= ((item.cost_basis * item.quantity - (item.institution_value)) / item.institution_value) * 100 %>
+                  <% if (result > 0) { %>
+                    <span style="color: #009900;">+<%= result.toFixed(2) %>%</span>
+                    <% } else if (result==0){ %>
+                      <span>
+                        <%= result %>
+                      </span>
+                      <% } else { %>
+                        <span style="color: #CC0000;">-<%= Math.abs(result).toFixed(2) %>%<i
+                              class="fa-solid fa-arrow-trend-down"></i></span>
+                        <% } %>
               </td>
 
               <td data-cell="actions" id="action">

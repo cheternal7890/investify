@@ -25,7 +25,7 @@ td{
   padding: 0.75rem;
   background-color: #d9d9d9;
   border-width: 1px;
-  width: 400px;
+  width: auto;
   line-height: 42px;
   border-bottom-style: solid;
   border-color: rgba(66, 66, 66, 0.077);
@@ -49,8 +49,6 @@ td{
   text-align: left;
 }
 
-
-
 #identifierLink{
   color:  #0099FF;
   text-decoration-line: none;
@@ -64,11 +62,6 @@ td{
   td{
     text-align: left;
   }
-
-  td:nth-child(7) {
-    width: 100px;
-    text-align: center;
-  }  
 }
 
 #positionRow:hover{
@@ -118,6 +111,7 @@ td{
   }
 
   td {
+    display: block;
     min-width: 100%;
     padding: 0;
     margin: 0;
@@ -126,7 +120,6 @@ td{
   }
 
   tr{
-    display: grid;
     margin: 0;
   }
 
@@ -138,13 +131,14 @@ td{
     content: attr(data-cell) ":";
     font-weight: 550;
     text-transform: capitalize;
+  }  
+
+  #positionRow:last-child{
+    td{
+      border: none;
+    }
   }
 
-  tr td:nth-child(7) {
-    width: 100%;
-    text-align: left;
-  }
-  
 }
 
 .dt-info{
@@ -158,6 +152,7 @@ td{
 }
 
 #dt-search-0{
+  height: 30px;
   width: 215px;
 }
 

@@ -12,13 +12,12 @@ import favicon from "serve-favicon"
 import path from "path"
 import { fileURLToPath } from 'url';
 
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
 const saltRounds = 10;
 const port = 3000;
-
+const { Pool } = pg
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
@@ -37,9 +36,6 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-
-// Testing the position list
-let list = ""
 
 /* ========================== Connect to Database ========================== */
 
@@ -107,7 +103,8 @@ app.get("/positions", ensureAuthenticated, async (req, res) => {
     const user = req.user.username;
 
     const positionResult = await db.query(
-      "SELECT * FROM account JOIN position_table ON position_table.account_id = account.id WHERE username = $1 LIMIT 10", [user]);
+      "SELECT name, ticker_symbol, type, cost_basis, institution_price, institution_price_as_of, institution_value, quantity, iso_currency_code, holdings.security_id FROM account JOIN holdings ON holdings.account_id = account.id JOIN securities ON securities.security_id = holdings.security_id WHERE username = $1", [user]);
+
     const positionData = positionResult.rows
 
     res.render("positions.ejs", {
@@ -151,7 +148,7 @@ const configuration = new Configuration({
 
 const client = new PlaidApi(configuration);
 
-app.post('/create_link_token', async (req, res) => {
+app.post('/create_link_token', ensureAuthenticated, async (req, res) => {
   try {
     const response = await client.linkTokenCreate({
       user: {
@@ -175,9 +172,136 @@ app.post('/create_link_token', async (req, res) => {
   }
 });
 
-let token = ""
+// Function for getting the user's securities and holdings data
+async function getHoldings(access_token) {
+  const request = {
+    access_token: access_token,
+  };
 
-app.post('/exchange_public_token', async function (
+  try {
+    const response = await client.investmentsHoldingsGet(request);
+    return response.data;
+  } catch (error) {
+
+    console.error("Error fetching holdings:", error);
+    throw error;
+  }
+}
+
+// Function for getting the user's investment transactions 
+async function getInvestmentTransactions(access_token, start_date, end_date, count = 10, offset = 0) {
+  const request = {
+    access_token: access_token,
+    start_date: start_date,
+    end_date: end_date,
+    options: {
+      count: count,
+      offset: offset,
+    },
+  };
+
+  try {
+    const response = await client.investmentsTransactionsGet(request);
+    return response.data.investment_transactions;
+  } catch (error) {
+    console.error("Error fetching investment transactions:", error);
+    throw error;
+  }
+}
+
+async function insertTransactions(dataArray, user) {
+
+}
+
+
+async function insertHoldings(dataArray, user) {
+  const query = `
+  INSERT INTO holdings (cost_basis, institution_price, institution_price_as_of, institution_value, quantity, iso_currency_code, security_id, account_id)
+  VALUES($1, $2, $3, $4, $5, $6, $7, $8)
+  `;
+
+  const pool = new Pool({
+    host: process.env.PG_HOST,
+    user: process.env.PG_USER,
+    password: process.env.PG_PASSWORD,
+    database: process.env.PG_DATABASE,
+    port: process.env.PG_PORT
+  })
+
+  try {
+    const client = await pool.connect();
+
+    try {
+      await client.query('BEGIN');
+
+      for (const data of dataArray) {
+        await client.query(query, [data.cost_basis, data.institution_price, data.institution_price_as_of, data.institution_value, data.quantity, data.iso_currency_code, data.security_id, user.id]);
+      }
+
+      await client.query('COMMIT');
+
+      console.log("Inserted the rows in holdings table");
+
+    } catch (error) {
+      await client.query('ROLLBACK');
+      throw error;
+    } finally {
+      client.release();
+    }
+
+  } catch (error) {
+    console.error("There was an error executing the holdings batch query", error);
+  } finally {
+    await pool.end();
+  }
+
+}
+
+async function insertSecurities(dataArray) {
+  const query = `
+      INSERT INTO securities (name, ticker_symbol, type, isin, cusip, security_id)
+      VALUES ($1, $2, $3, $4, $5, $6)  
+  `
+
+  const pool = new Pool({
+    host: process.env.PG_HOST,
+    user: process.env.PG_USER,
+    password: process.env.PG_PASSWORD,
+    database: process.env.PG_DATABASE,
+    port: process.env.PG_PORT
+  })
+
+  try {
+    const client = await pool.connect();
+
+    try {
+      await client.query('BEGIN');
+
+      for (const data of dataArray) {
+        await client.query(query, [data.name, data.ticker_symbol, data.type, data.isin, data.cusip, data.security_id]);
+      }
+
+      await client.query('COMMIT');
+
+      console.log("Inserted the rows in securities table");
+
+    } catch (error) {
+      await client.query('ROLLBACK');
+      throw error;
+    } finally {
+      client.release();
+    }
+
+  } catch (error) {
+    console.error("There was an error excuting the securities batch query", error);
+  } finally {
+    await pool.end();
+  }
+
+}
+
+
+app.post('/exchange_public_token', ensureAuthenticated, async function (
   request,
   response,
   next,
@@ -188,46 +312,27 @@ app.post('/exchange_public_token', async function (
     const response = await client.itemPublicTokenExchange({
       public_token: publicToken,
     });
-    // These values should be saved to a persistent database and
-    // associated with the currently signed-in user
+    // Access token that is created for the user
     const accessToken = response.data.access_token;
     const itemID = response.data.item_id;
-    token = accessToken;
-    res.json({ public_token_exchange: 'complete' });
+    const currentUser = request.user;
+
+    // Get a list of holdings and positions for the user
+    const holdingsResult = await getHoldings(accessToken);
+
+    // await insertHoldings(holdingsResult.holdings, currentUser);
+    // await insertSecurities(holdingsResult.securities);
+
+    // Get a list of transactions for the user
+    const transactionsResult = await getInvestmentTransactions(accessToken, '2019-01-01', '2024-07-29')
+
+    // console.log(transactionsResult);
+    console.log(holdingsResult.accounts[0].balances.current);
+
   } catch (error) {
-    // handle error
+    console.log("Error", error);
   }
 });
-
-// Get the user's investment transactions
-app.post('/get_investments', async (req, res) => {
-  console.log(token);
-
-  const request = {
-    access_token: token,
-    start_date: '2019-01-01',
-    end_date: '2024-07-29',
-    options: {
-      count: 250,
-      offset: 0,
-    },
-  };
-
-  try {
-    const response = await client.investmentsTransactionsGet(request);
-    const investmentTransactions = response.data.investment_transactions
-    list = investmentTransactions
-    return res.json(investmentTransactions);
-  } catch (error) {
-    // handle error
-  }
-
-});
-
-// Get the user's securites and holdings data
-app.post("/get_holdings", async (req, res) => {
-
-})
 
 /* ========================== Update Account ========================== */
 

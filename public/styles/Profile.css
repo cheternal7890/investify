@@ -151,6 +151,9 @@ span {
   border-color: black;
 }
 
+#plaidButton:hover{
+  background-color: rgb(27, 27, 27);
+}
 
 /* ====================== Deleting Account CSS ====================== */
 
