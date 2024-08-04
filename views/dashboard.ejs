@@ -60,24 +60,32 @@
         </div>
 
         <div>
-          <h6>Positions</h6>
+          <% if(locals.position.length > 0){ %>
+            <div id="positionItem">
+              <h6>Positions</h6>
+              <a href="/positions" id="viewAllLink">View All <i class="fa-solid fa-angle-right"></i></a>
+            </div>
 
-          <% if(locals.position){ %>
+
             <% position.forEach((item)=> { %>
               <div id="positionItem">
                 <p>
                   <%= item.name %>
                 </p>
 
-                <% if(item.unrealized_gains> 0){ %>
-                  <p id="positiveTrendColor">+<%= item.unrealized_gains %>%<i class="fa-solid fa-arrow-trend-up"></i></p>
-                  <% } else if (item.unrealized_gains < 0) { %>
-                    <p id="negativeTrendColor">
-                      <%= item.unrealized_gains %>%<i class="fa-solid fa-arrow-trend-down"></i>
-                    </p>
+               <p>
+                <% var result= ((item.cost_basis * item.quantity - (item.institution_value)) / item.institution_value) * 100 %>
+                <% if (result > 0) { %>
+                  <span style="color: #009900;">+<%= result.toFixed(2) %>%</span>
+                  <% } else if (result==0){ %>
+                    <span>
+                      <%= result %>
+                    </span>
                     <% } else { %>
-                      <%= item.unrealized_gains %>
-                        <% } %>
+                      <span style="color: #CC0000;">-<%= Math.abs(result).toFixed(2) %>%<i
+                            class="fa-solid fa-arrow-trend-down"></i></span>
+                      <% } %>
+               </p>
 
               </div>
               <% }) %>
@@ -148,7 +156,10 @@
 
       <div id="transactionBox">
         <div id="titleContainer">
-          <h6>Transactions</h6>
+            <div id="positionItem">
+              <h6>Transactions</h6>
+              <a href="/positions" id="viewAllLink">View All <i class="fa-solid fa-angle-right"></i></a>
+            </div>
         </div>
 
         <div id="borderLine">
@@ -159,66 +170,24 @@
           <thead id="headerBlock">
             <tr>
               <td id="headerCells">Name</td>
-              <td id="headerCells">Category</td>
-              <td id="headerCells">Date</td>
+              <td id="headerCells">Type</td>
               <td id="headerCells">Amount</td>
+              <td id="headerCells">Date</td>
             </tr>
           </thead>
 
           <tbody id="positionRow">
-            <tr>
-              <td data-cell="name" id="name">
-                Walmart
-              </td>
 
-              <td data-cell="category" id="category">
-                Shops
-              </td>
-
-              <td data-cell="date" id="date">
-                2023-09-30
-              </td>
-
-              <td data-cell="amount" id="amount">
-                $72.10
-              </td>
-            </tr>
-
-            <tr>
-              <td data-cell="name" id="name">
-                Best Buy
-              </td>
-
-              <td data-cell="category" id="category">
-                Electronics
-              </td>
-
-              <td data-cell="date" id="date">
-                2023-09-28
-              </td>
-
-              <td data-cell="amount" id="amount">
-                $84.30
-              </td>
-            </tr>
-
-            <tr>
-              <td data-cell="name" id="name">
-                DoorDash
-              </td>
-
-              <td data-cell="category" id="category">
-                Food and Drink
-              </td>
-
-              <td data-cell="date" id="date">
-                2023-09-24
-              </td>
-
-              <td data-cell="amount" id="amount">
-                $23.94
-              </td>
-            </tr>
+          <%  if(locals.transaction.length > 0){ %>
+             <% transaction.forEach((item) => { %>
+                <tr>
+                  <td data-cell="name" id="name"><%= item.name %></td>
+                  <td data-cell="type" id="type"><%=  item.type.charAt(0).toUpperCase() + item.type.slice(1) %></td>
+                  <td data-cell="amount" id="amount"><%= item.amount %></td>
+                  <td data-cell="date" id="date"><%= item.date %></td>
+                </tr>
+             <% }) %>
+           <%  } %>
 
           </tbody>
 

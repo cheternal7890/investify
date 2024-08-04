@@ -72,27 +72,75 @@ app.get("/register", (req, res) => {
   res.render("register.ejs");
 })
 
+async function getUserFinancialData(user) {
+
+  const queries = {
+    account: `
+    SELECT settled_cash, buying_power, dividends, balance 
+    FROM portfolio_information 
+    JOIN account ON portfolio_information.id = account.id 
+    WHERE account.id = $1
+    `,
+
+    positions: `
+    SELECT name, ticker_symbol, type, cost_basis, institution_price, institution_price_as_of, institution_value, quantity, iso_currency_code, holdings.security_id 
+    FROM account 
+    JOIN holdings ON holdings.account_id = account.id 
+    JOIN securities ON securities.security_id = holdings.security_id 
+    WHERE account.id = $1 LIMIT 3
+    `,
+
+    transactions: `
+    SELECT name, date, type, amount 
+    FROM account 
+    JOIN transactions ON transactions.account_id = account.id 
+    WHERE account.id = $1
+    `
+  }
+
+  const pool = new Pool({
+    host: process.env.PG_HOST,
+    user: process.env.PG_USER,
+    password: process.env.PG_PASSWORD,
+    database: process.env.PG_DATABASE,
+    port: process.env.PG_PORT
+  })
+
+  try {
+    const results = await Promise.all([
+      pool.query(queries.account, [user.id]),
+      pool.query(queries.positions, [user.id]),
+      pool.query(queries.transactions, [user.id])
+    ])
+
+    return {
+      accountData: results[0].rows[0],
+      positionData: results[1].rows,
+      transactionData: results[2].rows
+    };
+
+  } catch (error) {
+    console.error("Error querying the user information", error);
+    throw error;
+  }
+}
+
 app.get("/dashboard", ensureAuthenticated, async (req, res) => {
 
   try {
-    const user = req.user.username
-
-    const result = await db.query(
-      "SELECT settled_cash, buying_power, dividends, balance FROM account JOIN portfolio_information ON portfolio_information.id = account.id WHERE username = $1", [user])
-    const data = result.rows[0];
-
-    const positionResult = await db.query(
-      "SELECT name, unrealized_gains FROM account JOIN position_table ON position_table.account_id = account.id WHERE username = $1 LIMIT 3", [user]);
-    const positionData = positionResult.rows
+    const user = req.user
+    const result = await getUserFinancialData(user);
 
     res.render("dashboard.ejs", {
-      username: user,
-      account: data,
-      position: positionData
+      username: user.username,
+      account: result.accountData,
+      position: result.positionData,
+      transaction: result.transactionData
     });
 
   } catch (err) {
     // Internal Server Error
+    res.redirect("/login");
     console.log(err);
   }
 })
@@ -210,9 +258,46 @@ async function getInvestmentTransactions(access_token, start_date, end_date, cou
 }
 
 async function insertTransactions(dataArray, user) {
+  const query = `
+  INSERT INTO transactions (name, date, type, amount, account_id)
+  VALUES ($1, $2, $3, $4, $5)
+  `
+  const pool = new Pool({
+    host: process.env.PG_HOST,
+    user: process.env.PG_USER,
+    password: process.env.PG_PASSWORD,
+    database: process.env.PG_DATABASE,
+    port: process.env.PG_PORT
+  })
+
+  try {
+    const client = await pool.connect();
+
+    try {
+      await client.query('BEGIN');
+
+      for (const data of dataArray) {
+        await client.query(query, [data.name, data.date, data.type, data.amount, user.id])
+      }
+
+      await client.query('COMMIT');
+
+      console.log("Inserted the rows in the transactions table")
+
+    } catch (error) {
+      await client.query('ROLLBACK');
+      throw error;
+    } finally {
+      client.release();
+    }
+
+  } catch (error) {
+    console.error("There was an error executing the transactions batch query", error)
+  } finally {
+    await pool.end();
+  }
 
 }
-
 
 async function insertHoldings(dataArray, user) {
   const query = `
@@ -300,7 +385,6 @@ async function insertSecurities(dataArray) {
 
 }
 
-
 app.post('/exchange_public_token', ensureAuthenticated, async function (
   request,
   response,
@@ -326,8 +410,7 @@ app.post('/exchange_public_token', ensureAuthenticated, async function (
     // Get a list of transactions for the user
     const transactionsResult = await getInvestmentTransactions(accessToken, '2019-01-01', '2024-07-29')
 
-    // console.log(transactionsResult);
-    console.log(holdingsResult.accounts[0].balances.current);
+    // await insertTransactions(transactionsResult, currentUser);
 
   } catch (error) {
     console.log("Error", error);
