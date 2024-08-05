@@ -412,6 +412,8 @@ app.post('/exchange_public_token', ensureAuthenticated, async function (
 
     // await insertTransactions(transactionsResult, currentUser);
 
+    console.log(holdingsResult.accounts);
+
   } catch (error) {
     console.log("Error", error);
   }

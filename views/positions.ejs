@@ -23,9 +23,8 @@
 
 <body>
   <%- include("partials/header.ejs") %>
-
+    <!------------------ Position Table ------------------>
     <table id="userPositionTable" class="" style="width:100%">
-
       <thead>
         <div id="positionEntries">
           <h6>My Positions
@@ -48,13 +47,11 @@
           <th id="headerCells" style="text-align: center;">Actions</th>
         </tr>
       </thead>
+      
       <tbody>
-
         <% if(locals.positionData){ %>
           <% positionData.forEach((item)=> { %>
-
             <tr id="positionRow">
-
               <td data-cell="identifier" id="identifier">
                 <a href="" id="identifierLink">
                   <%= item.ticker_symbol %>
@@ -129,10 +126,8 @@
               </td>
 
             </tr>
-
             <% }) %>
               <% } %>
-
       </tbody>
     </table>
 </body>

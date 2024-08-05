@@ -13,13 +13,6 @@ body {
   font-family: "Inter", sans-serif;
 }
 
-h5{
-  font-size: 1rem;
-  padding: 0;
-  margin: 0;
-  font-weight: 550;
-}
-
 h6{
   font-size: 1.25rem;
   font-weight: 550;
@@ -27,9 +20,11 @@ h6{
   margin: 7px 0px;  
 }
 
-p{
+h5{
   font-size: 1rem;
-  margin: 12px 0px;
+  padding: 0;
+  margin: 0;
+  font-weight: 550;
 }
 
 span {
