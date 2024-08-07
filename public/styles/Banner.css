@@ -36,13 +36,13 @@
 
   .menu-container{
     position: absolute;
-    z-index: 1;
+    z-index: 999;
     box-shadow: rgba(43, 43, 43, 0.30) 0px 3px 8px;
     top: 48px;
     right: 11px;
     color: black;
     background-color: white;
-    width: 215px;
+    width: 225px;
     height: auto;
     border-radius: 4px;
   }
