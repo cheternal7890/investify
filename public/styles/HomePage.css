@@ -184,8 +184,17 @@ span {
     flex-wrap: wrap;
   }
 
-  #name {
-    width: auto;
+  #positionRow{
+    width: 100%;
+  }
+
+  #headerBlock tr td {
+    padding: 10px 0px;
+  }
+
+  #positionRow tr td  {
+    padding: 10px 0px;
+    width: 25%;
   }
 
   #lineGraphBox, #doughnutGraphBox{
@@ -204,10 +213,6 @@ span {
   overflow-y: auto;
 }
 
-#name{
-  width: 600px;
-}
-
 #transactionTable{
   width: 100%;
   border-collapse: collapse;
@@ -216,6 +221,10 @@ span {
 #transactionTable td{
   padding: 10px;
   max-width: 600px;
+}
+
+#name{
+  width: 600px;
 }
 
 #headerBlock{
