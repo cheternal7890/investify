@@ -76,7 +76,7 @@ async function getUserFinancialData(user) {
 
   const queries = {
     account: `
-    SELECT settled_cash, buying_power, dividends, balance 
+    SELECT available, dividends, assets
     FROM portfolio_information 
     JOIN account ON portfolio_information.id = account.id 
     WHERE account.id = $1
@@ -148,15 +148,15 @@ app.get("/dashboard", ensureAuthenticated, async (req, res) => {
 app.get("/positions", ensureAuthenticated, async (req, res) => {
 
   try {
-    const user = req.user.username;
+    const user = req.user;
 
     const positionResult = await db.query(
-      "SELECT name, ticker_symbol, type, cost_basis, institution_price, institution_price_as_of, institution_value, quantity, iso_currency_code, holdings.security_id FROM account JOIN holdings ON holdings.account_id = account.id JOIN securities ON securities.security_id = holdings.security_id WHERE username = $1", [user]);
+      "SELECT name, ticker_symbol, type, cost_basis, institution_price, institution_price_as_of, institution_value, quantity, iso_currency_code, holdings.security_id FROM account JOIN holdings ON holdings.account_id = account.id JOIN securities ON securities.security_id = holdings.security_id WHERE account_id = $1", [user.id]);
 
     const positionData = positionResult.rows
 
     res.render("positions.ejs", {
-      username: user,
+      username: user.username,
       positionData: positionData
     })
 
@@ -237,7 +237,7 @@ async function getHoldings(access_token) {
 }
 
 // Function for getting the user's investment transactions 
-async function getInvestmentTransactions(access_token, start_date, end_date, count = 10, offset = 0) {
+async function getInvestmentTransactions(access_token, start_date, end_date, count = 20, offset = 0) {
   const request = {
     access_token: access_token,
     start_date: start_date,
@@ -385,6 +385,19 @@ async function insertSecurities(dataArray) {
 
 }
 
+async function updateAccountInformation(dataArray, user) {
+  console.log(dataArray);
+
+  try {
+    await db.query("UPDATE portfolio_information SET available = $1, dividends = $2, assets = $3 WHERE id = $4", [dataArray.available, dataArray.available, dataArray.current, user.id])
+    console.log("Account information has been updated");
+
+  } catch (error) {
+    console.error("Error updating the account information for the user:", error);
+  }
+
+}
+
 app.post('/exchange_public_token', ensureAuthenticated, async function (
   request,
   response,
@@ -403,16 +416,17 @@ app.post('/exchange_public_token', ensureAuthenticated, async function (
 
     // Get a list of holdings and positions for the user
     const holdingsResult = await getHoldings(accessToken);
-
     // await insertHoldings(holdingsResult.holdings, currentUser);
     // await insertSecurities(holdingsResult.securities);
 
+
     // Get a list of transactions for the user
     const transactionsResult = await getInvestmentTransactions(accessToken, '2019-01-01', '2024-07-29')
-
     // await insertTransactions(transactionsResult, currentUser);
 
-    console.log(holdingsResult.accounts);
+
+    // Update user portfolio information
+    const updateProfile = await updateAccountInformation(holdingsResult.accounts[0].balances, currentUser);
 
   } catch (error) {
     console.log("Error", error);
@@ -539,7 +553,7 @@ app.post("/register", async (req, res) => {
         } else {
           const result = await db.query("INSERT INTO account (email, username, password) VALUES ($1, $2, $3) RETURNING *", [email, username, hash])
 
-          await db.query("INSERT INTO portfolio_information (id, settled_cash, buying_power, dividends, balance) VALUES ($1, 0, 0, 0, 0)", [result.rows[0].id])
+          await db.query("INSERT INTO portfolio_information (id, available, dividends, assets) VALUES ($1, 0, 0, 0)", [result.rows[0].id])
 
           res.redirect("/login");
         }

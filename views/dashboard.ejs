@@ -31,27 +31,33 @@
         </div>
 
         <div>
+
+
+        <% if(locals.test){ %>
+          <h1>Exists</h1>
+         <% } else { %>
           <div id="informationItem">
-            <p style="opacity: 0.65;">Settled Cash</p>
+            <p style="opacity: 0.65;">Cash Available</p>
             <p>
-              <%= account.settled_cash %>
+              <%= account.available %>
             </p>
           </div>
 
           <div id="informationItem">
-            <p style="opacity: 0.65;">Buying Power</p>
+            <p style="opacity: 0.65;">Total Assets</p>
             <p>
-              <%= account.buying_power %>
+              <%= account.assets %>
             </p>
           </div>
 
           <div id="informationItem">
-            <p style="opacity: 0.65;">Dividends</p>
+            <p style="opacity: 0.65;">Dividend Income</p>
             <p>
               <%= account.dividends %>
             </p>
           </div>
         </div>
+      <% } %>
 
         <div id="buttonContainer">
           <button id="buttonItem"><span>Deposit</span></button>
@@ -97,7 +103,7 @@
         <div id="titleContainer">
           <span style="opacity: 0.65; margin: 0;">Net Account Value</span>
           <h1>
-            <%= account.balance %>
+            <%= account.assets %>
           </h1>
         </div>
 
@@ -170,16 +176,24 @@
               <% transaction.forEach((item)=> { %>
                 <tr>
                   <td data-cell="name" id="name">
-                    <span><%= item.name %></span>
+                    <span>
+                      <%= item.name %>
+                    </span>
                   </td>
                   <td data-cell="type" id="type">
-                    <span><%= item.type.charAt(0).toUpperCase() + item.type.slice(1) %></span>
+                    <span>
+                      <%= item.type.charAt(0).toUpperCase() + item.type.slice(1) %>
+                    </span>
                   </td>
                   <td data-cell="amount" id="amount">
-                    <span><%= item.amount %></span>
+                    <span>
+                      <%= item.amount %>
+                    </span>
                   </td>
                   <td data-cell="date" id="date">
-                    <span><%= item.date %></span>
+                    <span>
+                      <%= item.date %>
+                    </span>
                   </td>
                 </tr>
                 <% }) %>
@@ -188,7 +202,96 @@
         </table>
       </div>
     </main>
-    <script src="/js/chart.js"></script>
+    <script>
+      var transactionData = JSON.parse(`<%- JSON.stringify(locals.transaction) %>`);;
+
+      const chartData = transactionData.map(t => ({
+        x: new Date(t.date).getTime(), // Converts date string to timestamp
+        y: parseFloat(t.amount.replace(/[$,]/g, '')), // Removes the $ and commas, then convert to number
+        type: t.type
+      }));
+
+      // Line Chart Options
+      var lineChartOptions = {  
+        stroke: {
+          width: 1,
+        },
+        series: [{
+          name: 'Transaction',
+          data: chartData
+        }],
+        chart: {
+          type: 'line',
+          fontFamily: "'Inter', sans-serif",
+        },
+        dataLabels: {
+          enabled: false
+        },
+        xaxis: {
+          type: 'datetime',
+          labels: {
+            format: 'd MMM',
+          },
+          tooltip: {
+            enabled: false
+          }
+        },
+        yaxis: {
+          opposite: true,
+          labels: {
+            formatter: function (value) {
+              return `$${value.toLocaleString()}`;
+            }
+          }
+        },
+        zoom: {
+          enabled: true,
+          autoScaleYaxis: true
+        },
+        tooltip: {
+          custom: function ({ series, seriesIndex, dataPointIndex, w }) {
+            const dataPoint = w.config.series[seriesIndex].data[dataPointIndex];
+            const date = new Date(dataPoint.x);
+
+            // Adjust date for time zone offset
+            const adjustedDate = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+
+            return `
+            <div class="custom-tooltip">
+             <strong>Type:</strong> ${dataPoint.type.charAt(0).toUpperCase() + dataPoint.type.slice(1)}<br>
+             <strong>Date:</strong> ${adjustedDate.toLocaleDateString()}<br>
+             <strong>Transaction:</strong> $${dataPoint.y.toFixed(2)}
+            </div>
+             `;
+          }
+        }
+      };
+
+
+      // Donut Chart Options
+      var donutChartOptions = {
+        series: [44, 55, 13, 43],
+        chart: {
+          type: 'donut',
+          height: 350,
+          fontFamily: "'Inter', sans-serif"
+        },
+        legend: {
+          position: 'top',
+          horizontalAlign: 'center'
+        },
+        labels: ['Stocks', 'Holdings', 'Securities', 'Exchange Traded Funds'],
+        colors: ['#8ecae6', '#023047', '#ffb703', '#fb8500'],
+      };
+
+      // Render Line Chart
+      var lineChart = new ApexCharts(document.querySelector("#lineChart"), lineChartOptions);
+      lineChart.render();
+
+      // Render Donut Chart
+      var donutChart = new ApexCharts(document.querySelector("#donutChart"), donutChartOptions);
+      donutChart.render();
+    </script>
 </body>
 
 </html>

@@ -5,7 +5,7 @@ new DataTable('#userPositionTable', {
         topStart: toolbar,
         topEnd: {
             search: {
-                placeholder: "Search position",
+                placeholder: "Search for position",
             }
         },
         bottom: 'paging',
