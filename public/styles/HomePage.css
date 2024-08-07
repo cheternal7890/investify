@@ -163,7 +163,7 @@ span {
 
 @media only screen and (max-width: 768px) {
   #container {
-    margin: 0;
+    padding: 0;
     gap: 1.2rem;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto 1fr 0.5fr 0.5fr;
@@ -182,6 +182,10 @@ span {
 
   #buttonContainer {
     flex-wrap: wrap;
+  }
+
+  #name {
+    width: auto;
   }
 
   #lineGraphBox, #doughnutGraphBox{
