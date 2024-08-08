@@ -104,14 +104,13 @@
 
   #searchBar{
     border-radius: 4px;
+    overflow: hidden;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 0px 0.5px, rgb(210, 210, 210) 0px 0px 0px 1px inset;
   }
 
   #searchBox {
-    width: 480px;
+    width: 420px;
     padding: 6px;
-    border-top-left-radius: 4px;
-    border-bottom-left-radius: 4px;
     background-color: #d9d9d9;
     border-style: solid;
     border-color: #d9d9d9;
@@ -123,8 +122,6 @@
 
   #searchIcon{
     padding: 6px;
-    border-top-right-radius: 4px;
-    border-bottom-right-radius: 4px;
     cursor: pointer;
     float: right;
     border-style: solid;
@@ -146,11 +143,14 @@
   font-size: 0.938rem;
   padding: 0.75rem;
 
+  div {
+    display: flex;
+    gap: 1rem;
+  }
+
   a {
     text-decoration-line: none;
     color: black;
-    padding-right: 0.75rem;
-
     text-underline-offset: 4px;
     font-weight: 415;
   }
@@ -174,7 +174,7 @@
 #horizontalLine {
   margin-top: 0;
   margin-bottom: 1rem;
-  border-width: 3px;
+  border-width: 2.5px;
   border-style: solid;
   color: #d9d9d9;
 }

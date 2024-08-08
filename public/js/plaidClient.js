@@ -1,5 +1,5 @@
 // Event listener for the "plaidButton" button click
-document.getElementById('plaidButton').addEventListener('click', async () => {
+document.getElementById('linkPlaidButton').addEventListener('click', async () => {
     // Fetch a link token from the server
     const linkHandler = Plaid.create({
         token: (await $.post('/create_link_token')).link_token,

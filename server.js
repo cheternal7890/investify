@@ -151,7 +151,7 @@ app.get("/positions", ensureAuthenticated, async (req, res) => {
     const user = req.user;
 
     const positionResult = await db.query(
-      "SELECT name, ticker_symbol, type, cost_basis, institution_price, institution_price_as_of, institution_value, quantity, iso_currency_code, holdings.security_id FROM account JOIN holdings ON holdings.account_id = account.id JOIN securities ON securities.security_id = holdings.security_id WHERE account_id = $1", [user.id]);
+      "SELECT name, ticker_symbol, type, cost_basis, institution_price, institution_price_as_of, institution_value, quantity, iso_currency_code, holdings.security_id FROM account JOIN holdings ON holdings.account_id = account.id LEFT JOIN securities ON securities.security_id = holdings.security_id WHERE account_id = $1", [user.id]);
 
     const positionData = positionResult.rows
 
@@ -174,11 +174,15 @@ app.get("/updates", ensureAuthenticated, (req, res) => {
   });
 })
 
-app.get("/profile", ensureAuthenticated, (req, res) => {
-  const user = req.user.username;
+app.get("/profile", ensureAuthenticated, async (req, res) => {
+  const user = req.user;
+
+  const userData = await getUserFinancialData(user);
+  const dataExists = !!(userData.positionData.length > 0 || userData.transactionData.length > 0);
 
   res.render("profile.ejs", {
-    username: user,
+    username: user.username,
+    linkPlaid: dataExists
   });
 })
 

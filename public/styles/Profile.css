@@ -137,7 +137,7 @@ span {
 
 /* ====================== Plaid Button CSS ====================== */
 
-#plaidButton{
+.plaidButton{
   background-color: black;
   color: white;
   border-radius: 4px;
@@ -148,7 +148,7 @@ span {
   border-color: black;
 }
 
-#plaidButton:hover{
+.plaidButton:hover{
   background-color: rgb(27, 27, 27);
 }
 

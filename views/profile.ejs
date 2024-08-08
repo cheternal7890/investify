@@ -101,9 +101,17 @@
 
           <form class="boxForm">
             <div id="box">
-              <button id="plaidButton" type="button">
-                <span>Link Bank</span>
-              </button>
+
+              <% if(locals.linkPlaid==true) { %>
+                <button class="plaidButton" type="button">
+                  <span>Unlink from Plaid</span>
+                </button>
+                <% } else { %>
+                  <button class="plaidButton" id="linkPlaidButton" type="button">
+                    <span>Link Bank</span>
+                  </button>
+                  <% } %>
+
             </div>
           </form>
         </div>
