@@ -190,14 +190,14 @@ app.get("/news", ensureAuthenticated, async (req, res) => {
 
 })
 
-app.post("/news", async (req, res) => {
+app.post("/news", ensureAuthenticated, async (req, res) => {
   const user = req.user.username;
 
   try {
     const response = await axios.get("https://finnhub.io/api/v1/news", {
       params: {
         category: req.body.category,
-        token: process.env.TOKEN_ID
+        token: process.env.FINN_TOKEN_ID
       }
     });
 
