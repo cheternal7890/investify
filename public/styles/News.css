@@ -13,11 +13,12 @@
     font-family: "Inter", sans-serif;
   }
 
-  /* ========================== Main Container ========================== */
+  /* ========================== Main Box ========================== */
 
   .container {
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
+    grid-template-areas: "moversBox mainBox filterBox";
     gap: 20px;
     padding: 0 56px;
   }
@@ -62,34 +63,9 @@
     justify-content: center;
   }
 
-  .movers, .filter {
-    position: sticky;
-    top: 12px;
-    align-self: start;
-    font-size: 0.875rem;
-  }
-
-  /* ========================== Mobile Responsiveness ========================== */
-
-  @media only screen and (max-width: 768px) {
-    .container {
-      text-align: left;
-      grid-template-columns: 1fr;
-      padding: 1rem;
-    }
-
-    .article {
-      flex-wrap: wrap;
-    }
-
-    .movers, .filter {
-      display: none;
-    }
-
-  }
-
   .date {
-    font-size: 0.813rem;
+    font-size: 0.75rem;
+    opacity: 0.85;
   }
 
   .headline {
@@ -99,6 +75,87 @@
   .summary {
     opacity: 0.75;
     font-size: 0.813rem;
+  }
+
+  .movers, .filter {
+    position: sticky;
+    top: 12px;
+    align-self: start;
+    font-size: 0.875rem;
+  }
+  
+  /* ========================== Mover Box ========================== */
+
+  table {
+    table-layout: fixed;
+    width: 100%; 
+    font-size: 0.813rem;
+    border-collapse: collapse;
+    text-align: left;
+  }
+
+  table thead tr {
+    font-size: 0.75rem;
+  }
+
+  th, td {
+    text-overflow: ellipsis;
+    padding: 0.25rem;
+  }
+
+  td:nth-child(3) {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    flex-direction: row;
+  }
+
+
+  .movers {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .switcher-container {
+    display: flex;
+    gap: 1rem;
+    border-bottom-style: solid;
+    border-width: 1px;
+    border-color: rgb(180, 180, 180);
+  }
+
+  .switcher-button {
+    height: 2em;
+    padding: 0;
+    border: none;
+    background-color: transparent; 
+    cursor: pointer;
+    position: relative;
+    color: #4e4e4e;
+  }
+
+  .switcher-button.active {
+    padding: 0;
+    color: rgb(0, 0, 0);
+  }
+
+  .switcher-button.active::after {
+    content: '';
+    position: absolute;
+    bottom: -0.75px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background-color: #33a08c;
+  }
+
+  .tab-content {
+    display: none;
+  }
+
+  .tab-content.active {
+    display: block;
   }
 
   /* ========================== Filter Box ========================== */
@@ -139,4 +196,35 @@
 
   .filter form button:active {
     background-color: #2f8d7c;
+  }
+
+  /* ========================== Mobile Responsiveness ========================== */
+
+  @media only screen and (max-width: 1200px) {
+    .container {
+      text-align: left;
+      grid-template-columns: 1fr;
+      grid-template-areas: 
+      "filterBox"
+      "mainBox";
+      padding: 1rem;
+    }
+
+    .box.filter {
+      grid-area: filterBox;
+      position: relative;
+    }
+
+    .main {
+      grid-area: mainBox;
+    }
+
+    .article {
+      flex-wrap: wrap;
+    }
+
+    .box.movers {
+      display: none;
+    }
+
   }

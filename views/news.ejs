@@ -20,7 +20,67 @@
 
     <main class="container">
       <div class="box movers">
-        <div class="header">Top Movers</div>
+        <div class="header">
+          <div>Top Movers Today</div>
+        </div>
+
+        <div class="switcher-container">
+            <button class="switcher-button active" data-tab="gainers">Top Gainers</button>
+            <button class="switcher-button" data-tab="losers">Top Losers</button>
+        </div>
+
+        <div id="gainersTab" class="tab-content active">
+          <table>
+
+            <thead>
+              <tr>
+                <th>Symbol</th>
+                <th>Price</th>
+                <th>Performance</th>
+              </tr>
+            </thead>
+
+            <tbody>
+             <% if(locals.topGainers) { %>
+              <% for(let i = 0; i <= 4; i++) { %>
+                  <tr>
+                    <td><%= topGainers[i].symbol %></td>
+                    <td>$<%= topGainers[i].price %></td>
+                    <td style="color: #009900;"><i class="fa-solid fa-arrow-trend-up"></i> <%= topGainers[i].changesPercentage %>%</td>
+                  </tr>
+               <% } %>
+             <% } %>
+            </tbody>
+
+
+          </table>
+        </div>
+
+        <div id="losersTab" class="tab-content">
+          <table>
+
+            <thead>
+              <tr>
+                <th>Symbol</th>
+                <th>Price</th>
+                <th>Performance</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% if(locals.topLosers) { %>
+                <% for(let i = 0; i <= 4; i++) { %>
+                    <tr>
+                      <td><%= topLosers[i].symbol %></td>
+                      <td>$<%= topLosers[i].price %></td>
+                      <td style="color: #CC0000;"><i class="fa-solid fa-arrow-trend-down"></i> <%= Math.abs(topLosers[i].changesPercentage) %>%</td>
+                    </tr>
+                 <% } %>
+               <% } %>
+            </tbody>
+            
+          </table>
+        </div>
       </div>
 
       <div class="main">
@@ -34,7 +94,8 @@
 
                 <div class="article-content">
                   <span class="date">
-                    <%= new Date(item.datetime * 1000).toLocaleString('en-US') %>
+                    <%= new Date(item.datetime * 1000).toLocaleString('en-US') %> | <%=
+                        item.category.charAt(0).toUpperCase() + item.category.slice(1) %>
                   </span>
                   <div class="headline">
                     <strong>
@@ -57,17 +118,16 @@
       <div class="box filter">
         <div class="header">Filter by Category</div>
         <div>
-          <form action="/news" method="POST">
-            <button type="submit" value="general" name="category">General</button>
-            <button type="submit" value="forex" name="category">Forex</button>
-            <button type="submit" value="crypto" name="category">Crypto</button>
-            <button type="submit" value="merger" name="category">Merger</button>
+          <form action="/news" method="GET">
+            <button type="submit" name="category" value="general">General</button>
+            <button type="submit" name="category" value="forex">Forex</button>
+            <button type="submit" name="category" value="crypto">Crypto</button>
+            <button type="submit" name="category" value="merger">Merger</button>
           </form>
         </div>
       </div>
     </main>
-
-
+    <script src="/js/news.js"></script>
 </body>
 
 </html>

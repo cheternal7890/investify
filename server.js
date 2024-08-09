@@ -169,49 +169,42 @@ app.get("/positions", ensureAuthenticated, async (req, res) => {
 
 app.get("/news", ensureAuthenticated, async (req, res) => {
   const user = req.user.username;
+  const category = req.query.category || "general";
 
   try {
-    const response = await axios.get("https://finnhub.io/api/v1/news", {
-      params: {
-        category: "general",
-        token: process.env.FINN_TOKEN_ID
-      }
-    });
+    const [finnResponse, fmpGainers, fmpLosers] = await Promise.all([
+      axios.get("https://finnhub.io/api/v1/news", {
+        params: {
+          category: category,
+          token: process.env.FINN_TOKEN_ID
+        }
+      }),
+
+      axios.get("https://financialmodelingprep.com/api/v3/stock_market/gainers", {
+        params: {
+          apikey: process.env.FMP_TOKEN_ID
+        }
+      }),
+
+      axios.get("https://financialmodelingprep.com/api/v3/stock_market/losers", {
+        params: {
+          apikey: process.env.FMP_TOKEN_ID
+        }
+      })
+    ])
 
     res.render("news.ejs", {
       username: user,
-      news: response.data
+      news: finnResponse.data,
+      topGainers: fmpGainers.data,
+      topLosers: fmpLosers.data,
     });
 
   } catch (error) {
     console.error("There was an error getting the news data", error);
     res.redirect("/dashboard")
   }
-
-})
-
-app.post("/news", ensureAuthenticated, async (req, res) => {
-  const user = req.user.username;
-
-  try {
-    const response = await axios.get("https://finnhub.io/api/v1/news", {
-      params: {
-        category: req.body.category,
-        token: process.env.FINN_TOKEN_ID
-      }
-    });
-
-    res.render("news.ejs", {
-      username: user,
-      news: response.data
-    });
-
-  } catch (error) {
-    console.error("There was an error getting the news data", error);
-    res.redirect("/dashboard")
-  }
-
-})
+});
 
 app.get("/profile", ensureAuthenticated, async (req, res) => {
   const user = req.user;
