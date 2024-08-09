@@ -11,6 +11,7 @@ import cors from 'cors'
 import favicon from "serve-favicon"
 import path from "path"
 import { fileURLToPath } from 'url';
+import axios from "axios";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -166,12 +167,50 @@ app.get("/positions", ensureAuthenticated, async (req, res) => {
 
 })
 
-app.get("/updates", ensureAuthenticated, (req, res) => {
+app.get("/news", ensureAuthenticated, async (req, res) => {
   const user = req.user.username;
 
-  res.render("updates.ejs", {
-    username: user,
-  });
+  try {
+    const response = await axios.get("https://finnhub.io/api/v1/news", {
+      params: {
+        category: "general",
+        token: process.env.FINN_TOKEN_ID
+      }
+    });
+
+    res.render("news.ejs", {
+      username: user,
+      news: response.data
+    });
+
+  } catch (error) {
+    console.error("There was an error getting the news data", error);
+    res.redirect("/dashboard")
+  }
+
+})
+
+app.post("/news", async (req, res) => {
+  const user = req.user.username;
+
+  try {
+    const response = await axios.get("https://finnhub.io/api/v1/news", {
+      params: {
+        category: req.body.category,
+        token: process.env.TOKEN_ID
+      }
+    });
+
+    res.render("news.ejs", {
+      username: user,
+      news: response.data
+    });
+
+  } catch (error) {
+    console.error("There was an error getting the news data", error);
+    res.redirect("/dashboard")
+  }
+
 })
 
 app.get("/profile", ensureAuthenticated, async (req, res) => {
