@@ -75,7 +75,9 @@ span {
 
 #buttonContainer {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
+  gap: 0.25rem;
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
 }
@@ -161,7 +163,7 @@ span {
 
 /* ========================== Media Queries ========================== */
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 900px) {
   #container {
     padding: 0;
     gap: 1.2rem;

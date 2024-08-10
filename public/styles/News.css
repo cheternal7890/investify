@@ -207,7 +207,7 @@
       grid-template-areas: 
       "filterBox"
       "mainBox";
-      padding: 1rem;
+      padding: 0.25rem;
     }
 
     .box.filter {

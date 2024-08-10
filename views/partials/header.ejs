@@ -1,57 +1,55 @@
 <header>
-  <nav id="topHeader">
-    <div id="headerDivider">
-      <div>Corner</div>
-      <div title="Account">
+  <nav class="topHeader">
 
-        <button id="profile-btn">
-          <% if(locals.username){ %>
-            <%= locals.username %> <i class="fa-solid fa-user"></i>
-              <% } else { %>
-                Username
-                <% } %>
-        </button>
+    <div>
+      <a href="/dashboard" class="logoLink">
+        <span class="applicationTitle">Investify</span>
+      </a>
+    </div>
 
-        <div id="menu" class="menu-container hide">
-          <p class="headingTitle">
-            Settings
-          </p>
-          <div id="links">
-            <a href="/profile" class="dropdownLink" title="Preferences">
-              <i class="fa-solid fa-gear"></i>Preferences
-            </a>
+    <div class="searchBar">
+      <input type="search" class="searchBox" placeholder="Search..." />
+      <button type="submit" class="searchIcon"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
 
-            <a href="" class="dropdownLink" title="Help and Support">
-              <i class="fa-solid fa-circle-question"></i>Help and Support
-            </a>
 
-            <a href="/logout" class="dropdownLink" title="Log out">
-              <i class="fa-solid fa-right-from-bracket"></i>Log out
-            </a>
-          </div>
+    <div title="Account">
+
+      <button id="profile-btn" class="profile-button">
+        <% if(locals.username){ %>
+          <%= locals.username %> <i class="fa-solid fa-user"></i>
+            <% } else { %>
+              Username
+              <% } %>
+      </button>
+
+      <div id="menu" class="menuContainer hide">
+        <p class="headingTitle">
+          Settings
+        </p>
+        <div id="links" class="linkContainer">
+          <a href="/profile" class="dropdownLink" title="Preferences">
+            <i class="fa-solid fa-gear"></i>Preferences
+          </a>
+
+          <a href="" class="dropdownLink" title="Help and Support">
+            <i class="fa-solid fa-circle-question"></i>Help and Support
+          </a>
+
+          <a href="/logout" class="dropdownLink" title="Log out">
+            <i class="fa-solid fa-right-from-bracket"></i>Log out
+          </a>
         </div>
       </div>
     </div>
+
   </nav>
 
-  <nav id="middleHeader">
-    <div><a href="/dashboard" id="applicationTitle">Investify</a></div>
-    <div id="searchBar">
-      <input type="search" id="searchBox" placeholder="Search..." />
-      <button type="submit" id="searchIcon"><i class="fa-solid fa-magnifying-glass"></i></button>
-    </div>
+  <nav class="bottomHeader">
     <div>
-      <i class="fa-solid fa-bell" id="notificationBell"></i>
+      <a href="/dashboard" title="Home" class="navigationLink">Home</a>
+      <a href="/positions" title="Positions" class="navigationLink">Positions</a>
+      <a href="/news" title="News" class="navigationLink">News</a>
     </div>
   </nav>
-
-  <nav id="bottomHeader">
-    <div>
-      <a href="/dashboard" title="Home">Home</a>
-      <a href="/positions" title="Positions">Positions</a>
-      <a href="/news" title="News">News</a>
-    </div>
-  </nav>
-
-  <hr id="horizontalLine" />
 </header>
