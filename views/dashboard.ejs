@@ -223,6 +223,9 @@
         chart: {
           type: 'area',
           fontFamily: "'Inter', sans-serif",
+          animations: {
+            speed: 700
+          }
         },
         dataLabels: {
           enabled: false
@@ -267,14 +270,16 @@
         }
       };
 
-
       // Donut Chart Options
       var donutChartOptions = {
         series: [44, 55, 13, 43],
         chart: {
           type: 'donut',
           height: 350,
-          fontFamily: "'Inter', sans-serif"
+          fontFamily: "'Inter', sans-serif",
+          animations: {
+            speed: 700
+          }
         },
         legend: {
           position: 'top',

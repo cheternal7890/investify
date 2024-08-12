@@ -4,7 +4,6 @@
   }
   
   body {
-    max-width: 1600px;
     width: 100%;
     padding: 0;
     margin: auto;
@@ -17,6 +16,8 @@
 
   .container {
     display: grid;
+    max-width: 1600px;
+    margin: auto;
     grid-template-columns: 1fr 2fr 1fr;
     grid-template-areas: "moversBox mainBox filterBox";
     gap: 20px;
@@ -63,18 +64,24 @@
     justify-content: center;
   }
 
-  .date {
-    font-size: 0.75rem;
-    opacity: 0.85;
-  }
-
   .headline {
     font-size: 0.938rem;
+  }
+
+  .date {
+    font-size: 0.813rem;
+    opacity: 0.85;
   }
 
   .summary {
     opacity: 0.75;
     font-size: 0.813rem;
+  }
+
+  img {
+    width: 260px;
+    height: 150px;
+    border-radius: 4px;
   }
 
   .movers, .filter {
@@ -109,7 +116,6 @@
     gap: 2px;
     flex-direction: row;
   }
-
 
   .movers {
     display: flex;

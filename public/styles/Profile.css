@@ -4,7 +4,6 @@
 }
 
 body {
-  max-width: 1600px;
   width: 100%;
   padding: 0;
   margin: auto;
@@ -13,22 +12,22 @@ body {
   font-family: "Inter", sans-serif;
 }
 
-h6{
-  font-size: 1.25rem;
+h5{
+  font-size: 1.125rem;
   font-weight: 550;
   padding: 0;
   margin: 7px 0px;  
 }
 
-h5{
+h6{
   font-size: 1rem;
-  padding: 0;
   margin: 0;
+  padding: 0;
   font-weight: 550;
 }
 
 span {
-  font-size: 0.833rem;
+  font-size: 0.813rem;
 }
 
 /* ====================== Main ====================== */
@@ -202,10 +201,4 @@ span {
 #errorMessageHeader{
   text-align: center;
   color: #CC3300;
-}
-
-@media only screen and (max-width: 768px){
-  h6{
-    text-align: center;
-  }
 }
